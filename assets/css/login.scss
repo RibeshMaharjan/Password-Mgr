@@ -1,6 +1,7 @@
 $primary: #ffffff;
 $secondary: #1e90ff;
 $bg-image: url(../images/background.jpg);
+$heading-size: 18px;
 
 body{
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -34,7 +35,7 @@ body{
         backdrop-filter: blur(5px);
         
         .heading{
-            font-size: 18px;
+            font-size: $heading-size;
             color: $primary;
         }
 
@@ -87,6 +88,76 @@ body{
             }
             
         }
-        
+    }
+    .popup{
+        width: 600px;
+        height: 400px;
+        position: fixed;
+
+        margin: 0;
+        padding: 3rem;
+        box-sizing: border-box;
+
+        background-color: rgba(0,0,0,0.5);
+        background-color: white;
+
+        .close-btn{
+            position: absolute;
+            right: 2rem;
+            top: 2rem;
+            cursor: pointer;
+        }
+
+        .heading{
+            font-size: $heading-size;
+            color: black;
+            text-align: center;
+        }
+
+        .signup_form{
+            margin-top: 3rem;
+            display: grid;
+            grid-template-columns: auto auto;
+            column-gap: 3rem;
+
+            .input{
+                height: 3.5rem;
+                width: 100%;
+
+                padding: .3rem;
+                padding-inline: 1.5rem;
+                margin-bottom: 1.5rem;
+                box-sizing: border-box;
+                font-size: 1.2rem;
+
+                border: 1px solid black;
+                border-radius: .5rem;
+            }
+
+            button{
+                padding: 1rem;
+                margin-top: 1.5rem;
+                
+                height: 3.5rem;
+                width: 10rem;
+
+                position: absolute;
+                right: 3rem;
+                bottom: 2rem;
+
+                font-size: large;
+                box-sizing: border-box;
+
+                border: 1px solid black;
+                outline: none;
+                border-radius: .5rem;
+                transition: all 0.3s ease;
+
+                &:hover {
+                    cursor: pointer;
+                    transform: scale(1.1);
+                }
+            }
+        }
     }
 }

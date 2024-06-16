@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/assets/css/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 <body>
     <div class="container">
@@ -19,12 +20,37 @@
                     <!-- Password Input -->
                     <input type="password" class="input" name="password" placeholder="password"><br>
                     <!-- Register -->
-                    <span>Dont have a account?&nbsp;<a href="#">Register</a></span><br>
+                    <span>Dont have a account?&nbsp;<a id="show-popup-btn">Register</a></span><br>
                     <!-- Login Button -->
                     <button name="submit">Login</button>
                 </form>
             </div>
         </div>
+        <div class="popup" id="popup" style="display: none;">
+            <span class="material-symbols-outlined close-btn" id="close-btn">
+                close
+            </span>
+            <div class="heading">
+                <h1>Signup</h1>
+            </div>
+                <form action="" class="signup_form">
+                    <!-- Name Input -->
+                    <div>                    
+                        <input type="text" class="input" name="name" placeholder="Full Name"><br>
+                    </div>                    
+                    <!-- Username Input -->
+                    <div>                    
+                        <input type="uname" class="input" name="uname" placeholder="Username"><br>
+                    </div>                    
+                    <!-- Password Input -->
+                    <div>                    
+                        <input type="password" class="input" name="password" placeholder="password"><br>
+                    </div>                    
+                    <!-- Login Button -->
+                    <button name="submit">Register</button>
+                </form>
+        </div>
     </div>
+    <script src="/assets/js/pop.js"></script>
 </body>
 </html>
