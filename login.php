@@ -14,15 +14,15 @@
                 <h1>Login</h1>
             </div>
             <div class="form">
-                <form action="">
+                <form action="includes/login-inc.php" method="POST">
                     <!-- Username Input -->
                     <input type="uname" class="input" name="uname" placeholder="Username"><br>
                     <!-- Password Input -->
-                    <input type="password" class="input" name="password" placeholder="password"><br>
+                    <input type="password" class="input" name="pwd" placeholder="password"><br>
                     <!-- Register -->
                     <span>Dont have a account?&nbsp;<a id="show-popup-btn">Register</a></span><br>
                     <!-- Login Button -->
-                    <button name="submit" name="login">Login</button>
+                    <button type="submit" name="login">Login</button>
                 </form>
             </div>
         </div>
