@@ -14,15 +14,15 @@
                 <h1>Login</h1>
             </div>
             <div class="form">
-                <form action="">
+                <form action="includes/login-inc.php" method="POST">
                     <!-- Username Input -->
                     <input type="uname" class="input" name="uname" placeholder="Username"><br>
                     <!-- Password Input -->
-                    <input type="password" class="input" name="password" placeholder="password"><br>
+                    <input type="password" class="input" name="pwd" placeholder="password"><br>
                     <!-- Register -->
                     <span>Dont have a account?&nbsp;<a id="show-popup-btn">Register</a></span><br>
                     <!-- Login Button -->
-                    <button name="submit">Login</button>
+                    <button type="submit" name="login">Login</button>
                 </form>
             </div>
         </div>
@@ -33,21 +33,24 @@
             <div class="heading">
                 <h1>Signup</h1>
             </div>
-                <form action="" class="signup_form">
+                <form action="includes/signup-inc.php" class="signup_form" method="POST">
                     <!-- Name Input -->
                     <div>                    
-                        <input type="text" class="input" name="name" placeholder="Full Name"><br>
+                        <input type="text" class="input" name="uname" placeholder="UserName"><br>
                     </div>                    
                     <!-- Username Input -->
                     <div>                    
-                        <input type="uname" class="input" name="uname" placeholder="Username"><br>
+                        <input type="email" class="input" name="email" placeholder="Email"><br>
                     </div>                    
                     <!-- Password Input -->
                     <div>                    
-                        <input type="password" class="input" name="password" placeholder="password"><br>
-                    </div>                    
+                        <input type="password" class="input" name="pwd" placeholder="Password"><br>
+                    </div>
+                    <div>                    
+                        <input type="password" class="input" name="pwdRepeat" placeholder="Repeat Password"><br>
+                    </div>
                     <!-- Login Button -->
-                    <button name="submit">Register</button>
+                    <button type="submit" name="submit">Register</button>
                 </form>
         </div>
     </div>
