@@ -44,6 +44,7 @@ class Login extends Dbh {
     
         $checkPwd = ($pwd == $decryptPwd[0]['decrypted_password']) ? true : false;
             
+        // If password is incorrect
         if($checkPwd == false) {
             $stmt = null;
             header("location: ../login.php?error=wrongpassword");

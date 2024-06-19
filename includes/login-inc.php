@@ -7,9 +7,9 @@ if (isset($_POST["login"]))
     $pwd = $_POST["pwd"];
 
     // Instantiate SignupContr class
-    include "../classes/dbhclasses.php";
-    include "../classes/loginclasses.php";
-    include "../classes/login-controller.php";
+    include "../config/dbh.php";
+    include "../models/login.php";
+    include "../controllers/login.php";
 
     $login = new LoginController($uname, $pwd);
 
@@ -17,5 +17,5 @@ if (isset($_POST["login"]))
     $login->loginUser();
 
     // Going back to front page
-    header("location: ../login.php?error=none");
+    header("location: ../index.php?error=none");
 }

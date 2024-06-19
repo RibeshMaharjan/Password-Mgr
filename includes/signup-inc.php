@@ -9,9 +9,9 @@ if (isset($_POST["submit"]))
     $pwdRepeat = $_POST["pwdRepeat"];
 
     // Instantiate SignupContr class
-    include "../classes/dbhclasses.php";
-    include "../classes/signupclasses.php";
-    include "../classes/signup-controller.php";
+    include "../config/dbh.php";
+    include "../models/signup.php";
+    include "../controllers/signup.php";
 
     $signup = new SignupController($uname, $email, $pwd, $pwdRepeat);
 
