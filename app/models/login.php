@@ -70,6 +70,11 @@ class Login extends Dbh {
             session_start();
             $_SESSION["userid"] = $user[0]["users_id"];
             $_SESSION["username"] = $user[0]["users_name"];
+            $salt = $user[0]["users_salt"];
+            $iterations = 10000;
+            $keyLength = 24;
+            $key = hash_pbkdf2("sha256", $pwd, $salt, $iterations, $keyLength, true);
+            $_SESSION["password"] = $key;
         }
 
         $stmt= null;
