@@ -7,7 +7,7 @@ class CredentialController extends Credential{
     private $username;
     private $password;
 
-    public function __construct($user_id, $site, $username, $password) {
+    public function __construct($user_id = '', $site = '', $username = '', $password = '') {
         $this->user_id = $user_id;
         $this->site = $site;
         $this->username = $username;
@@ -28,7 +28,7 @@ class CredentialController extends Credential{
         //     exit();
         // }
 
-        $this->setCredential($this->user_id, $this->site, $this->username, $this->password);
+        $this->createCredential($this->user_id, $this->site, $this->username, $this->password);
     }
 
     // private function emptyInput() {
@@ -66,5 +66,12 @@ class CredentialController extends Credential{
     //     }
     //     return $result;
     // }
+
+    public function showCredentials() {
+
+        $data = $this->showCredential();
+
+        return $data;
+    }
 
 }
