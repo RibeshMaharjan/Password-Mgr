@@ -1,18 +1,29 @@
 <?php
 
-class CredentialController extends Credential{
+require_once __DIR__.'/../core/controller.php';
+require_once __DIR__.'/../models/credentialmodel.php';
+class Credential extends Controller{
 
     private $user_id;
     private $site;
     private $username;
     private $password;
 
-    public function __construct($user_id = '', $site = '', $username = '', $password = '') {
-        $this->user_id = $user_id;
-        $this->site = $site;
-        $this->username = $username;
-        $this->password = $password;
-    }
+    // function __construct(){    
+    //     // create an instance of the model
+    //     $this->credential = new Credential;
+    // }
+
+    // function hello_get($name = ''){
+
+	// 	$this->credential->sayHello('CJ_MODEL');
+	// }
+    // public function __construct($user_id = '', $site = '', $username = '', $password = '') {
+    //     $this->user_id = $user_id;
+    //     $this->site = $site;
+    //     $this->username = $username;
+    //     $this->password = $password;
+    // }
 
     public function addCredentials() {
         // if($this->emptyInput() == false) {
@@ -69,9 +80,11 @@ class CredentialController extends Credential{
 
     public function showCredentials() {
 
-        $data = $this->showCredential();
+        $credential = $this->model('credentialmodel');
+        $data = $credential->showCredential();
 
-        return $data;
+        $this->view('credentials/show', $data);
+        // return $data;
     }
 
 }

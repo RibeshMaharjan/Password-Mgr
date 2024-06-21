@@ -3,10 +3,13 @@
 require_once __DIR__.'/../dbh.php';
 class Model extends Dbh{
 
-    protected $connection;
-
-    protected function __construct() {
-        $this->connection = $this->connect();
+    function __construct() {
+        $dbh = new Dbh();
+        if ($dbh) {
+            $this->connection = $dbh->connect();
+        } else {
+            throw new Exception('Failed to instantiate Dbh class.');
+        }
     }
 
     // function create($tableName,$insertWhat){

@@ -1,7 +1,10 @@
 <?php
 
 require_once '../app/init.php';
+require_once __DIR__.'/../app/dbh.php';
 require_once '../app/helpers/session_helper.php';
+include __DIR__."/../app/models/credentialmodel.php";
+include __DIR__."/../app/controllers/credential.php";
 
 $app = new App;
 
@@ -56,7 +59,10 @@ $app = new App;
             </form><br><br>
             <div class="container ms-0">
                 <h3>Your Credentials</h3>
-                <?php include '../app/views/credentials/show.php'; ?>
+                <?php 
+                    $credential = new Credential();
+                    $data = $credential->showCredentials(); 
+                ?>
             </div>
         </main>
         <footer>

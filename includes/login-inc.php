@@ -7,7 +7,8 @@ if (isset($_POST["login"]))
     $pwd = $_POST["pwd"];
 
     // Instantiate SignupContr class
-    include "../app/config/dbh.php";
+    require_once __DIR__.'/../app/dbh.php';
+    // include "../app/config/dbh.php"; 
     include "../app/models/login.php";
     include "../app/controllers/login.php";
 

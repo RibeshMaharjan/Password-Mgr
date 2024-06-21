@@ -1,11 +1,20 @@
 <?php
 
-// require_once '../config/dbh.php';
+require_once __DIR__.'/../core/model.php';
 if (!isset($_SESSION)) {
     session_start();
 }
 
-class Credential extends Dbh{
+class CredentialModel extends Model{
+
+    function __construct(){
+		parent::__construct();
+		echo 'Test Model  CREATED '."<br />";
+	}
+
+    function sayHello($name){
+		echo "Welcome to  ". $name;
+	}
     private $conn;
     private $table_name = "credentials";
 
@@ -37,7 +46,7 @@ class Credential extends Dbh{
         }
     }
 
-    protected function showCredential() {
+    public function showCredential() {
         $stmt = $this->connect()->prepare("SELECT site,username,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE users_id = ?;");
 
         if(!$stmt->execute(array($_SESSION["password"], $_SESSION["userid"]))) {
@@ -46,8 +55,7 @@ class Credential extends Dbh{
             exit();
         }
         
-        // $data = $stml->fetchAll(PDO::FETCH_ASSOC);
-
-        return $stmt;
+        $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $data;   
     }
 }
