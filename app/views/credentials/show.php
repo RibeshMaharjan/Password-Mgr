@@ -1,13 +1,8 @@
 <?php
     
-    require_once '../app/config/dbh.php';
-    require_once '../app/helpers/session_helper.php';
-    include "../app/models/credential.php";
-    include "../app/controllers/credential.php";
+    
 
-    $credential = new CredentialController();
-
-    $data = $credential->showCredentials();
+    
 ?>
 <div
     class="table-responsive"
@@ -25,16 +20,16 @@
         </thead>
         <tbody>
             <?php 
-                while($row = $data->fetch(PDO::FETCH_ASSOC)){
+                // while($row = $data->fetch(PDO::FETCH_ASSOC)){
             ?>
             <tr class="">
-                <td scope="row"><?= $row["site"]; ?></td>
-                <td><?= $row["username"]; ?></td>
-                <td><?= $row["password"]; ?></td>
+                <td scope="row"><?= $data[0]['site']; ?></td>
+                <td><?= $data[0]["username"]; ?></td>
+                <td><?= $data[0]["password"]; ?></td>
                 <td><a href="">Edit</a><a href="">Delete</a></td>
             </tr>
             <?php
-                }
+                // }
             ?>
             </tr>
         </tbody>
