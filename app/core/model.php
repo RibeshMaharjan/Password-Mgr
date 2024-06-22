@@ -3,6 +3,7 @@
 require_once __DIR__.'/../dbh.php';
 class Model extends Dbh{
 
+    private $connection;
     function __construct() {
         $dbh = new Dbh();
         if ($dbh) {
@@ -11,24 +12,4 @@ class Model extends Dbh{
             throw new Exception('Failed to instantiate Dbh class.');
         }
     }
-
-    // function create($tableName,$insertWhat){
-
-    // }
-
-	// function read($tableName,$args,$whereArgs){
-
-    // }
-
-    // function update($tableName,$whatToSet,$whereArgs){
-
-    // }
-
-    // function delete($tableName,$whereArgs){
-
-    // }
-
-    // function where($sql,$whereArgs){
-
-    // }
 }

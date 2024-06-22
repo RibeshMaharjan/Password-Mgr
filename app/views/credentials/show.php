@@ -1,9 +1,6 @@
-<?php
-    
-    
-
-    
-?>
+<?php if(isset($data['message'])){
+    echo $data['message'];
+} ?>
 <div
     class="table-responsive"
 >
@@ -20,16 +17,17 @@
         </thead>
         <tbody>
             <?php 
+            foreach ($data as $row) {
                 // while($row = $data->fetch(PDO::FETCH_ASSOC)){
             ?>
             <tr class="">
-                <td scope="row"><?= $data[0]['site']; ?></td>
-                <td><?= $data[0]["username"]; ?></td>
-                <td><?= $data[0]["password"]; ?></td>
-                <td><a href="">Edit</a><a href="">Delete</a></td>
+                <td scope="row"><?= $row['site']; ?></td>
+                <td><?= $row["username"]; ?></td>
+                <td><?= $row["password"]; ?></td>
+                <td><a href="">Edit</a><br><a href="../app/controllers/credential.php?delete=<?=$row['id']?>">Delete</a></td>
             </tr>
             <?php
-                // }
+                }
             ?>
             </tr>
         </tbody>
