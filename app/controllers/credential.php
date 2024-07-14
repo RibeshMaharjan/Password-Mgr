@@ -1,5 +1,6 @@
 <?php
 
+require_once __DIR__.'/../helpers/session_helper.php';
 require_once __DIR__.'/../core/controller.php';
 require_once __DIR__.'/../models/credentialmodel.php';
 class Credential extends Controller{
@@ -8,83 +9,137 @@ class Credential extends Controller{
     private $site;
     private $username;
     private $password;
+    private $credential;
 
-    // function __construct(){    
-    //     // create an instance of the model
-    //     $this->credential = new Credential;
-    // }
-
-    // function hello_get($name = ''){
-
-	// 	$this->credential->sayHello('CJ_MODEL');
-	// }
-    // public function __construct($user_id = '', $site = '', $username = '', $password = '') {
-    //     $this->user_id = $user_id;
-    //     $this->site = $site;
-    //     $this->username = $username;
-    //     $this->password = $password;
-    // }
-
-    public function addCredentials() {
-        // if($this->emptyInput() == false) {
-        //     header("location: ../index.php?error=emptyinput");
-        //     exit();
-        // }
-        // if($this->invalidUsername() == false) {
-        //     header("location: ../index.php?error=Username");
-        //     exit();
-        // }
-        // if($this->invalidEmail() == false) {
-        //     header("location: ../index.php?error=Email");
-        //     exit();
-        // }
-
-        $this->createCredential($this->user_id, $this->site, $this->username, $this->password);
+    function __construct(){    
+        // create an instance of the model
+        $this->credential = new CredentialModel;
     }
 
-    // private function emptyInput() {
-    //     $result;
+    public function addCredentials($user_id, $site, $username, $password) {
+        if($this->emptyInput($user_id, $site, $username, $password) == false) {
+            header("location: ../../public/index.php?error=emptyinput");
+            exit();
+        }
+        if($this->invalidUsername($username) == false) {
+            header("location: ../../public/index.php?error=Username");
+            exit();
+        }
+        // if($this->invalidEmail() == false) {
+        //     header("location: ../../public/index.php?error=Email");
+        //     exit();
+        // }
+        $this->credential->createCredential($user_id, $site, $username, $password);
+        header("location: ../../public/index.php");
+        exit();
+    }
 
-    //     if(empty($this->user_id) || empty($this->site) || empty($this->username) || empty($this->password)){
-    //         $result = false;
-    //     }
-    //     else {
-    //         $result = true;
-    //     }
-    //     return $result;
-    // }
+    private function emptyInput($user_id = '', $site = '', $username = '', $password = '') {
+        $result;
+
+        if(empty($user_id) || empty($site) || empty($username) || empty($password)){
+            $result = false;
+        }
+        else {
+            $result = true;
+        }
+        return $result;
+    }
     
-    // private function invalidUsername() {
-    //     $result;
+    private function invalidUsername($uname) {
+        $result;
 
-    //     if(!preg_match("/^[a-zA-z0-9]*$/", $this->uname)){
-    //         $result = false;
-    //     }
-    //     else{
-    //         $result = true;
-    //     }
-    //     return $result;
-    // }
+        if(!preg_match("/^[a-zA-z0-9]*$/", $uname)){
+            $result = false;
+        }
+        else{
+            $result = true;
+        }
+        return $result;
+    }
 
-    // private function invalidEmail() {
-    //     $result;
+    private function invalidEmail($email) {
+        $result;
 
-    //     if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
-    //         $result = false;
-    //     }
-    //     else{
-    //         $result = true;
-    //     }
-    //     return $result;
-    // }
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $result = false;
+        }
+        else{
+            $result = true;
+        }
+        return $result;
+    }
 
     public function showCredentials() {
 
-        $credential = $this->model('credentialmodel');
-        $data = $credential->showCredential();
+        $data = $this->credential->showCredential();
 
         $this->view('credentials/show', $data);
         // return $data;
-    }
+    }   
 
+    public function updateCredentials($id, $site, $username, $password) {
+        if($this->emptyInput($site, $username, $password) == false) {
+            header("location: ../../public/index.php?error=emptyinput");
+            exit();
+        }
+        if($this->invalidUsername($username) == false) {
+            header("location: ../../public/index.php?error=Username");
+            exit();
+        }
+
+        $this->credential->updateCredential($id, $site, $username, $password);
+
+    }
+    public function deleteCredentials($id) {
+        
+        $credential = $this->model('credentialmodel');
+        $credential->deleteCredential($id);
+    }
+}
+
+$init = new Credential;
+
+if (isset($_POST["add"])) 
+{
+    // Grabbing the data
+    $user_id = $_SESSION["userid"];
+    $site = $_POST["site"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Running error handlers and insert credential
+    $init->addCredentials($user_id, $site, $username, $password);
+
+    // Going back to front page
+    header("location: ../../public/index.php?error=none");
+}
+
+if (isset($_POST["update"])) 
+{
+    // Grabbing the data
+    $user_id = $_SESSION["userid"];
+    $id = $_POST["id"];
+    $site = $_POST["site"];
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    // Updateing the credential
+    $init->updateCredentials($id, $site, $username, $password);
+
+    // Going back to front page
+    header("location: ../../public/index.php?error=none");
+}
+
+if (isset($_GET["delete"])) 
+{
+    // Grabbing the data
+    $id = $_GET["delete"];
+    $user_id = $_SESSION["userid"];
+
+    // Deleting credential
+    $init->deleteCredentials($id);
+
+    // Going back to front page
+    header("location: ../../public/index.php?error=none");
 }

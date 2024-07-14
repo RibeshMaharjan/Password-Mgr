@@ -9,7 +9,7 @@ class CredentialModel extends Model{
 
     function __construct(){
 		parent::__construct();
-		echo 'Test Model  CREATED '."<br />";
+		echo 'Test Model  CREATED new changes'."<br />";
 	}
 
     function sayHello($name){
@@ -18,18 +18,7 @@ class CredentialModel extends Model{
     private $conn;
     private $table_name = "credentials";
 
-    protected function createCredential($user_id, $site, $username, $password) {
-        $stmt = $this->connect()->prepare('SELECT users_salt FROM users WHERE users_id = ?');
-        
-        if(!$stmt->execute(array($user_id))) {
-            $stmt = null;
-            header("location: ../login.php?error=stmtfailed");
-            exit();
-        }
-
-        $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Generate Salt key
+    public function createCredential($user_id, $site, $username, $password) {
         $salt = $_SESSION["password"];
 
         $stmt = $this->connect()->prepare("INSERT INTO ".$this->table_name." (users_id, site, username, password) VALUES (?,?,?,AES_ENCRYPT(?,?));");
@@ -41,13 +30,13 @@ class CredentialModel extends Model{
         }
         else {
             $stmt = null;
-            header("location: ../index.php?error=CredentialAdded");
+            header("location: /../../public/index.php?error=CredentialAdded");
             exit();
         }
     }
 
     public function showCredential() {
-        $stmt = $this->connect()->prepare("SELECT site,username,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE users_id = ?;");
+        $stmt = $this->connect()->prepare("SELECT *,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE users_id = ?;");
 
         if(!$stmt->execute(array($_SESSION["password"], $_SESSION["userid"]))) {
             $stmt = null;
@@ -57,5 +46,24 @@ class CredentialModel extends Model{
         
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;   
+    }
+
+    public function updateCredential($id, $site, $username, $password) {
+        $stmt = $this->connect()->prepare("UPDATE " . $this->table_name . " SET site = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE id = ?;");
+
+        if(!$stmt->execute(array($site, $username, $password, $_SESSION["password"], $id))) {
+            $stmt = null;
+            header("location: ../login.php?error=stmtfailed");
+            exit();
+        }
+    }
+    public function deleteCredential($id) {
+        $stmt = $this->connect()->prepare("DELETE FROM " . $this->table_name . " WHERE id = ?;");
+
+        if(!$stmt->execute(array($id))) {
+            $stmt = null;
+            header("location: /../../public/index.php?error=stmtfailed");
+            exit();
+        }
     }
 }
