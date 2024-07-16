@@ -9,7 +9,7 @@ class CredentialModel extends Model{
 
     function __construct(){
 		parent::__construct();
-		echo 'Test Model  CREATED new changes'."<br />";
+		// echo 'Test Model  CREATED new changes'."<br />";
 	}
 
     function sayHello($name){

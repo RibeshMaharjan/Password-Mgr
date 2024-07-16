@@ -22,8 +22,8 @@ body{
     background-size: cover;
 
     .wrapper{
-        height: 32rem;
-        width: 24rem;
+        min-height: 32rem;
+        min-width: 24rem;
     
         padding: 25px;
         box-sizing: border-box;
