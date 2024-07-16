@@ -9,9 +9,9 @@ if (isset($_POST["submit"]))
     $pwdRepeat = $_POST["pwdRepeat"];
 
     // Instantiate SignupContr class
-    include "../config/dbh.php";
-    include "../models/signup.php";
-    include "../controllers/signup.php";
+    include "../app/dbh.php";
+    include "../app/models/signup.php";
+    include "../app/controllers/signup.php";
 
     $signup = new SignupController($uname, $email, $pwd, $pwdRepeat);
 
@@ -19,5 +19,5 @@ if (isset($_POST["submit"]))
     $signup->signupUser();
 
     // Going back to front page
-    header("location: ../login.php?error=none");
+    header("location: ../public/login.php?error=none");
 }

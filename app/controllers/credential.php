@@ -14,6 +14,7 @@ class Credential extends Controller{
     function __construct(){    
         // create an instance of the model
         $this->credential = new CredentialModel;
+        // $credential = $this->model("credential");
     }
 
     public function addCredentials($user_id, $site, $username, $password) {

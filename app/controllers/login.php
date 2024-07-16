@@ -1,16 +1,22 @@
 <!-- Task like change something in the database -->
 <?php
 
+require_once __DIR__.'/../helpers/session_helper.php';
+require_once __DIR__.'/../core/controller.php';
+require_once __DIR__.'/../models/login.php';
 
 class LoginController extends Controller {
     
     private $uname;
     private $pwd;
+    private $login;
 
-    public function
+
     public function __construct($uname, $pwd) {
         $this->uname = $uname;
         $this->pwd = $pwd;
+        // $this->login = new Login;
+        $this->login = $this->model("login");
     }
 
     public function loginUser() {
@@ -18,7 +24,7 @@ class LoginController extends Controller {
             header("location: ../login.php?error=emptyinput");
             exit();
         }
-        $this->getUser($this->uname, $this->pwd);
+        $this->login->getUser($this->uname, $this->pwd);
     }
 
     private function emptyInput() {
@@ -40,10 +46,10 @@ if (isset($_POST["login"]))
     $pwd = $_POST["pwd"];
 
     // Instantiate SignupContr class
-    require_once __DIR__.'/../app/dbh.php';
+    require_once "../app/dbh.php";
     // include "../app/config/dbh.php"; 
-    include "../app/models/login.php";
-    include "../app/controllers/login.php";
+    // include "../app/models/login.php";
+    // include "../app/controllers/login.php";
 
     $login = new LoginController($uname, $pwd);
 
