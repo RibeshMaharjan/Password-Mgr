@@ -39,16 +39,36 @@ include __DIR__."/../../app/controllers/credential.php";
             src="https://kit.fontawesome.com/922cd10ce2.js" 
             crossorigin="anonymous">
         </script>
+        <link 
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+            rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+            crossorigin="anonymous">
+        <script 
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
+        <div class="my-container">
         <?php include './includes/sidebar.php'; ?>
         <div class="content">
             <header>
-                <!-- place navbar here -->
-                <h1>Welcome <?= $_SESSION["username"]; ?></h1>
-                <form action="logout.php" method="POST">
-                    <button type="submit" name="logout">Logout</button>
-                </form><br><br>
-                
+                <ul class="nav justify-content-end py-3 px-5">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Welcome <?= $_SESSION["username"]; ?></a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="logout.php">Logout</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <form action="logout.php" method="POST">
+                            <button type="submit" class="logout-btn" name="logout">Logout</button>
+                        </form>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                    </li> -->
+                </ul>
+                <hr>
+            
             </header>

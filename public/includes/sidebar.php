@@ -9,12 +9,8 @@
             <div class="sidebar-section-content">
                 <ul class="sidebar-list">
                     <li class="sidebar-item"><a href="" class="sidebar-link active">My Vault</a></li>
-                    <li class="sidebar-item"><a href="" class="sidebar-link">My Vault</a></li>
-                    <li class="sidebar-item"><a href="" class="sidebar-link">My Vault</a></li>
                 </ul>
                 <ul class="sidebar-list">
-                    <li class="sidebar-item"><a href="" class="sidebar-link">My Vault</a></li>
-                    <li class="sidebar-item"><a href="" class="sidebar-link">My Vault</a></li>
                     <li class="sidebar-item"><a href="" class="sidebar-link">My Vault</a></li>
                 </ul>
             </div>

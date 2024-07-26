@@ -1,43 +1,59 @@
 <?php include './includes/header.php'; ?>
     <main>
-        <h3>Enter your Credentials</h3>
-        <form action="../app/controllers/credential.php" class="signup_form" method="POST">
-            <!-- Site Input -->
-            <div>                    
-                <input type="text" class="input" name="site" placeholder="Site"><br>
-            </div>  
-            <!-- Name Input -->
-            <div>                    
-                <input type="text" class="input" name="username" placeholder="UserName"><br>
-            </div>                    
-            <!-- Password Input -->
-            <div>                    
-                <input type="password" class="input" name="password" placeholder="Password"><br>
+        <div class="container-fluid mt-4 mx-2">
+            <h3 class="mb-2">Enter your Credentials</h3>
+            <form action="../app/controllers/credential.php" method="POST">
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="site" name="site">
+                    <label for="floatingInput">Site</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
+                    <label for="floatingInput">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
+                    <label for="floatingPassword">Password</label>
+                </div>
+                <button type="submit" class="btn btn-primary mt-3" name="add">Submit</button>
+            </form>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="credential-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <!-- Add Button -->
-            <button type="submit" name="add">Register</button>
-        </form><br><br>
-        <h1>Update Form</h1>
-        <form action="../app/controllers/credential.php" class="signup_form" method="POST">
-            <div>                    
-                <input type="text" class="input" name="id" placeholder="Id"><br>
+            <div class="modal-body">
+                <form action="../app/controllers/credential.php" method="POST">
+                        <input type="hidden" name="id" id="id">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="site" placeholder="Site" name="site">
+                            <label for="floatingInput">Site</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+                            <label for="floatingPassword">Username</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+                            <label for="floatingPassword">Password</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="update">Submit</button>
+                    </form>
             </div>
-            <!-- Site Input -->
-            <div>                    
-                <input type="text" class="input" name="site" placeholder="Site"><br>
-            </div>  
-            <!-- Name Input -->
-            <div>                    
-                <input type="text" class="input" name="username" placeholder="UserName"><br>
-            </div>                    
-            <!-- Password Input -->
-            <div>                    
-                <input type="password" class="input" name="password" placeholder="Password"><br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" name="update">Submit</button>
             </div>
-            <!-- Add Button -->
-            <button type="submit" name="update">Register</button>
-        </form><br><br>
-        <div class="container ms-0">
+            </div>
+        </div>
+        </div>
+
+        <div class="my-table mt-5 mx-4">
             <h3>Your Credentials</h3>
             <?php 
                 $credential = new Credential();
