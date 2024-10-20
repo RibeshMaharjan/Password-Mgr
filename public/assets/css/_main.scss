@@ -1,28 +1,9 @@
 // Nav CSS
 
-body {
-  margin: 0;
-}
-
-@media (min-width: 768px) {
-  body {
-    overflow: hidden;
-  }
-}
-
-.navbar {
-  background-color: #fff;
-  border-bottom: 1px solid black;
-}
-
-.my-container {
-  margin: 0;
-  padding: 0;
-
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 0px;
-
+// .navbar {
+//   background-color: #fff;
+//   border-bottom: 1px solid black;
+// }
   .nav-link {
     // color: rgba(0, 76, 255, 0.573);
     color: #000;
@@ -70,4 +51,3 @@ body {
       }
     }
   }
-}

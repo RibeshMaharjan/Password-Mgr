@@ -30,7 +30,7 @@ class CredentialModel extends Model{
         }
         else {
             $stmt = null;
-            header("location: /../../public/index.php?error=CredentialAdded");
+            header("location: /../public/index.php?error=CredentialAdded");
             exit();
         }
     }
@@ -49,7 +49,7 @@ class CredentialModel extends Model{
     }
 
     public function updateCredential($id, $site, $username, $password) {
-        $stmt = $this->connect()->prepare("UPDATE " . $this->table_name . " SET site = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE id = ?;");
+        $stmt = $this->connect()->prepare("UPDATE " . $this->table_name . " SET site = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE account_id = ?;");
 
         if(!$stmt->execute(array($site, $username, $password, $_SESSION["password"], $id))) {
             $stmt = null;
@@ -58,7 +58,7 @@ class CredentialModel extends Model{
         }
     }
     public function deleteCredential($id) {
-        $stmt = $this->connect()->prepare("DELETE FROM " . $this->table_name . " WHERE id = ?;");
+        $stmt = $this->connect()->prepare("DELETE FROM " . $this->table_name . " WHERE account_id = ?;");
 
         if(!$stmt->execute(array($id))) {
             $stmt = null;

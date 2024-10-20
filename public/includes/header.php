@@ -1,11 +1,17 @@
 <?php
 
 // require_once '../app/init.php';
-require_once __DIR__.'/../../app/dbh.php';
 require_once '../app/helpers/session_helper.php';
+require_once __DIR__.'/../../app/dbh.php';
 include __DIR__."/../../app/controllers/credential.php";
 
 // $app = new App;
+// session_start();
+
+if(!isset($_SESSION['auth']))
+{
+    header('Location: ../public/login.php');
+}
 
 ?>
 
@@ -19,6 +25,29 @@ include __DIR__."/../../app/controllers/credential.php";
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
         />
+        <!-- Google Font -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <!-- Tomorrow Font -->
+        <link 
+            href="https://fonts.googleapis.com/css2?family=Tomorrow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" 
+            rel="stylesheet">
+        <!-- Montserrat Font -->
+        <link 
+            href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" 
+            rel="stylesheet">
+
+        <!-- Poppins Font -->
+        <link 
+            href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" 
+            rel="stylesheet">
+
+        <!-- Font Awesome Cdn -->
+        <script 
+            src="https://kit.fontawesome.com/922cd10ce2.js" 
+            crossorigin="anonymous">
+        </script>
 
         <!-- Bootstrap CSS v5.2.1 -->
         <link
@@ -28,18 +57,6 @@ include __DIR__."/../../app/controllers/credential.php";
             crossorigin="anonymous"
         />
         <link 
-            rel="stylesheet" 
-            href="assets/css/sidebar.css"
-        />
-        <link 
-            rel="stylesheet" 
-            href="assets/css/main.css"
-        />
-        <script 
-            src="https://kit.fontawesome.com/922cd10ce2.js" 
-            crossorigin="anonymous">
-        </script>
-        <link 
             href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
             rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
             crossorigin="anonymous">
@@ -47,28 +64,62 @@ include __DIR__."/../../app/controllers/credential.php";
             src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
             integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
             crossorigin="anonymous"></script>
+
+        <!-- Main Css -->
+        <link rel="stylesheet" href="./assets/css/style.css">
+
     </head>
     <body>
-        <div class="my-container">
-        <?php include './includes/sidebar.php'; ?>
-        <div class="content">
-            <header>
-                <ul class="nav justify-content-end py-3 px-5">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Welcome <?= $_SESSION["username"]; ?></a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="logout.php">Logout</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <form action="logout.php" method="POST">
-                            <button type="submit" class="logout-btn" name="logout">Logout</button>
-                        </form>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-                    </li> -->
-                </ul>
-                <hr>
-            
+            <?php
+                // include './includes/sidebar.php';
+            ?>
+            <header class="primary-header">
+                <div>
+                    <img src="./assets/images/logo/logo2preview.png" alt="" class="logo">
+                </div>
+
+                <button class="mobile-nav-toggle" aria-expanded="false">
+                    <!-- <i class="fa-solid fa-bars"></i> -->
+                </button>
+
+                <nav>
+                    <ul id="primary-navigation" class="primary-navigation" data-visible="false">
+                        <li class="active">
+                            <a href="index.php">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                Password Generator
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                Tool
+                            </a>
+                        </li>
+                        <li>
+                            <a href="">
+                                Logout
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </header>
+            <div class="content">
+                <!-- <header>
+                    <nav class="home-navbar">
+                        <ul class="nav-bar">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Welcome </a>
+                            </li>
+                            <li class="nav-item">
+                                <form action="logout.php" method="POST">
+                                    <button type="submit" class="logout-btn" name="logout">Logout</button>
+                                </form>
+                            </li>
+                        </ul>
+                    </nav>
+                    <hr>
+                </header> -->

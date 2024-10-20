@@ -7,13 +7,13 @@ class Login extends Dbh {
 
         if(!$stmt->execute(array($uname, $uname))) {
             $stmt = null;
-            header("location: ../login.php?error=stmtfailed");
+            header("location: ../public/login.php?error=stmtfailed");
             exit();
         }
 
         if ($stmt->rowCount() == 0) {
             $stmt = null;
-            header("location: ../login.php?error=usernotfound");
+            header("location: ../public/login.php?error=usernotfound");
             exit();
         }
 
@@ -30,13 +30,13 @@ class Login extends Dbh {
         $stmt = $this->connect()->prepare('SELECT AES_DECRYPT(users_pwd, ?) AS decrypted_password FROM users WHERE users_name = ? OR users_email = ?');
         if(!$stmt->execute(array($key, $uname, $uname))) {
             $stmt = null;
-            header("location: ../login.php?error=stmtfailed");
+            header("location: ../public/login.php?error=stmtfailed");
             exit();
         }
     
         if ($stmt->rowCount() == 0) {
             $stmt = null;
-            header("location: ../login.php?error=usernotfound");
+            header("location: ../public/login.php?error=usernotfound");
             exit();
         }
         
@@ -47,7 +47,7 @@ class Login extends Dbh {
         // If password is incorrect
         if($checkPwd == false) {
             $stmt = null;
-            header("location: ../login.php?error=wrongpassword");
+            header("location: ../public/login.php?error=wrongpassword");
             exit();
         }
         elseif($checkPwd == true) {
@@ -55,20 +55,21 @@ class Login extends Dbh {
 
             if(!$stmt->execute(array($uname, $uname, $pwd, $key))) {
                 $stmt = null;
-                header("location: ../login.php?error=stmtfailed");
+                header("location: ../public/login.php?error=stmtfailed");
                 exit();
             }
 
             if ($stmt->rowCount() == 0) {
                 $stmt = null;
-                header("location: ../login.php?error=usernotfound");
+                header("location: ../public/login.php?error=usernotfound");
                 exit();
             }
 
             $user = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             session_start();
-            $_SESSION["userid"] = $user[0]["users_id"];
+            $_SESSION['auth'] = true;
+            $_SESSION["userid"] = $user[0]["user_id"];
             $_SESSION["username"] = $user[0]["users_name"];
             $salt = $user[0]["users_salt"];
             $iterations = 10000;

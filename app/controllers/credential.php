@@ -35,10 +35,32 @@ class Credential extends Controller{
         exit();
     }
 
-    private function emptyInput($user_id = '', $site = '', $username = '', $password = '') {
-        $result;
+    public function updateCredentials($id, $site, $username, $password) {
+        if($this->emptyInput(NULL, $site, $username, $password) == false) {
+            header("location: ../../public/index.php?error=emptyinput");
+            exit();
+        }
 
-        if(empty($user_id) || empty($site) || empty($username) || empty($password)){
+        $this->credential->updateCredential($id, $site, $username, $password);
+
+    }
+    public function deleteCredentials($id) {
+        
+        $credential = $this->model('credentialmodel');
+        $credential->deleteCredential($id);
+    }
+
+    private function emptyInput($user_id, $site = '', $username = '', $password = '') {
+        $result;
+        $user_result = false;
+        
+        if (isset($user_id)) {
+            if(empty($user_id)){
+                $user_result = false;
+            }
+        }
+
+        if($user_result || empty($site) || empty($username) || empty($password)){
             $result = false;
         }
         else {
@@ -77,25 +99,6 @@ class Credential extends Controller{
 
         $this->view('credentials/show', $data);
         // return $data;
-    }   
-
-    public function updateCredentials($id, $site, $username, $password) {
-        if($this->emptyInput($site, $username, $password) == false) {
-            header("location: ../../public/index.php?error=emptyinput");
-            exit();
-        }
-        if($this->invalidUsername($username) == false) {
-            header("location: ../../public/index.php?error=Username");
-            exit();
-        }
-
-        $this->credential->updateCredential($id, $site, $username, $password);
-
-    }
-    public function deleteCredentials($id) {
-        
-        $credential = $this->model('credentialmodel');
-        $credential->deleteCredential($id);
     }
 }
 
@@ -132,10 +135,10 @@ if (isset($_POST["update"]))
     header("location: ../../public/index.php?error=none");
 }
 
-if (isset($_GET["delete"])) 
+if (isset($_POST["delete"])) 
 {
     // Grabbing the data
-    $id = $_GET["delete"];
+    $id = $_POST["id"];
     $user_id = $_SESSION["userid"];
 
     // Deleting credential

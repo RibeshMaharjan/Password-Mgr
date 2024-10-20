@@ -17,16 +17,16 @@
                     // while($row = $data->fetch(PDO::FETCH_ASSOC)){
                 ?>
                 <tr class="">
-                    <td style="display: none;"><?= $row["id"]; ?></td>
-                    <td scope="row"><?= $row['site']; ?></td>
-                    <td><?= $row["username"]; ?></td>
-                    <td><?= $row["password"]; ?></td>
+                    <td style="display: none;" id="id"><?= $row["account_id"]; ?></td>
+                    <td scope="row" id="site"><?= $row['site']; ?></td>
+                    <td id="username"><?= $row["username"]; ?></td>
+                    <td id="password"><?= $row["password"]; ?></td>
                     <td class="table-cell">
                         <!-- Button trigger modal -->
-                        <button type="button" class="table-btn" id="edit-btn" data-bs-toggle="modal" data-bs-target="#credential-edit">
+                        <button type="button" class="table-btn edit-btn" id="edit-btn">
                         Edit
                         </button>
-                        <a href="../app/controllers/credential.php?delete=<?=$row['id']?>" class="table-btn">Delete</a>
+                        <button type="button" class="table-btn delete-btn" id="delete-btn">Delete</button>
                     </td>
                 </tr>
                 <?php

@@ -1,27 +1,15 @@
-$primary: #ffffff;
-$secondary: #1e90ff;
-$bg-image: url(../images/background.jpg);
-$heading-size: 18px;
-
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: black;
-  padding: 0;
-  margin: 0;
-}
-
-.container {
+.login-bg {
   display: flex;
   justify-content: center;
   align-items: center;
 
-  height: 100dvh;
-  width: 100dvw;
+  min-height: 100dvh;
+  min-width: 100dvw;
 
   background: $bg-image no-repeat;
   background-size: cover;
 
-  .wrapper {
+  .login-wrapper {
     min-height: 32rem;
     min-width: 24rem;
 

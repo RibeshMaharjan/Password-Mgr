@@ -21,7 +21,7 @@ class Signup extends Dbh{
 
         if(!$stmt->execute(array($uname, $email, $pwd, $key, $salt))) {
             $stmt = null;
-            header("location: ../login.php?error=stmtfailed");
+            header("location: ../public/login.php?error=stmtfailed");
             exit();
         }
         
@@ -33,7 +33,7 @@ class Signup extends Dbh{
 
         if(!$stmt->execute(array($uname, $email))) {
             $stmt = null;
-            header("location: ../login.php?error=stmtfailed");
+            header("location: ../public/login.php?error=stmtfailed");
             exit();
         }
         

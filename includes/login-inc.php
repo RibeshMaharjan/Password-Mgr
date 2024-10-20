@@ -8,8 +8,8 @@ if (isset($_POST["login"]))
 
     // Instantiate SignupContr class
     require_once __DIR__.'/../app/dbh.php';
-    // include "../app/config/dbh.php"; 
     include "../app/models/login.php";
+    // include "../app/config/dbh.php"; 
     include "../app/controllers/login.php";
 
     $login = new LoginController($uname, $pwd);
