@@ -19,7 +19,7 @@
             src="./assets/js/nav.js"
         ></script>
         <script
-            src="./assets/js/slider.js"
+            src="./assets/js/dashboard.js"
         ></script>
         <script
             src="./assets/js/app.js"
@@ -29,13 +29,11 @@
                 function() {
                     $(".edit-btn").on('click', function() {
                         $('#credential-edit').modal('show');
-                        $tr = $(this).closest('tr');
+                        $tr = $(this).closest('.dashboard-table-row');
 
-                        var text = $tr.children("td").map(function() {
+                        var text = $tr.children(".dashboard-table-cell").map(function() {
                             return $(this).text();
                         }).get();
-
-                        console.log(text);
 
                         $('#id').val(text[0]);
                         $('#site').val(text[1]);
@@ -43,18 +41,16 @@
                         $('#password').val(text[3]);
                     });
 
-                    $(".delete-btn").on('click', function() {
-                        $('#credential-delete').modal('show');
-                        $tr = $(this).closest('tr');
+                    // $(".delete-btn").on('click', function() {
+                    //     $('#credential-delete').modal('show');
+                    //     $tr = $(this).closest('.dashboard-table-row');
 
-                        var text = $tr.children("td").map(function() {
-                            return $(this).text();
-                        }).get();
+                    //     var text = $tr.children(".dashboard-table-cell").map(function() {
+                    //         return $(this).text();
+                    //     }).get();
 
-                        console.log(text);
-
-                        $('#delete-id').val(text[0]);
-                    });
+                    //     $('#delete-id').val(text[0]);
+                    // });
                 }
             );
         </script>

@@ -30,7 +30,7 @@ class CredentialModel extends Model{
         }
         else {
             $stmt = null;
-            header("location: /../public/index.php?error=CredentialAdded");
+            header("location: ../../public/index.php?error=CredentialAdded");
             exit();
         }
     }

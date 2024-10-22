@@ -1,7 +1,7 @@
 <?php include './includes/header.php'; ?>
     <div class="container">
-        <main class="d-none">
-            <div class="container-fluid mt-4 mx-2">
+        <main class="">
+            <div class="container-fluid mt-4 mx-2 d-none">
                 <h3 class="mb-2">Enter your Credentials</h3>
                 <form action="../app/controllers/credential.php" method="POST">
                     <div class="form-floating mb-3">
@@ -62,7 +62,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="../app/controllers/credential.php" method="POST">
+                    <form action="../app/controllers/credential.php" method="POST" id="form-delete">
                         <label>Are you Sure?</label>
                         <input type="hidden" name="id" id="delete-id">
                         <button type="submit" class="btn btn-primary" name="delete">Delete</button>
@@ -76,8 +76,8 @@
             </div>
             </div>
 
-            <div class="my-table mt-5 mx-4">
-                <h3>Your Credentials</h3>
+            <div class="table-container">
+                <h3 class="table-title">Your Credentials</h3>
                 <?php 
                     $credential = new Credential();
                     $data = $credential->showCredentials(); 

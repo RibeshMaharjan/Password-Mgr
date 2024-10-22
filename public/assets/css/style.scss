@@ -6,6 +6,10 @@
 
 @import 'header';
 
+@import './Dashboard/master';
+
 @import 'main';
 
 @import 'sidebar';
+
+// sass --watch public/assets/css/style.scss:public/assets/css/style.css
