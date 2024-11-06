@@ -1,0 +1,115 @@
+.credential-single-body {
+    background: $light-bg-color;
+    margin-top: 6rem;
+    border-radius: 6px;
+    box-shadow: 0 0 20px 5px $secondary-bg-color;
+    padding: 1rem 2rem 1rem;
+    color: $white;
+    .title {
+        margin-bottom: 2rem;
+        display: grid;
+        grid-template-columns: 120px 3fr 120px;
+        align-items: center;
+        .back-icon {
+            i{
+                margin-left: 1rem;
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+        }
+        .button-section {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+    .credential-listing {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,  minmax(440px, 1fr));
+        gap: 2rem;
+        .credentials {
+            // max-width: 380px;
+            display: grid;
+            grid-template-rows: 3fr 1fr;
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas: 
+                'credential-left credential-right'
+                'button-group button-group';
+            gap: 1rem;
+            // flex-direction: column;
+            background-color: $bg-color;
+            padding: 1rem 2rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            
+            .credential-left, .credential-right {
+                // width: 50%;
+                .credential-info-group{
+                    display: flex;
+                    flex-direction: column;
+                    margin-bottom: 1rem;
+                    label{
+                        margin-bottom: 6px;
+                    }
+                    input, .input{
+                        padding: .5rem .8rem .5rem;
+                        border: none;
+                        outline: none;
+                        border-radius: 5px;
+                        max-width: 100%;
+                    }
+                    .input {
+                        padding-inline: 0;
+                        text-decoration: underline;
+                    }
+                }
+            }
+            .credential-left {
+                grid-area: credential-left;
+            }
+            .credential-right {
+                grid-area: credential-right;
+            }
+            .credential-button-group {
+                grid-area: button-group;
+                display: flex;
+                align-items: center;
+                gap: 1rem;
+                .pass-mgr-button {
+                    height: 80%;
+                    display: flex;
+                    align-items: center;
+                    position: relative;
+                    &::before {
+                        --table-btn-icon-height: 20px;
+                        
+                        content: "";
+                        margin-right: 10px;
+                        width: var(--table-btn-icon-height);
+                        height: var(--table-btn-icon-height);
+                        background-repeat: no-repeat;
+                        color: $white;
+                    }
+                }
+                .edit-btn {
+                    &::before {
+                        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160L0 416c0 53 43 96 96 96l256 0c53 0 96-43 96-96l0-96c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 96c0 17.7-14.3 32-32 32L96 448c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l96 0c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 64z'/%3E%3C/svg%3E");
+                        
+                    }
+                }
+                .delete-btn {
+                    &::before {
+                        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M135.2 17.7C140.6 6.8 151.7 0 163.8 0L284.2 0c12.1 0 23.2 6.8 28.6 17.7L320 32l96 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 96C14.3 96 0 81.7 0 64S14.3 32 32 32l96 0 7.2-14.3zM32 128l384 0 0 320c0 35.3-28.7 64-64 64L96 512c-35.3 0-64-28.7-64-64l0-320zm96 64c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16l0 224c0 8.8 7.2 16 16 16s16-7.2 16-16l0-224c0-8.8-7.2-16-16-16z'/%3E%3C/svg%3E");                        
+                    }
+                }
+            }
+            @media (max-width:767px) {
+                grid-template-rows: 3fr 3fr 1fr;
+                grid-template-columns: 1fr;
+                grid-template-areas: 
+                    'credential-left'
+                    'credential-right'
+                    'button-group';
+            }
+        }
+    }
+}

@@ -93,11 +93,18 @@ class Credential extends Controller{
         return $result;
     }
 
-    public function showCredentials() {
+    public function showCredentials($site_id) {
 
-        $data = $this->credential->showCredential();
+        $data = $this->credential->showCredential($site_id);
 
-        $this->view('credentials/show', $data);
+        $this->view('singlecredential', $data);
+        // return $data;
+    }
+    public function showCredentialsUpdateHistorys($id) {
+
+        $data = $this->credential->showCredentialsUpdateHistory($id);
+
+        $this->view('update_credentials/show_updated_credentials', $data);
         // return $data;
     }
 }
@@ -109,6 +116,7 @@ if (isset($_POST["add"]))
     // Grabbing the data
     $user_id = $_SESSION["userid"];
     $site = $_POST["site"];
+    $site_id = $_POST["site_id"];
     $username = $_POST["username"];
     $password = $_POST["password"];
 

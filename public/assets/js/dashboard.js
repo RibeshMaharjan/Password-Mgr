@@ -1,3 +1,6 @@
+// Dashboard Table
+
+
 // Table Option Toggle
 const dropdownCell = document.querySelectorAll(".dashboard-table .option-cell");
 
@@ -29,8 +32,29 @@ dropdownCell.forEach(optioncell => {
   }
 });
 
+// Show Update History Credentials
 
-// Delete the cedential
+const updateHistoryBtn = document.querySelectorAll(".update-history");
+
+updateHistoryBtn.forEach(button => {
+  const parentElement = button.closest('.dashboard-table-row');
+  
+  button.addEventListener('click', () => {
+    const updateHistoryRow = parentElement.querySelector(".update-history-row");
+
+    // Grabbing the Data Visible Attribute
+    visibility = updateHistoryRow.getAttribute("data-visible");
+      
+    if(visibility === "false") {
+      updateHistoryRow.setAttribute("data-visible", "true");
+    }
+    else {
+      updateHistoryRow.setAttribute("data-visible", "false");
+    }
+  });
+});
+
+// Delete the credential
 
 const optionDropdownMenu = document.querySelectorAll(".dashboard-table .option-dropdown-menu");
 const deleteBtn = document.querySelectorAll(".dashboard-table .option-dropdown-menu .delete-btn");

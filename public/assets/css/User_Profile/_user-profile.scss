@@ -1,0 +1,38 @@
+.profilebody{
+    padding: 0 clamp(1rem, 10vh, 6rem);
+    background: $light-bg-color;
+    margin-top: 6rem;
+    border-radius: 6px;
+    box-shadow: 0 0 20px 5px $secondary-bg-color;
+    .body{
+        padding-inline: 20px;
+        padding-bottom: 2rem;
+        form{
+            .profile-form-input-group{
+                margin-bottom: 2rem;
+                width: max-content;
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                position: relative;
+                label{
+                    color: $white;
+                    width: 7rem;
+                }
+                input{
+                    width: 16rem;
+                    padding: .5rem 1rem .5rem;
+                    border-radius: 6px;
+                    border: none;
+                    outline: none;
+                }
+                .hidden-icon{
+                    position: absolute;
+                    top: 8px;
+                    right: .8rem;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+}
