@@ -57,6 +57,89 @@ a {
   cursor: pointer;
 }
 
+.content .home-navbar {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.content .home-navbar .nav-bar {
+  display: flex;
+  align-items: center;
+}
+
+.primary-header {
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+}
+.primary-header .logo {
+  width: 120px;
+  aspect-ratio: 4/2;
+  margin-left: clamp(1.6rem, 7vw, 10rem);
+  object-fit: cover;
+}
+.primary-header .primary-navigation {
+  --gap: 1rem;
+  padding: 0;
+  margin: 0;
+  font-family: "Tomorrow", sans-serif;
+  display: flex;
+  gap: var(--gap);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(0.5rem);
+}
+.primary-header .primary-navigation li a {
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+.primary-header .primary-navigation[data-visible=true] {
+  transform: translateX(0);
+}
+@media (min-width: 761px) {
+  .primary-header .primary-navigation {
+    --gap: clamp(1rem, 2vw, 3rem);
+    padding-block: 2rem;
+    padding-inline: clamp(1rem, 5vw, 10rem);
+  }
+}
+@media (max-width: 761px) {
+  .primary-header .primary-navigation {
+    --gap: 1.6rem;
+    z-index: 1000;
+    position: fixed;
+    inset: 0 0 0 30%;
+    flex-direction: column;
+    padding: min(30vh, 6rem) 2rem;
+    transform: translateX(100%);
+    transition: transform 350ms ease-out;
+  }
+}
+.primary-header .mobile-nav-toggle {
+  display: none;
+}
+.primary-header .mobile-nav-toggle[aria-expanded=true] {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z'/%3E%3C/svg%3E");
+}
+@media (max-width: 761px) {
+  .primary-header .mobile-nav-toggle {
+    display: block;
+    position: absolute;
+    z-index: 9999;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23fbfaff' d='M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z'/%3E%3C/svg%3E");
+    border: none;
+    background-repeat: no-repeat;
+    width: 1.6rem;
+    aspect-ratio: 1;
+    outline: none;
+    top: 2rem;
+    right: 2rem;
+  }
+}
+
 .login-bg {
   display: flex;
   justify-content: center;
@@ -175,89 +258,6 @@ a {
 .login-bg .popup .signup_form button:hover {
   cursor: pointer;
   transform: scale(1.1);
-}
-
-.content .home-navbar {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-.content .home-navbar .nav-bar {
-  display: flex;
-  align-items: center;
-}
-
-.primary-header {
-  padding-top: 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-}
-.primary-header .logo {
-  width: 120px;
-  aspect-ratio: 4/2;
-  margin-left: clamp(1.6rem, 7vw, 10rem);
-  object-fit: cover;
-}
-.primary-header .primary-navigation {
-  --gap: 1rem;
-  padding: 0;
-  margin: 0;
-  font-family: "Tomorrow", sans-serif;
-  display: flex;
-  gap: var(--gap);
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(0.5rem);
-}
-.primary-header .primary-navigation li a {
-  color: #ffffff;
-  font-size: 1.2rem;
-  font-weight: 600;
-}
-.primary-header .primary-navigation[data-visible=true] {
-  transform: translateX(0);
-}
-@media (min-width: 761px) {
-  .primary-header .primary-navigation {
-    --gap: clamp(1rem, 2vw, 3rem);
-    padding-block: 2rem;
-    padding-inline: clamp(1rem, 5vw, 10rem);
-  }
-}
-@media (max-width: 761px) {
-  .primary-header .primary-navigation {
-    --gap: 1.6rem;
-    z-index: 1000;
-    position: fixed;
-    inset: 0 0 0 30%;
-    flex-direction: column;
-    padding: min(30vh, 6rem) 2rem;
-    transform: translateX(100%);
-    transition: transform 350ms ease-out;
-  }
-}
-.primary-header .mobile-nav-toggle {
-  display: none;
-}
-.primary-header .mobile-nav-toggle[aria-expanded=true] {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z'/%3E%3C/svg%3E");
-}
-@media (max-width: 761px) {
-  .primary-header .mobile-nav-toggle {
-    display: block;
-    position: absolute;
-    z-index: 9999;
-    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23fbfaff' d='M0 96C0 78.3 14.3 64 32 64l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 128C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32l384 0c17.7 0 32 14.3 32 32s-14.3 32-32 32L32 288c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32L32 448c-17.7 0-32-14.3-32-32s14.3-32 32-32l384 0c17.7 0 32 14.3 32 32z'/%3E%3C/svg%3E");
-    border: none;
-    background-repeat: no-repeat;
-    width: 1.6rem;
-    aspect-ratio: 1;
-    outline: none;
-    top: 2rem;
-    right: 2rem;
-  }
 }
 
 .credential-single-body {
@@ -608,64 +608,12 @@ a {
   outline: none;
 }
 
-.sidebar {
-  background-color: var(#ffffff);
-  color: #ffffff;
-  height: 100dvh;
-  padding: 30px;
-  padding-right: 18px;
-}
-.sidebar .sidebar-section-1 .sidebar-section-title {
-  font-size: 1.8rem;
-  margin-bottom: 20px;
-  /* Media query for small screens */
-}
-.sidebar .sidebar-section-1 .sidebar-section-title .menu-icon {
-  display: none; /* Hide the icon by default */
-  cursor: pointer;
-}
-@media (max-width: 768px) {
-  .sidebar .sidebar-section-1 .sidebar-section-title .menu-icon {
-    display: inline-block; /* Display the icon on small screens */
-  }
-}
-.sidebar .sidebar-section-1 .sidebar-section-content {
-  font-size: 1.2rem;
-  font-weight: 800;
-}
-.sidebar .sidebar-section-1 .sidebar-section-content .sidebar-list {
-  padding: 0;
-  margin-bottom: 10px;
-  list-style-type: none;
-}
-.sidebar .sidebar-section-1 .sidebar-section-content .sidebar-list .sidebar-item {
-  padding: 0;
-  margin-bottom: 24px;
-}
-.sidebar .sidebar-section-1 .sidebar-section-content .sidebar-list .sidebar-item .sidebar-link {
-  padding-inline: 18px;
-  padding-block: 12px;
-  text-decoration: none;
-  color: #ffffff;
-  font-size: 1.2rem;
-  font-weight: 500;
-  border-radius: 24px;
-}
-.sidebar .sidebar-section-1 .sidebar-section-content .sidebar-list .sidebar-item .sidebar-link.active {
-  background-color: gold;
-  color: black;
-}
-
-@media (max-width: 960px) {
-  .sidebar {
-    margin-left: -170px;
-    position: absolute;
-    min-height: 100vh;
-    transition: margin-left 0.3s ease;
-  }
-  .sidebar.active {
-    margin-left: 0;
-  }
+.password-generator-body {
+  padding: 0 clamp(1rem, 10vh, 6rem);
+  background: rgb(29, 40, 60);
+  margin-top: 6rem;
+  border-radius: 6px;
+  box-shadow: 0 0 20px 5px rgb(21, 30, 47);
 }
 
 /*# sourceMappingURL=style.css.map */

@@ -7,6 +7,7 @@ require_once __DIR__.'/../../app/config/function.php';
 include __DIR__."/../../app/controllers/credential.php";
 include __DIR__."/../../app/controllers/userprofilecontroller.php";
 include __DIR__."/../../app/controllers/sitecontroller.php";
+include __DIR__."/../../app/controllers/passwordgeneratorcontroller.php";
 
 // $app = new App;
 // session_start();
@@ -65,7 +66,7 @@ if(!isset($_SESSION['auth']))
             crossorigin="anonymous">
 
         <!-- Main Css -->
-        <link rel="stylesheet" href="./assets/css/style.css">
+        <link rel="stylesheet" href="./assets/css/styles.css">
 
     </head>
     <body>
