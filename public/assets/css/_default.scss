@@ -3,12 +3,14 @@ body {
     
     padding: 0;
     margin: 0;
+    scrollbar-width: none;
+
+    min-height: 100dvh;
 
     background: url(../images/hero-background.png);
+    background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-
-    overflow: hidden;
 }
 
 ul {
@@ -17,4 +19,41 @@ ul {
 
 a {
     text-decoration: none;
+}
+
+.title{
+    position: relative;
+    .back-icon{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    h1{
+        color: $white;
+        padding-block: 2rem;
+        text-align: center;
+        letter-spacing: 2px;
+        @media (max-width:767px) {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+.pass-mgr-button{
+    min-width: max-content;
+    max-width: max-content;
+    padding: .3rem 1rem;
+    border: none;
+    color: $white;
+    font-weight: 500;
+    border-radius: 3px;    
+    background-color: $sec-button-color;
+    cursor: pointer;
+}
+
+.hidden-icon{
+    position: absolute;
+    top: 8px;
+    right: .8rem;
+    cursor: pointer;
 }

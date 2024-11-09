@@ -6,6 +6,14 @@
 
 @import 'header';
 
-@import 'main';
+@import './Dashboard/master';
+
+@import './Credential_single/master';
+
+@import './Index/master';
+
+@import './User_Profile/master';
 
 @import 'sidebar';
+
+// sass --watch public/assets/css/style.scss:public/assets/css/style.css
