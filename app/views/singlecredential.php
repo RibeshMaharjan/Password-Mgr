@@ -7,18 +7,32 @@
     <?php 
     // print_r($data);
     foreach($data as $row){
-        
         ?>
             <form action="" method="post">
                 <div class="credentials">
                     <div class="credential-left">
+                        <input type="hidden" name="account_id" id="account_id" value="<?= $row['account_id'] ?>">
                         <div class="credential-info-group">
                             <label for="username">Username</label>
-                            <input type="text" value="<?= $row['username'] ?>">
+                            <div class="input-container">
+                                <input type="text" value="<?= $row['username'] ?>">
+                                <div class="copy-icon copy-btn" onclick="copyToClipboard(event)">
+                                    <i class="fa-solid fa-copy"></i>
+                                </div>
+                                <!-- <button class="copy-btn" onclick="copyToClipboard()">&#x2398;</button> -->
+                            </div>
                         </div>
                         <div class="credential-info-group">
                             <label for="password">Password</label>
-                            <input type="" value="<?= $row['password'] ?>">
+                            <div class="input-container">
+                                <input type="password" value="<?= $row['password'] ?>">
+                                <div class="hidden-icon">
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                </div>
+                                <div class="copy-icon copy-btn" onclick="copyToClipboard(event)">
+                                    <i class="fa-solid fa-copy"></i>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="credential-right">
@@ -40,19 +54,32 @@
                         </button>
                     </div>
                 </div>
+                <script>
+                    const hiddenIcon = document.querySelector(".hidden-icon");
+                    hiddenIcon.addEventListener('click', function(e){
+                        const icon = document.querySelector(".hidden-icon .fa-solid");
+                        const inputContainer = e.target.closest(".input-container");
+                        const passwordField = inputContainer.querySelector("input");
+                        if(icon.classList.contains("fa-eye-slash")){
+                            icon.classList.remove("fa-eye-slash");
+                            icon.classList.add("fa-eye");
+                            passwordField.type = 'text';
+                            return;
+                        }
+                        icon.classList.remove("fa-eye");
+                        icon.classList.add("fa-eye-slash");
+                        passwordField.type = 'password';
+                    });
+
+                    function copyToClipboard(event) {
+                        const inputContainer = event.target.closest(".input-container");
+                        const inputField = inputContainer.querySelector("input");
+                        copyText = inputField.value;
+                        navigator.clipboard.writeText(copyText);  
+                    }
+                </script>
             </form>
         <?php
         }
         ?>
-        <script>
-            // const sites = document.querySelectorAll(".sites");
-
-            // sites.forEach(site => {
-            //     const form = site.querySelector("#site");
-            //     site.addEventListener('click', function() {
-            //         // document.forms['form-delete'];
-            //         form.submit();  
-            //     });
-            // });
-        </script>
 </div>

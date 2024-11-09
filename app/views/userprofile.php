@@ -32,7 +32,7 @@
                 icon.classList.remove("fa-eye-slash");
                 icon.classList.add("fa-eye");
                 passwordField.type = 'text';
-                exit();
+                return;
             }
             icon.classList.remove("fa-eye");
             icon.classList.add("fa-eye-slash");

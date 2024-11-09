@@ -17,27 +17,59 @@ class CredentialModel extends Model{
 	}
     private $conn;
     private $table_name = "credentials";
+    private $table_site = "sites";
     private $password_history_table_name = "password_history";
 
-    public function createCredential($user_id, $site, $username, $password) {
+    public function addSite($site_name, $site_url) {
+        $pdo = $this->connect();
+        $stmt = $pdo->prepare("SELECT * FROM ".$this->table_site." WHERE site_url = ?");
+        $stmt->execute(array($site_url));
+
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach($result as $row){
+            if($row['site_url'] == $site_url){
+                $site_id = $row['site_id'];
+                $stmt = null;
+                $message = ["success" => "true", "site_id" => $site_id];
+                return $message;
+            }
+        }
+        $stmt = null;
+        $stmt = $pdo->prepare("INSERT INTO ".$this->table_site." (site_name, site_url) VALUES (?,?);");
+        
+        if(!$stmt->execute(array($site_name, $site_url))) {
+            $stmt = null;
+            header("location: ../index.php?error=SiteAddtionfailed");
+            exit();
+        }
+        else {
+            $site_id = $pdo->lastInsertId();
+            $_SESSION['site_id'] = $site_id;
+            $stmt = null;
+            $message = ["success" => "true", "site_id" => $site_id];
+            return $message;
+        }
+    }
+
+    public function createCredential($user_id, $site, $username, $password, $notes) {
         $salt = $_SESSION["password"];
 
-        $stmt = $this->connect()->prepare("INSERT INTO ".$this->table_name." (users_id, site, username, password) VALUES (?,?,?,AES_ENCRYPT(?,?));");
+        $stmt = $this->connect()->prepare("INSERT INTO ".$this->table_name." (users_id, site_id, username, password, notes) VALUES (?,?,?,AES_ENCRYPT(?,?),?);");
         
-        if(!$stmt->execute(array($user_id, $site, $username, $password, $salt))) {
+        if(!$stmt->execute(array($user_id, $site, $username, $password, $salt, $notes))) {
             $stmt = null;
-            header("location: ../index.php?error=stmtfailed");
+            header("location: ../single.php?error=stmtfailed");
             exit();
         }
         else {
             $stmt = null;
-            header("location: ../../public/index.php?error=CredentialAdded");
+            header("location: ../../public/single.php?error=CredentialAdded");
             exit();
         }
     }
 
     public function showCredential($site_id) {
-        $stmt = $this->connect()->prepare("SELECT credentials.username, AES_DECRYPT(credentials.password,?) as password, credentials.notes, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
+        $stmt = $this->connect()->prepare("SELECT credentials.account_id, credentials.username, AES_DECRYPT(credentials.password,?) as password, credentials.notes, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
         // $stmt = $this->connect()->prepare("SELECT *,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE users_id = ? AND site_id = ?");
         
         if(!$stmt->execute(array($_SESSION["password"], $_SESSION["userid"], $site_id))) {
@@ -62,7 +94,7 @@ class CredentialModel extends Model{
         return $data;
     }
 
-    public function updateCredential($id, $site, $username, $password) {
+    public function updateCredential($id, $username, $password, $notes) {
         
         $accountInfo = $this->connect()->prepare("SELECT *,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE account_id = ?;");
         
@@ -87,9 +119,9 @@ class CredentialModel extends Model{
             exit();
         }
         
-        $stmt = $this->connect()->prepare("UPDATE " . $this->table_name . " SET site = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE account_id = ?;");
+        $stmt = $this->connect()->prepare("UPDATE " . $this->table_name . " SET notes = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE account_id = ?;");
         
-        if(!$stmt->execute(array($site, $username, $password, $_SESSION["password"], $id))) {
+        if(!$stmt->execute(array($notes, $username, $password, $_SESSION["password"], $id))) {
             $stmt = null;
             header("location: ../index.php?error=failed_to_update_password");
             exit();
@@ -100,7 +132,7 @@ class CredentialModel extends Model{
 
         if(!$stmt->execute(array($id))) {
             $stmt = null;
-            header("location: /../../public/index.php?error=stmtfailed");
+            header("location: /../../public/single.php?error=stmtfailed");
             exit();
         }
     }

@@ -18,11 +18,24 @@ a {
   text-decoration: none;
 }
 
+.title {
+  position: relative;
+}
+.title .back-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
 .title h1 {
   color: #ffffff;
   padding-block: 2rem;
   text-align: center;
   letter-spacing: 2px;
+}
+@media (max-width: 767px) {
+  .title h1 {
+    font-size: 1.6rem;
+  }
 }
 
 .pass-mgr-button {
@@ -34,6 +47,13 @@ a {
   font-weight: 500;
   border-radius: 3px;
   background-color: #008080;
+  cursor: pointer;
+}
+
+.hidden-icon {
+  position: absolute;
+  top: 8px;
+  right: 0.8rem;
   cursor: pointer;
 }
 
@@ -242,22 +262,24 @@ a {
 
 .credential-single-body {
   background: rgb(29, 40, 60);
-  margin-top: 6rem;
+  margin-block: 6rem 2rem;
   border-radius: 6px;
   box-shadow: 0 0 20px 5px rgb(21, 30, 47);
-  padding: 1rem 2rem 1rem;
+  padding-block: 1rem;
+  padding-inline: 1rem;
   color: #ffffff;
 }
 .credential-single-body .title {
   margin-bottom: 2rem;
-  display: grid;
-  grid-template-columns: 120px 3fr 120px;
   align-items: center;
 }
 .credential-single-body .title .back-icon i {
-  margin-left: 1rem;
+  margin-left: 0.5rem;
   font-size: 1.5rem;
   cursor: pointer;
+}
+.credential-single-body .title h1 {
+  text-transform: capitalize;
 }
 .credential-single-body .title .button-section {
   display: flex;
@@ -275,9 +297,9 @@ a {
   grid-template-areas: "credential-left credential-right" "button-group button-group";
   gap: 1rem;
   background-color: rgb(16, 24, 39);
-  padding: 1rem 2rem 1rem;
+  padding-block: 1rem;
+  padding-inline: 1rem;
   border-radius: 6px;
-  cursor: pointer;
 }
 .credential-single-body .credential-listing .credentials .credential-left .credential-info-group, .credential-single-body .credential-listing .credentials .credential-right .credential-info-group {
   display: flex;
@@ -292,11 +314,41 @@ a {
   border: none;
   outline: none;
   border-radius: 5px;
-  max-width: 100%;
+  min-width: 100%;
+  pointer-events: none;
+  box-sizing: border-box;
 }
 .credential-single-body .credential-listing .credentials .credential-left .credential-info-group .input, .credential-single-body .credential-listing .credentials .credential-right .credential-info-group .input {
   padding-inline: 0;
   text-decoration: underline;
+}
+.credential-single-body .credential-listing .credentials .credential-left .credential-info-group .input-container, .credential-single-body .credential-listing .credentials .credential-right .credential-info-group .input-container {
+  --copy-btn-width: 45px;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+}
+.credential-single-body .credential-listing .credentials .credential-left .credential-info-group .input-container .hidden-icon, .credential-single-body .credential-listing .credentials .credential-right .credential-info-group .input-container .hidden-icon {
+  color: #000000;
+  right: calc(0.6rem + var(--copy-btn-width));
+}
+.credential-single-body .credential-listing .credentials .credential-left .credential-info-group .input-container .copy-btn, .credential-single-body .credential-listing .credentials .credential-right .credential-info-group .input-container .copy-btn {
+  background-color: #C0C0C0;
+  height: 100%;
+  width: var(--copy-btn-width);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+.credential-single-body .credential-listing .credentials .credential-left .credential-info-group .input-container .copy-btn i, .credential-single-body .credential-listing .credentials .credential-right .credential-info-group .input-container .copy-btn i {
+  color: rgb(16, 24, 39);
 }
 .credential-single-body .credential-listing .credentials .credential-left {
   grid-area: credential-left;
@@ -338,9 +390,15 @@ a {
     grid-template-areas: "credential-left" "credential-right" "button-group";
   }
 }
+@media (max-width: 767px) {
+  .credential-single-body .credential-listing {
+    grid-template-columns: 1fr;
+  }
+}
 
 .credential-add-form {
-  padding: 0 clamp(1rem, 10vh, 6rem);
+  padding-block: 0;
+  padding-inline: clamp(0rem, 5vw, 5rem);
   margin-bottom: 1rem;
 }
 .credential-add-form .add-form-title {
@@ -348,24 +406,77 @@ a {
   color: #ffffff;
 }
 .credential-add-form form {
+  margin-bottom: 2rem;
   display: grid;
-  gap: 1.25rem;
+  grid-template-rows: 3fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "credential-left credential-right" "button-group button-group";
+  gap: 1rem;
 }
-.credential-add-form form .form-floating--full-width {
-  grid-column: 1/-1;
+.credential-add-form form .credential-left .credential-info-group, .credential-add-form form .credential-right .credential-info-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 }
-@media (min-width: 35em) {
+.credential-add-form form .credential-left .credential-info-group label, .credential-add-form form .credential-right .credential-info-group label {
+  margin-bottom: 6px;
+}
+.credential-add-form form .credential-left .credential-info-group input, .credential-add-form form .credential-left .credential-info-group .input, .credential-add-form form .credential-right .credential-info-group input, .credential-add-form form .credential-right .credential-info-group .input {
+  padding: 0.5rem 0.8rem 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  max-width: 100%;
+}
+.credential-add-form form .credential-left .credential-info-group .input, .credential-add-form form .credential-right .credential-info-group .input {
+  padding-inline: 0;
+  text-decoration: underline;
+}
+.credential-add-form form .credential-left {
+  grid-area: credential-left;
+}
+.credential-add-form form .credential-right {
+  grid-area: credential-right;
+}
+.credential-add-form form .credential-button-group {
+  grid-area: button-group;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.credential-add-form form .credential-button-group .pass-mgr-button {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.credential-add-form form .credential-button-group .pass-mgr-button::before {
+  --table-btn-icon-height: 20px;
+  content: "";
+  margin-right: 10px;
+  width: var(--table-btn-icon-height);
+  height: var(--table-btn-icon-height);
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+.credential-add-form form .credential-button-group .submit-btn::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z'/%3E%3C/svg%3E");
+}
+@media (max-width: 767px) {
   .credential-add-form form {
-    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 3fr 3fr 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "credential-left" "credential-right" "button-group";
   }
 }
 
 .main-body {
   background: rgb(29, 40, 60);
-  margin-top: 6rem;
+  margin-block: clamp(2rem, 5vw, 6rem) 2rem;
   border-radius: 6px;
   box-shadow: 0 0 20px 5px rgb(21, 30, 47);
-  padding: 1rem 2rem 1rem;
+  padding-block: 1rem;
+  padding-inline: 1rem;
   color: #ffffff;
 }
 .main-body .title {
@@ -374,6 +485,73 @@ a {
 .main-body .title .button-section {
   display: flex;
   justify-content: flex-end;
+}
+.main-body .title .button-section .site-add-button i {
+  margin-right: 8px;
+}
+.main-body .site-add-form {
+  margin-bottom: 2rem;
+}
+.main-body .site-add-form .form-site, .main-body .site-add-form .form-credential {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "credential-left credential-right" "button-group button-group";
+  gap: 1rem;
+}
+.main-body .site-add-form .form-site .credential-left .credential-info-group, .main-body .site-add-form .form-site .credential-right .credential-info-group, .main-body .site-add-form .form-credential .credential-left .credential-info-group, .main-body .site-add-form .form-credential .credential-right .credential-info-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+.main-body .site-add-form .form-site .credential-left .credential-info-group label, .main-body .site-add-form .form-site .credential-right .credential-info-group label, .main-body .site-add-form .form-credential .credential-left .credential-info-group label, .main-body .site-add-form .form-credential .credential-right .credential-info-group label {
+  margin-bottom: 6px;
+}
+.main-body .site-add-form .form-site .credential-left .credential-info-group input, .main-body .site-add-form .form-site .credential-left .credential-info-group .input, .main-body .site-add-form .form-site .credential-right .credential-info-group input, .main-body .site-add-form .form-site .credential-right .credential-info-group .input, .main-body .site-add-form .form-credential .credential-left .credential-info-group input, .main-body .site-add-form .form-credential .credential-left .credential-info-group .input, .main-body .site-add-form .form-credential .credential-right .credential-info-group input, .main-body .site-add-form .form-credential .credential-right .credential-info-group .input {
+  padding: 0.5rem 0.8rem 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  max-width: 100%;
+}
+.main-body .site-add-form .form-site .credential-left .credential-info-group .input, .main-body .site-add-form .form-site .credential-right .credential-info-group .input, .main-body .site-add-form .form-credential .credential-left .credential-info-group .input, .main-body .site-add-form .form-credential .credential-right .credential-info-group .input {
+  padding-inline: 0;
+  text-decoration: underline;
+}
+.main-body .site-add-form .form-site .credential-left, .main-body .site-add-form .form-credential .credential-left {
+  grid-area: credential-left;
+}
+.main-body .site-add-form .form-site .credential-right, .main-body .site-add-form .form-credential .credential-right {
+  grid-area: credential-right;
+}
+@media (max-width: 767px) {
+  .main-body .site-add-form .form-site, .main-body .site-add-form .form-credential {
+    grid-template-columns: 1fr;
+    grid-template-areas: "credential-left" "credential-right" "button-group";
+  }
+}
+.main-body .site-add-form .site-add-button-group {
+  grid-area: button-group;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.main-body .site-add-form .site-add-button-group .pass-mgr-button {
+  height: 80%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.main-body .site-add-form .site-add-button-group .pass-mgr-button::before {
+  --table-btn-icon-height: 20px;
+  content: "";
+  margin-right: 10px;
+  width: var(--table-btn-icon-height);
+  height: var(--table-btn-icon-height);
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+.main-body .site-add-form .site-add-button-group .submit-btn::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512'%3E%3C!--!Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--%3E%3Cpath fill='%23ffffff' d='M64 80c-8.8 0-16 7.2-16 16l0 320c0 8.8 7.2 16 16 16l320 0c8.8 0 16-7.2 16-16l0-320c0-8.8-7.2-16-16-16L64 80zM0 96C0 60.7 28.7 32 64 32l320 0c35.3 0 64 28.7 64 64l0 320c0 35.3-28.7 64-64 64L64 480c-35.3 0-64-28.7-64-64L0 96zM337 209L209 337c-9.4 9.4-24.6 9.4-33.9 0l-64-64c-9.4-9.4-9.4-24.6 0-33.9s24.6-9.4 33.9 0l47 47L303 175c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9z'/%3E%3C/svg%3E");
 }
 .main-body .site-listing {
   display: grid;
@@ -393,6 +571,12 @@ a {
   font-size: 1.6rem;
   letter-spacing: 2px;
 }
+@media (max-width: 767px) {
+  .main-body .site-listing {
+    grid-template-columns: 1fr;
+  }
+}
+
 .profilebody {
   padding: 0 clamp(1rem, 10vh, 6rem);
   background: rgb(29, 40, 60);
@@ -422,12 +606,6 @@ a {
   border-radius: 6px;
   border: none;
   outline: none;
-}
-.profilebody .body form .profile-form-input-group .hidden-icon {
-  position: absolute;
-  top: 8px;
-  right: 0.8rem;
-  cursor: pointer;
 }
 
 .sidebar {

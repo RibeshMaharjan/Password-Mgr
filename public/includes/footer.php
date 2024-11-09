@@ -21,28 +21,7 @@
                 function() {
                     $(".edit-btn").on('click', function() {
                         $('#credential-edit').modal('show');
-                        $tr = $(this).closest('.dashboard-table-row');
-
-                        var text = $tr.children(".dashboard-table-cell").map(function() {
-                            return $(this).text();
-                        }).get();
-
-                        $('#id').val(text[0]);
-                        $('#site').val(text[1]);
-                        $('#username').val(text[2]);
-                        $('#password').val(text[3]);
                     });
-
-                    // $(".delete-btn").on('click', function() {
-                    //     $('#credential-delete').modal('show');
-                    //     $tr = $(this).closest('.dashboard-table-row');
-
-                    //     var text = $tr.children(".dashboard-table-cell").map(function() {
-                    //         return $(this).text();
-                    //     }).get();
-
-                    //     $('#delete-id').val(text[0]);
-                    // });
                 }
             );
         </script>

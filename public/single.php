@@ -3,9 +3,10 @@
         <main>
             <?php
                 if(isset($_POST['site_id'])){
-                    $site_id = $_POST['site_id'];
-                    $site_name = $_POST['site_name'];
+                    $_SESSION['site_id'] = $_POST['site_id'];
                 }
+                $site_id = $_SESSION['site_id'];
+                $site = getSite($site_id);
             ?>
 
             <!-- Modal -->
@@ -17,12 +18,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="../app/controllers/credential.php" method="POST">
+                    <form action="../app/controllers/credential.php" id="form-credential-edit" method="POST">
                         <input type="hidden" name="id" id="id">
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="site" placeholder="Site" name="site">
-                            <label for="floatingInput">Site</label>
-                        </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="username" placeholder="Username" name="username">
                             <label for="floatingPassword">Username</label>
@@ -30,6 +27,10 @@
                         <div class="form-floating mb-3">
                             <input type="password" class="form-control" id="password" placeholder="Password" name="password">
                             <label for="floatingPassword">Password</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="textarea" class="form-control" id="notes" placeholder="Notes" name="notes">
+                            <label for="floatingInput">Notes</label>
                         </div>
                         <button type="submit" class="btn btn-primary" name="update">Submit</button>
                     </form>
@@ -67,9 +68,9 @@
             <div class="credential-single-body">
                 <div class="title">
                     <div class="back-icon">
-                        <i class="fa-solid fa-arrow-left" onclick="window.history.back();"></i>
+                        <i class="fa-solid fa-arrow-left" onclick="window.location.href = 'index.php';"></i>
                     </div>
-                    <h1>Your <?= $site_name ?> Credentials</h1>
+                    <h1>Your <?= $site['site_name'] ?> Credentials</h1>
                     <div class="button-section">
                         <a class="pass-mgr-button dashboard-add-button" data-bs-toggle="collapse" href="#credential-add-form" role="button" aria-expanded="false" aria-controls="credential-add-form"><i class="fa-solid fa-plus"></i>Add New</a>
                     </div>
@@ -77,19 +78,30 @@
                 <div class="credential-add-form collapse" id="credential-add-form">
                     <h3 class="add-form-title">Enter your Credentials</h3>
                     <form action="../app/controllers/credential.php" method="POST">
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="site" name="site">
-                            <label for="floatingInput">Site</label>
+                        <div class="credential-left">
+                            <div class="credential-info-group">
+                                <label for="username">Username</label>
+                                <input type="text" placeholder="site" name="username">
+                            </div>
+                            <div class="credential-info-group">
+                                <label for="password">Password</label>
+                                <input type="text" placeholder="Password" name="password">
+                            </div>
                         </div>
-                        <div class="form-floating">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Username" name="username">
-                            <label for="floatingInput">Username</label>
+                        <div class="credential-right">
+                            <div class="credential-info-group">
+                                <label for="site">Site</label>
+                                <input type="hidden" name="site_id" value="<?= $site['site_id'] ?>">
+                                <div class="input"><?= $site['site_url'] ?></div>
+                            </div>
+                            <div class="credential-info-group">
+                                <label for="notes">Notes</label>
+                                <input type="textarea" name="notes" placeholder="No Notes Added">
+                            </div>
                         </div>
-                        <div class="form-floating form-floating--full-width">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" name="password">
-                            <label for="floatingPassword">Password</label>
+                        <div class="credential-button-group">
+                            <button type="submit" class="pass-mgr-button submit-btn" name="add">Submit</button>
                         </div>
-                        <button type="submit" class="pass-mgr-button" name="add">Submit</button>
                     </form>
                 </div>
                 <?php 

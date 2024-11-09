@@ -22,11 +22,20 @@ a {
 }
 
 .title{
+    position: relative;
+    .back-icon{
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
     h1{
         color: $white;
         padding-block: 2rem;
         text-align: center;
         letter-spacing: 2px;
+        @media (max-width:767px) {
+            font-size: 1.6rem;
+        }
     }
 }
 
@@ -39,5 +48,12 @@ a {
     font-weight: 500;
     border-radius: 3px;    
     background-color: $sec-button-color;
+    cursor: pointer;
+}
+
+.hidden-icon{
+    position: absolute;
+    top: 8px;
+    right: .8rem;
     cursor: pointer;
 }

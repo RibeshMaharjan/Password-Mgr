@@ -3,6 +3,7 @@
 // require_once '../app/init.php';
 require_once '../app/helpers/session_helper.php';
 require_once __DIR__.'/../../app/dbh.php';
+require_once __DIR__.'/../../app/config/function.php';
 include __DIR__."/../../app/controllers/credential.php";
 include __DIR__."/../../app/controllers/userprofilecontroller.php";
 include __DIR__."/../../app/controllers/sitecontroller.php";
@@ -88,7 +89,7 @@ if(!isset($_SESSION['auth']))
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                            <a href="./passwordgenerator.php">
                                 Password Generator
                             </a>
                         </li>

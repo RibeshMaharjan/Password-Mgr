@@ -32,6 +32,32 @@ dropdownCell.forEach(optioncell => {
   }
 });
 
+// Edit Credentials
+
+const editBtns =  document.querySelectorAll(".edit-btn");
+
+editBtns.forEach(editBtn => {
+  
+  editBtn.addEventListener('click', ()=> {
+    const credentials = editBtn.closest(".credentials");
+
+    var inputs = credentials.querySelectorAll("input");
+    console.log(inputs);
+    
+    const text = [];
+    inputs.forEach(input => {
+        text.push(input.value);
+    });
+    const credentialEditModel = document.querySelector("#credential-edit");
+
+    credentialEditModel.querySelector("#id").value = text[0];
+    credentialEditModel.querySelector("#username").value = text[1];
+    credentialEditModel.querySelector("#password").value = text[2];
+    credentialEditModel.querySelector("#notes").value = text[3];
+  });
+});
+
+
 // Show Update History Credentials
 
 const updateHistoryBtn = document.querySelectorAll(".update-history");
@@ -55,23 +81,36 @@ updateHistoryBtn.forEach(button => {
 });
 
 // Delete the credential
+const deleteBtns =  document.querySelectorAll(".delete-btn");
 
-const optionDropdownMenu = document.querySelectorAll(".dashboard-table .option-dropdown-menu");
-const deleteBtn = document.querySelectorAll(".dashboard-table .option-dropdown-menu .delete-btn");
+deleteBtns.forEach(deleteBtn => {
+  
+  deleteBtn.addEventListener('click', ()=> {
+    const credentials = deleteBtn.closest(".credentials");
 
-deleteBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-
-        // Accessing the Account Id to delete
-        const tableRow = btn.closest(".dashboard-table-row");
-        const tableCell = tableRow.querySelector(".dashboard-table-cell");
-        const accountId = tableRow.querySelector("#accound-id");
-        
-        // Grabbing the Input Element
-        const oFormObject = document.forms['form-delete'];
-        const oformElement = oFormObject.elements["delete-id"];
-        
-        // Assign the Account Id to Inpit Element
-        oformElement.value = accountId.innerHTML
-    });
+    const accountId = credentials.querySelector("#account_id");
+      
+    // Grabbing the Input Element
+    const oFormObject = document.forms['form-delete'];
+    const oformElement = oFormObject.elements["delete-id"];
+    
+    // Assign the Account Id to Inpit Element
+    oformElement.value = accountId.value;
+    console.log(accountId.value);
+    
+  });
 });
+
+
+
+// const copyBtns = document.querySelectorAll(".copy-btn");
+
+// copyBtns.forEach(copyBtn => {
+//   copyBtn.addEventListener('click', function() {
+//     const inputContainer = copyBtn.closest(".input-container");
+//     const inputField = inputContainer.querySelector("input");
+//     console.log(inputField);
+//     copyText = inputField.value;
+//     navigator.clipboard.writeText(copyText);    
+//   });
+// })

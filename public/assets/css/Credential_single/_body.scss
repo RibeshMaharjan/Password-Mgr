@@ -1,21 +1,25 @@
 .credential-single-body {
     background: $light-bg-color;
-    margin-top: 6rem;
+    margin-block: 6rem 2rem;
     border-radius: 6px;
     box-shadow: 0 0 20px 5px $secondary-bg-color;
-    padding: 1rem 2rem 1rem;
+    padding-block: 1rem;
+    padding-inline: clamp(.5rem, 1rem, 2rem);
     color: $white;
     .title {
         margin-bottom: 2rem;
-        display: grid;
-        grid-template-columns: 120px 3fr 120px;
+        // display: grid;
+        // grid-template-columns: 120px 3fr 120px;
         align-items: center;
         .back-icon {
             i{
-                margin-left: 1rem;
+                margin-left: .5rem;
                 font-size: 1.5rem;
                 cursor: pointer;
             }
+        }
+        h1 {
+            text-transform: capitalize;
         }
         .button-section {
             display: flex;
@@ -27,7 +31,6 @@
         grid-template-columns: repeat(auto-fill,  minmax(440px, 1fr));
         gap: 2rem;
         .credentials {
-            // max-width: 380px;
             display: grid;
             grid-template-rows: 3fr 1fr;
             grid-template-columns: 1fr 1fr;
@@ -35,14 +38,11 @@
                 'credential-left credential-right'
                 'button-group button-group';
             gap: 1rem;
-            // flex-direction: column;
             background-color: $bg-color;
-            padding: 1rem 2rem 1rem;
-            border-radius: 6px;
-            cursor: pointer;
-            
+            padding-block: 1rem;
+            padding-inline: clamp(.5rem, 1rem, 2rem);
+            border-radius: 6px;            
             .credential-left, .credential-right {
-                // width: 50%;
                 .credential-info-group{
                     display: flex;
                     flex-direction: column;
@@ -55,11 +55,44 @@
                         border: none;
                         outline: none;
                         border-radius: 5px;
-                        max-width: 100%;
+                        min-width: 100%;
+                        pointer-events: none;
+                        box-sizing: border-box;
                     }
                     .input {
                         padding-inline: 0;
                         text-decoration: underline;
+                    }
+                    .input-container{
+                        --copy-btn-width: 45px;
+
+                        position: relative;
+                        border-radius: 5px;
+
+                        overflow: hidden;
+                        .hidden-icon{
+                            color: $dark;
+                            right: calc(.6rem + var(--copy-btn-width));
+                        }
+                        .copy-btn {
+                            background-color: $button-color;
+                            height: 100%;
+                            width: var(--copy-btn-width);
+                            display: flex;
+                            justify-content: center;    
+                            align-items: center;
+                            position: absolute;
+                            right: 0px;
+                            top: 50%;
+                            transform: translateY(-50%);
+                            // background: transparent;
+                            border: none;
+                            font-size: 18px;
+                            cursor: pointer;
+                            i {
+                                color: $bg-color;
+                            }
+                        }
                     }
                 }
             }
@@ -110,6 +143,9 @@
                     'credential-right'
                     'button-group';
             }
+        }
+        @media (max-width:767px) {
+            grid-template-columns: 1fr;
         }
     }
 }
