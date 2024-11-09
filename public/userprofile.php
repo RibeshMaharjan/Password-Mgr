@@ -5,7 +5,7 @@ $user_id = $_SESSION["userid"];
 
 ?>
     <div class="container">
-        <main class="">
+        <main>
             <div class="profilebody">
                 <div class="title">
                     <h1>User Info</h1>
