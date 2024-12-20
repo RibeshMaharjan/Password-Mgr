@@ -6,7 +6,7 @@
     }
 ?>
 
-<form action="../includes/update-profile-inc.php?" method="POST">
+<form action="../includes/update-profile-inc.php" method="POST">
     <input type="hidden" name="userid" value="<?= $data['user']['user_id'] ?>">
     <div class="profile-form-input-group">
         <label for="username">Username</label>

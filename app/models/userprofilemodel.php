@@ -31,7 +31,7 @@ class UserProfileModel extends Model {
         $stmt->bindParam(':username', $username);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':pwd', $password);
-        $stmt->bindParam(':salt', $key);
+        $stmt->bindParam(':salt', $_SESSION["password"]);
         $stmt->bindParam(':user_id', $id);
     
         $stmt->execute();        

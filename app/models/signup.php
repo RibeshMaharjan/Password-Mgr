@@ -19,7 +19,7 @@ class Signup extends Dbh{
 
         $key = hash_pbkdf2("sha256", $pwd, $salt, $iterations, $keyLength, true);
 
-        if(!$stmt->execute(array($uname, $email, $pwd, $key, $salt))) {
+        if(!$stmt->execute(array($uname, $email, $pwd, $key, $key))) {
             $stmt = null;
             header("location: ../public/login.php?error=stmtfailed");
             exit();

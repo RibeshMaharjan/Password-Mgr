@@ -100,9 +100,12 @@ if(!isset($_SESSION['auth']))
                             </a>
                         </li>
                         <li>
-                            <a href="">
+                        <form action="logout.php" method="POST">
+                                    <button type="submit" class="logout-btn" name="logout">Logout</button>
+                                </form>
+                            <!-- <a href="">
                                 Logout
-                            </a>
+                            </a> -->
                         </li>
                     </ul>
                 </nav>
