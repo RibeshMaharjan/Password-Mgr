@@ -54,32 +54,36 @@
                         </button>
                     </div>
                 </div>
-                <script>
-                    const hiddenIcon = document.querySelector(".hidden-icon");
-                    hiddenIcon.addEventListener('click', function(e){
-                        const icon = document.querySelector(".hidden-icon .fa-solid");
-                        const inputContainer = e.target.closest(".input-container");
-                        const passwordField = inputContainer.querySelector("input");
-                        if(icon.classList.contains("fa-eye-slash")){
-                            icon.classList.remove("fa-eye-slash");
-                            icon.classList.add("fa-eye");
-                            passwordField.type = 'text';
-                            return;
-                        }
-                        icon.classList.remove("fa-eye");
-                        icon.classList.add("fa-eye-slash");
-                        passwordField.type = 'password';
-                    });
-
-                    function copyToClipboard(event) {
-                        const inputContainer = event.target.closest(".input-container");
-                        const inputField = inputContainer.querySelector("input");
-                        copyText = inputField.value;
-                        navigator.clipboard.writeText(copyText);  
-                    }
-                </script>
             </form>
         <?php
         }
         ?>
 </div>
+<script>
+    const hiddenIcon = document.querySelectorAll(".hidden-icon");
+
+    hiddenIcon.forEach(hiddenIcon => {
+        hiddenIcon.addEventListener('click', function(e){
+        const icon = document.querySelector(".hidden-icon .fa-solid");
+        const inputContainer = e.target.closest(".input-container");
+        const passwordField = inputContainer.querySelector("input");
+        if(icon.classList.contains("fa-eye-slash")){
+            icon.classList.remove("fa-eye-slash");
+            icon.classList.add("fa-eye");
+            passwordField.type = 'text';
+            return;
+        }
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+        passwordField.type = 'password';
+    });
+    });
+    
+
+    function copyToClipboard(event) {
+        const inputContainer = event.target.closest(".input-container");
+        const inputField = inputContainer.querySelector("input");
+        copyText = inputField.value;
+        navigator.clipboard.writeText(copyText);  
+    }
+</script>

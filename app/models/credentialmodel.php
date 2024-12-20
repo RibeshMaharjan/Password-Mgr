@@ -63,6 +63,7 @@ class CredentialModel extends Model{
         }
         else {
             $stmt = null;
+            $_SESSION['site_id'] = $site;
             header("location: ../../public/single.php?error=CredentialAdded");
             exit();
         }
