@@ -100,13 +100,19 @@ if(!isset($_SESSION['auth']))
                             </a>
                         </li>
                         <li>
-                        <form action="logout.php" method="POST">
-                                    <button type="submit" class="logout-btn" name="logout">Logout</button>
-                                </form>
-                            <!-- <a href="">
+                        <form action="logout.php" method="POST" id="logout-form">
+                            <input type="hidden" name="logout">
+                            <a href="" onclick="submitLogoutForm(event)">
                                 Logout
-                            </a> -->
+                            </a>
+                        </form>
                         </li>
+                        <script>
+                            function submitLogoutForm(event) {
+                                event.preventDefault();
+                                document.getElementById("logout-form").submit();
+                            }
+                        </script>
                     </ul>
                 </nav>
             </header>
