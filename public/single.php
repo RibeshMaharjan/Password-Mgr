@@ -106,7 +106,7 @@
                 </div>
                 <?php 
                     $credential = new Credential();
-                    $data = $credential->showCredentials($site_id); 
+                    /* $data = */$credential->showCredentials($site_id); 
                 ?>
             </div>
         </main>

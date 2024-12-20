@@ -13,7 +13,7 @@ $user_id = $_SESSION["userid"];
                 <div class="body">
                     <?php 
                         $userProfle = new Userprofilecontroller();
-                        $data = $userProfle->profile($user_id); 
+                        /*$data =  */$userProfle->profile($user_id); 
                     ?>
                 </div>
             </div>

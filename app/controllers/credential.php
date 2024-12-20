@@ -99,7 +99,7 @@ class Credential extends Controller{
     }
 
     private function invalidEmail($email) {
-        $result;
+        $result = false;
 
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $result = false;

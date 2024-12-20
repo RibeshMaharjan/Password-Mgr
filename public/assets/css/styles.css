@@ -2,7 +2,6 @@ body {
   font-family: "Tomorrow", sans-serif, "Montserrat", serif, sans-serif;
   padding: 0;
   margin: 0;
-  scrollbar-width: none;
   min-height: 100dvh;
   background: url(../images/hero-background.png);
   background-repeat: no-repeat;
@@ -16,7 +15,15 @@ ul {
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p, ul, ol {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+ol {
   margin: 0;
   padding: 0;
 }
@@ -107,7 +114,7 @@ a {
   display: none;
 }
 .notifications-container .error-alert .weak-icon {
-  color: #F87171;
+  color: #f87171;
 }
 .notifications-container .error-alert .error-prompt-container {
   display: flex;
@@ -115,13 +122,13 @@ a {
   margin-left: 1.25rem;
 }
 .notifications-container .error-alert .error-prompt-container .error-prompt-heading {
-  color: #991B1B;
+  color: #991b1b;
   font-size: 0.875rem;
   line-height: 1.25rem;
   font-weight: bold;
 }
 .notifications-container .error-alert .error-prompt-container .error-prompt-wrap {
-  color: #B91C1C;
+  color: #b91c1c;
   font-size: 0.875rem;
   line-height: 1.25rem;
 }
@@ -222,7 +229,6 @@ a {
   align-items: center;
   min-height: 100dvh;
   min-width: 100dvw;
-  background: url(../images/background.jpg) no-repeat;
   background-size: cover;
 }
 .login-bg .login-wrapper {

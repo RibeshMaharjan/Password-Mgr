@@ -18,7 +18,7 @@
     </div>
     <div class="profile-form-input-group">
         <label for="password">Password</label>
-        <input type="password" name="password" id="password" value="<?= $data['user']['decrypted_password'] ?>">
+        <input type="text" name="password" id="password" value="<?= $data['user']['decrypted_password'] ?>">
         <div class="hidden-icon">
             <i class="fa-solid fa-eye-slash"></i>
         </div>
