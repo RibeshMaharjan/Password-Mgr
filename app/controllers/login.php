@@ -11,7 +11,6 @@ class LoginController extends Controller {
     private $pwd;
     private $login;
 
-
     public function __construct($uname, $pwd) {
         $this->uname = $uname;
         $this->pwd = $pwd;
@@ -28,34 +27,12 @@ class LoginController extends Controller {
     }
 
     private function emptyInput() {
-        $result;
+        $result = true;
+
         if (empty($this->uname) || empty($this->pwd)) {
             $result = false;
         }
-        else {
-            $result = true;
-        }
+
         return $result;
     }
 }
-
-// if (isset($_POST["login"])) 
-// {
-//     // Grabbing the data
-//     $uname = $_POST["uname"];
-//     $pwd = $_POST["pwd"];
-
-//     // Instantiate SignupContr class
-//     require_once "../app/dbh.php";
-//     // include "../app/config/dbh.php"; 
-//     // include "../app/models/login.php";
-//     // include "../app/controllers/login.php";
-
-//     $login = new LoginController($uname, $pwd);
-
-//     // Running error handlers and user signup
-//     $login->loginUser();
-
-//     // Going back to front page
-//     header("location: ../public/index.php?error=none");
-// }

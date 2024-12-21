@@ -8,14 +8,11 @@ class SiteController extends Controller {
 
     private $siteModel;
     function __construct(){
-        // new $this->siteModel = $this->model("site");
         $this->siteModel = new Sitemodel;
     }
 
     public function showSites(){
-        // $sites = $this->getSites();
         $sites = $this->siteModel->getSite();
-
         $this->view('site', $sites);
     }
 }

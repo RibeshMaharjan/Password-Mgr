@@ -10,14 +10,11 @@ class GeneratorController extends Controller {
     function __construct(){    
         // create an instance of the model
         $this->generator = new GeneratorModel();
-        // $credential = $this->model("credential");
     }
 
     public function generatePassword($length, $lowercase, $uppercase, $number, $symbols){
         $password = $this->generator->generatePasswords($length, $lowercase, $uppercase, $number, $symbols);
-
         $this->view('passwordgenerator', $password);
-        // return $password
     }
     
     public function showPassword(){

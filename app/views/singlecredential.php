@@ -5,7 +5,6 @@
 ?>
 <div class="credential-listing">
     <?php 
-    // print_r($data);
     foreach($data as $row){
         ?>
             <form action="" method="post">
@@ -19,7 +18,6 @@
                                 <div class="copy-icon copy-btn" onclick="copyToClipboard(event)">
                                     <i class="fa-solid fa-copy"></i>
                                 </div>
-                                <!-- <button class="copy-btn" onclick="copyToClipboard()">&#x2398;</button> -->
                             </div>
                         </div>
                         <div class="credential-info-group">

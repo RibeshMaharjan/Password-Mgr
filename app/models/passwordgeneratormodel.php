@@ -8,10 +8,7 @@ if (!isset($_SESSION)) {
 class GeneratorModel extends Model {
 
     public function __construct() {
-        parent::__construct();
     }
-
-    // private $conn = $this->connect();
 
     public function generatePasswords($length, $lowercase, $uppercase, $number, $symbols) {
         $password = "";

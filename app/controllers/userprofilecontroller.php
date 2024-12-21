@@ -11,7 +11,6 @@ class Userprofilecontroller extends Controller {
     function __construct(){    
         // create an instance of the model
         $this->Userprofile = new UserProfileModel;
-        // $credential = $this->model("credential");
     }
 
     public function profile($id) {

@@ -14,11 +14,11 @@ if (isset($_POST["generate"]))
     // Instantiate SignupContr class
     require_once __DIR__.'/../app/dbh.php';
     include "../app/models/passwordgeneratormodel.php";
-    // include "../app/config/dbh.php"; 
     include "../app/controllers/passwordgeneratorcontroller.php";
     
     $generator = new GeneratorController();
     $generator->generatePassword($length, $lowercase, $uppercase, $number, $symbols);
+
     // Going back to front page
     header("location: ../public/passwordgenerator.php");
 }

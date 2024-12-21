@@ -7,22 +7,18 @@ if (!isset($_SESSION)) {
 
 class CredentialModel extends Model{
 
-    function __construct(){
-		parent::__construct();
-		// echo 'Test Model  CREATED new changes'."<br />";
-	}
-
-    function sayHello($name){
-		echo "Welcome to  ". $name;
-	}
-    private $conn;
+    private  $conn;
     private $table_name = "credentials";
     private $table_site = "sites";
-    private $password_history_table_name = "password_history";
+
+    function __construct() {
+        global $dbh;
+        $this->conn = $dbh;
+    }
 
     public function addSite($site_name, $site_url) {
-        $pdo = $this->connect();
-        $stmt = $pdo->prepare("SELECT * FROM ".$this->table_site." WHERE site_url = ?");
+        // $pdo = $this->conn;
+        $stmt = $this->conn->prepare("SELECT * FROM ".$this->table_site." WHERE site_url = ?");
         $stmt->execute(array($site_url));
 
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -54,7 +50,7 @@ class CredentialModel extends Model{
     public function createCredential($user_id, $site, $username, $password, $notes) {
         $salt = $_SESSION["password"];
 
-        $stmt = $this->connect()->prepare("INSERT INTO ".$this->table_name." (users_id, site_id, username, password, notes) VALUES (?,?,?,AES_ENCRYPT(?,?),?);");
+        $stmt = $this->conn->prepare("INSERT INTO ".$this->table_name." (users_id, site_id, username, password, notes) VALUES (?,?,?,AES_ENCRYPT(?,?),?);");
         
         if(!$stmt->execute(array($user_id, $site, $username, $password, $salt, $notes))) {
             $stmt = null;
@@ -70,8 +66,7 @@ class CredentialModel extends Model{
     }
 
     public function showCredential($site_id) {
-        $stmt = $this->connect()->prepare("SELECT credentials.account_id, credentials.username, AES_DECRYPT(credentials.password,?) as password, credentials.notes, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
-        // $stmt = $this->connect()->prepare("SELECT *,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE users_id = ? AND site_id = ?");
+        $stmt = $this->conn->prepare("SELECT credentials.account_id, credentials.username, AES_DECRYPT(credentials.password,?) as password, credentials.notes, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
         
         if(!$stmt->execute(array($_SESSION["password"], $_SESSION["userid"], $site_id))) {
             $stmt = null;
@@ -84,7 +79,7 @@ class CredentialModel extends Model{
     }
 
     public function showCredentialsUpdateHistory($id) {
-        $stmt = $this->connect()->prepare("SELECT *,AES_DECRYPT(previous_password,?) as password FROM password_history WHERE account_id = ?");
+        $stmt = $this->conn->prepare("SELECT *,AES_DECRYPT(previous_password,?) as password FROM password_history WHERE account_id = ?");
 
         if(!$stmt->execute(array($_SESSION["password"], $id))) {
             $stmt = null;
@@ -97,7 +92,7 @@ class CredentialModel extends Model{
 
     public function updateCredential($id, $username, $password, $notes) {
         
-        $accountInfo = $this->connect()->prepare("SELECT *,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE account_id = ?;");
+        $accountInfo = $this->conn->prepare("SELECT *,AES_DECRYPT(password,?) as password FROM " . $this->table_name . " WHERE account_id = ?;");
         
         if(!$accountInfo->execute(array($_SESSION["password"], $id))) {
             $accountInfo = null;
@@ -112,7 +107,7 @@ class CredentialModel extends Model{
             $old_password = $row['password'];
         }
 
-        $updatestmt = $this->connect()->prepare("INSERT INTO password_history (account_id, previous_username, previous_password) VALUES (?,?,AES_ENCRYPT(?,?));");
+        $updatestmt = $this->conn->prepare("INSERT INTO password_history (account_id, previous_username, previous_password) VALUES (?,?,AES_ENCRYPT(?,?));");
 
         if(!$updatestmt->execute(array($id, $old_username, $old_password, $_SESSION["password"]))) {
             $updatestmt = null;
@@ -120,7 +115,7 @@ class CredentialModel extends Model{
             exit();
         }
         
-        $stmt = $this->connect()->prepare("UPDATE " . $this->table_name . " SET notes = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE account_id = ?;");
+        $stmt = $this->conn->prepare("UPDATE " . $this->table_name . " SET notes = ?, username = ?, password = AES_ENCRYPT(?,?) WHERE account_id = ?;");
         
         if(!$stmt->execute(array($notes, $username, $password, $_SESSION["password"], $id))) {
             $stmt = null;
@@ -129,7 +124,7 @@ class CredentialModel extends Model{
         }
     }
     public function deleteCredential($id) {
-        $stmt = $this->connect()->prepare("DELETE FROM " . $this->table_name . " WHERE account_id = ?;");
+        $stmt = $this->conn->prepare("DELETE FROM " . $this->table_name . " WHERE account_id = ?;");
 
         if(!$stmt->execute(array($id))) {
             $stmt = null;

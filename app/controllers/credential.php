@@ -5,16 +5,11 @@ require_once __DIR__.'/../core/controller.php';
 require_once __DIR__.'/../models/credentialmodel.php';
 class Credential extends Controller{
 
-    private $user_id;
-    private $site;
-    private $username;
-    private $password;
     private $credential;
 
     function __construct(){    
         // create an instance of the model
         $this->credential = new CredentialModel;
-        // $credential = $this->model("credential");
     }
 
     public function addSites($site_name, $site_url) {
@@ -51,10 +46,6 @@ class Credential extends Controller{
             header("location: ../../public/index.php?error=Username");
             exit();
         }
-        // if($this->invalidEmail() == false) {
-        //     header("location: ../../public/index.php?error=Email");
-        //     exit();
-        // }
         $this->credential->createCredential($user_id, $site, $username, $password, $notes);
         header("location: ../../public/index.php");
         exit();
@@ -71,10 +62,8 @@ class Credential extends Controller{
         }
 
         $this->credential->updateCredential($id, $username, $password, $notes);
-
     }
     public function deleteCredentials($id) {
-        
         $credential = $this->model('credentialmodel');
         $credential->deleteCredential($id);
     }
@@ -115,14 +104,12 @@ class Credential extends Controller{
         $data = $this->credential->showCredential($site_id);
 
         $this->view('singlecredential', $data);
-        // return $data;
     }
     public function showCredentialsUpdateHistorys($id) {
 
         $data = $this->credential->showCredentialsUpdateHistory($id);
 
         $this->view('update_credentials/show_updated_credentials', $data);
-        // return $data;
     }
 }
 

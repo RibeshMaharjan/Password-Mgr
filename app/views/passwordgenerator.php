@@ -191,7 +191,6 @@
     }
 
     function checkLength(e){
-        // const pwlength = form.querySelector("input[type='number']");
         const container = e.target.closest("div");
         const passlength = container.querySelector("input[type='number']");
         const alertMessage = container.querySelector("p");

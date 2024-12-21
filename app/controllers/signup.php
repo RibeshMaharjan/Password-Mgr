@@ -42,63 +42,52 @@ class SignupController extends Signup{
     }
 
     private function emptyInput() {
-        $result;
+        $result = true;
 
         if(empty($this->uname) || empty($this->email) || empty($this->pwd) || empty($this->pwdRepeat)){
             $result = false;
         }
-        else{
-            $result = true;
-        }
+
         return $result;
     }
 
     private function invalidUsername() {
-        $result;
+        $result = true;
 
         if(!preg_match("/^[a-zA-z0-9]*$/", $this->uname)){
             $result = false;
         }
-        else{
-            $result = true;
-        }
+
         return $result;
     }
 
     private function invalidEmail() {
-        $result;
+        $result = true;
 
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
             $result = false;
         }
-        else{
-            $result = true;
-        }
+
         return $result;
     }
 
     private function pwdMatch() {
-        $result;
+        $result = true;
 
         if($this->pwd !== $this->pwdRepeat){
             $result = false;
         }
-        else{
-            $result = true;
-        }
+
         return $result;
     }
 
     private function usernameExists() {
-        $result;
+        $result = true;
 
         if(!$this->checkUser($this->uname, $this->email)){
             $result = false;
         }
-        else{
-            $result = true;
-        }
+        
         return $result;
     }
-
 }

@@ -35,10 +35,6 @@
                         <button type="submit" class="btn btn-primary" name="update">Submit</button>
                     </form>
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" name="update">Submit</button>
-                </div> -->
                 </div>
             </div>
             </div>
@@ -57,10 +53,6 @@
                         <button type="submit" class="btn btn-primary" name="delete">Delete</button>
                     </form>
                 </div>
-                    <!-- <div class="modal-footer">
-                        
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    </div> -->
                 </div>
             </div>
             </div>
@@ -106,7 +98,7 @@
                 </div>
                 <?php 
                     $credential = new Credential();
-                    /* $data = */$credential->showCredentials($site_id); 
+                    $credential->showCredentials($site_id); 
                 ?>
             </div>
         </main>

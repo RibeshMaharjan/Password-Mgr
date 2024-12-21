@@ -5,18 +5,23 @@
 
 class Sitemodel extends Model {
     
-    function __construct() {
-        parent::__construct();
-    }
+    private  $conn;
 
+    function __construct() {
+        global $dbh;
+
+        $this->conn = $dbh;
+    }
+    
     public function getSite(){
-        $stmt = $this->connect()->prepare("SELECT * FROM sites");
+
+        $stmt = $this->conn->prepare("SELECT * FROM sites");
         $stmt->execute();
 
         $siteResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // $stmt = null;
-        $stmt = $this->connect()->prepare("SELECT * FROM credentials WHERE users_id = :user_id");
+        $stmt = $this->conn->prepare("SELECT * FROM credentials WHERE users_id = :user_id");
         $stmt->bindParam(':user_id', $_SESSION['userid']);
         $stmt->execute();
         $credentials = $stmt->fetchAll(PDO::FETCH_ASSOC);

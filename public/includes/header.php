@@ -1,6 +1,5 @@
 <?php
 
-// require_once '../app/init.php';
 require_once '../app/helpers/session_helper.php';
 require_once __DIR__.'/../../app/dbh.php';
 require_once __DIR__.'/../../app/config/function.php';
@@ -8,9 +7,6 @@ include __DIR__."/../../app/controllers/credential.php";
 include __DIR__."/../../app/controllers/userprofilecontroller.php";
 include __DIR__."/../../app/controllers/sitecontroller.php";
 include __DIR__."/../../app/controllers/passwordgeneratorcontroller.php";
-
-// $app = new App;
-// session_start();
 
 if(!isset($_SESSION['auth']))
 {
@@ -70,16 +66,12 @@ if(!isset($_SESSION['auth']))
 
     </head>
     <body>
-            <?php
-                // include './includes/sidebar.php';
-            ?>
             <header class="primary-header">
                 <div>
                     <img src="./assets/images/logo/logo2preview.png" alt="" class="logo">
                 </div>
 
                 <button class="mobile-nav-toggle" aria-expanded="false">
-                    <!-- <i class="fa-solid fa-bars"></i> -->
                 </button>
 
                 <nav>
@@ -117,18 +109,3 @@ if(!isset($_SESSION['auth']))
                 </nav>
             </header>
             <div class="content">
-                <!-- <header>
-                    <nav class="home-navbar">
-                        <ul class="nav-bar">
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="#">Welcome </a>
-                            </li>
-                            <li class="nav-item">
-                                <form action="logout.php" method="POST">
-                                    <button type="submit" class="logout-btn" name="logout">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </nav>
-                    <hr>
-                </header> -->
