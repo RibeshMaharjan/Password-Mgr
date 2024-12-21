@@ -4,7 +4,6 @@
 
 <div class="dashboard-table">
     <div class="dashboard-table-head">
-        <!-- <div class="dashboard-table-cell">Site</div> -->
         <div class="dashboard-table-cell">Username</div>
         <div class="dashboard-table-cell">Password</div>
         <div class="dashboard-table-cell">Notes</div>
@@ -13,7 +12,6 @@
     </div>
     <?php 
         foreach ($data as $row) {
-        // while($row = $data->fetch(PDO::FETCH_ASSOC)){
     ?>
     <div class="dashboard-table-row">
         <div class="current-credential-row">
@@ -37,10 +35,6 @@
                 </ul>
             </div>
         </div>
-        <?php 
-            // $credential = new Credential();
-            // $data = $credential->showCredentialsUpdateHistorys($row["account_id"]); 
-        ?>
     </div>  
     <?php
         }

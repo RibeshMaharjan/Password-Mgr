@@ -5,7 +5,6 @@
 ?>
 <div class="site-listing">
     <?php 
-    // print_r($data);
     foreach($data as $row){
         ?>
             <div class="sites">
@@ -26,7 +25,6 @@
             sites.forEach(site => {
                 const form = site.querySelector("#site");
                 site.addEventListener('click', function() {
-                    // document.forms['form-delete'];
                     form.submit();  
                 });
             });

@@ -1,7 +1,3 @@
-<?php
-
-?>
-
 <div class="sidebar">
     <div class="sidebar-inner">
         <div class="sidebar-section-1">
