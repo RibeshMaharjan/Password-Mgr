@@ -1,18 +1,18 @@
 <?php
-
-require_once '../app/helpers/session_helper.php';
-require_once __DIR__.'/../../app/dbh.php';
-require_once __DIR__.'/../../app/config/function.php';
-include __DIR__."/../../app/controllers/credential.php";
-include __DIR__."/../../app/controllers/userprofilecontroller.php";
-include __DIR__."/../../app/controllers/sitecontroller.php";
-include __DIR__."/../../app/controllers/passwordgeneratorcontroller.php";
+//
+require_once './helpers/session_helper.php';
+//require_once __DIR__.'/../../app/config/function.php';
+//include __DIR__."/../../app/controllers/credential.php";
+//include __DIR__."/../../app/controllers/userprofilecontroller.php";
+//include __DIR__."/../../app/controllers/sitecontroller.php";
+//include __DIR__."/../../app/controllers/passwordgeneratorcontroller.php";
 
 if(!isset($_SESSION['auth']))
 {
-    header('Location: ../public/login.php');
+//    echo $_SESSION['auth'];
+//    header('Location: ./login.php');
 }
-
+//
 ?>
 
 <!doctype html>
@@ -62,50 +62,9 @@ if(!isset($_SESSION['auth']))
             crossorigin="anonymous">
 
         <!-- Main Css -->
+        <link rel="stylesheet" href="./assets/css/login.css">
         <link rel="stylesheet" href="./assets/css/styles.css">
 
     </head>
     <body>
-            <header class="primary-header">
-                <div>
-                    <img src="./assets/images/logo/logo2preview.png" alt="" class="logo">
-                </div>
 
-                <button class="mobile-nav-toggle" aria-expanded="false">
-                </button>
-
-                <nav>
-                    <ul id="primary-navigation" class="primary-navigation" data-visible="false">
-                        <li class="active">
-                            <a href="index.php">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./passwordgenerator.php">
-                                Password Generator
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./userprofile.php">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                        <form action="logout.php" method="POST" id="logout-form">
-                            <input type="hidden" name="logout">
-                            <a href="" onclick="submitLogoutForm(event)">
-                                Logout
-                            </a>
-                        </form>
-                        </li>
-                        <script>
-                            function submitLogoutForm(event) {
-                                event.preventDefault();
-                                document.getElementById("logout-form").submit();
-                            }
-                        </script>
-                    </ul>
-                </nav>
-            </header>
-            <div class="content">
