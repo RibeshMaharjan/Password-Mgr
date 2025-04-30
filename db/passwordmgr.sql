@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Dec 20, 2024 at 09:46 AM
--- Server version: 8.0.30
--- PHP Version: 8.1.10
+-- Host: 127.0.0.1
+-- Generation Time: Apr 30, 2025 at 03:52 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,13 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `credentials` (
-  `account_id` int NOT NULL,
-  `users_id` int NOT NULL,
-  `site_id` int NOT NULL,
+  `account_id` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
+  `site_id` int(11) NOT NULL,
   `username` varchar(35) NOT NULL,
-  `password` varbinary(100) NOT NULL,
-  `notes` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
+  `password` varbinary(255) NOT NULL,
+  `notes` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `credentials`
+--
+
+INSERT INTO `credentials` (`account_id`, `users_id`, `site_id`, `username`, `password`, `notes`) VALUES
+(3, 1, 1, 'teinasdfandson', 0x6638386633303438303135373335633432643066343632396535373132316362, ''),
+(5, 1, 2, 'insta', 0x3563623564633534663961386365333361643533333262626638623664633738, ''),
+(6, 1, 2, 'insta', 0x326233323735663065363430626431363961376366343736653265336138383036313733363436313634, ''),
+(7, 1, 3, 'ribubaucha@gmail.com', 0x6262616530623265326265346464343838616131363730663563623838386265, ''),
+(8, 1, 4, 'link usre', 0x6263393238636135383063653362623839393232313064353330326535616133, ''),
+(9, 1, 5, 'yoyutu', 0x6138363365633136386336666263333935336632663331633363653533316262, '');
 
 -- --------------------------------------------------------
 
@@ -43,11 +55,11 @@ CREATE TABLE `credentials` (
 --
 
 CREATE TABLE `password_history` (
-  `history_id` int NOT NULL,
-  `account_id` int NOT NULL,
+  `history_id` int(11) NOT NULL,
+  `account_id` int(11) NOT NULL,
   `previous_username` varchar(35) NOT NULL,
   `previous_password` varbinary(100) NOT NULL,
-  `changed_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `changed_time` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -57,7 +69,7 @@ CREATE TABLE `password_history` (
 --
 
 CREATE TABLE `sites` (
-  `site_id` int NOT NULL,
+  `site_id` int(11) NOT NULL,
   `site_name` varchar(50) NOT NULL,
   `site_url` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -68,11 +80,10 @@ CREATE TABLE `sites` (
 
 INSERT INTO `sites` (`site_id`, `site_name`, `site_url`) VALUES
 (1, 'Facebook', 'facebook.com'),
-(2, 'Instagram', 'instagram.com'),
-(3, 'Gmail', 'gmail.com'),
-(4, 'linkednin', 'linkednin.com'),
-(5, 'canvas', 'cancas.com'),
-(6, 'discord', 'discord.com');
+(2, 'instagram', 'instagram.com'),
+(3, 'Google', 'google.com'),
+(4, 'linkeden', 'linkedn.com'),
+(5, 'youtube', 'youtube.com');
 
 -- --------------------------------------------------------
 
@@ -81,22 +92,21 @@ INSERT INTO `sites` (`site_id`, `site_name`, `site_url`) VALUES
 --
 
 CREATE TABLE `users` (
-  `user_id` int NOT NULL,
+  `user_id` int(11) NOT NULL,
   `users_name` varchar(35) NOT NULL,
   `users_email` varchar(50) NOT NULL,
   `users_pwd` varbinary(255) NOT NULL,
   `users_salt` varbinary(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `token` varchar(82) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `users_name`, `users_email`, `users_pwd`, `users_salt`, `created_at`) VALUES
-(1, 'ribesh', 'ribubaucha@gmail.com', 0x243279243130242f47744a36634442466273537979772e666775566b75774b622e5a2e614f694d52723665516d536766464c57504a503367432f6971, 0xaa97351dcdb93ef66f035d631417282ea588ad75029f44c1, '2024-11-12 04:13:24'),
-(2, 'asura', 'asura@gmail.com', 0x9b5fa4aa0cc9a997433cfb4131a21f28, 0x41db6b4f4e854f5123419d75dde97c29dba814fc44471ace, '2024-12-20 08:31:26'),
-(3, 'ribesh1', 'ribubaucha1@gmail.com', 0x710e2603a2bf75cbed7fa34bcdb7bbd0, 0x41db6b4f4e854f5123419d75dde97c29dba814fc44471ace, '2024-12-20 09:29:25');
+INSERT INTO `users` (`user_id`, `users_name`, `users_email`, `users_pwd`, `users_salt`, `created_at`, `token`) VALUES
+(1, 'john', 'john@gmail.com', 0x6337316133366237303161343831386264333964366261623764653135646361, 0xcac5b13d83ae7751cd6b8e33392215e3db0af051c59f5aa5, '2025-04-29 02:05:01', '89d14cdf87d309428c32f6e79940ffb2dd5114cedd7db3805ab492f96732e62e');
 
 --
 -- Indexes for dumped tables
@@ -139,25 +149,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `credentials`
 --
 ALTER TABLE `credentials`
-  MODIFY `account_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `account_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `password_history`
 --
 ALTER TABLE `password_history`
-  MODIFY `history_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `history_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `sites`
 --
 ALTER TABLE `sites`
-  MODIFY `site_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `site_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -167,14 +177,14 @@ ALTER TABLE `users`
 -- Constraints for table `credentials`
 --
 ALTER TABLE `credentials`
-  ADD CONSTRAINT `site_id` FOREIGN KEY (`site_id`) REFERENCES `sites` (`site_id`) ON DELETE CASCADE ON UPDATE RESTRICT,
+  ADD CONSTRAINT `site_id` FOREIGN KEY (`site_id`) REFERENCES `sites` (`site_id`) ON DELETE CASCADE,
   ADD CONSTRAINT `users_id` FOREIGN KEY (`users_id`) REFERENCES `users` (`user_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `password_history`
 --
 ALTER TABLE `password_history`
-  ADD CONSTRAINT `account_id` FOREIGN KEY (`account_id`) REFERENCES `credentials` (`account_id`) ON DELETE CASCADE ON UPDATE RESTRICT;
+  ADD CONSTRAINT `account_id` FOREIGN KEY (`account_id`) REFERENCES `credentials` (`account_id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

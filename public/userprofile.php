@@ -4,6 +4,12 @@
 <?php include_once './includes/nav.php'; ?>
 
 <?php
+    require_once './lib/aes.php';
+
+    $aes = new AES();
+?>
+
+<?php
     $user_id = $_SESSION["userid"];
     $saltKey = $_SESSION["password"];
     $userInfo = getUserInfo();
@@ -16,15 +22,16 @@
         $email = $_POST["email"];
         $pwd = $_POST["password"];
 
+        $encypted_pwd = $aes->encrypt($pwd, $saltKey);
+
         $stmt = $dbh->prepare("UPDATE users SET 
                                         users_name = :username,
                                         users_email = :email,
-                                        users_pwd = AES_ENCRYPT(:pwd,:salt)
+                                        users_pwd = :pwd
                                         WHERE user_id = :user_id");
         $stmt->bindParam(':username', $uname);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':pwd', $pwd);
-        $stmt->bindParam(':salt', $saltKey);
+        $stmt->bindParam(':pwd', $encypted_pwd);
         $stmt->bindParam(':user_id', $user_id);
 
         $stmt->execute();
@@ -52,7 +59,7 @@
                         </div>
                         <div class="profile-form-input-group">
                             <label for="password">Password</label>
-                            <input type="text" name="password" id="password" value="<?= $userInfo['decrypted_password'] ?>">
+                            <input type="text" name="password" id="password" value="<?= $userInfo['pwd'] ?>">
                             <div class="hidden-icon">
                                 <i class="fa-solid fa-eye-slash"></i>
                             </div>

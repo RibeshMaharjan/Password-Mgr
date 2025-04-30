@@ -1,6 +1,10 @@
 <?php include_once './php/dbh.php'; ?>
+<?php include_once './lib/aes.php'; ?>
 <?php include_once './includes/header.php'; ?>
 <?php include_once './includes/nav.php'; ?>
+<?php
+$aes = new AES();
+?>
     <div class="container">
         <main>
             <div class="main-body">
@@ -37,8 +41,10 @@
 
                             $salt = $_SESSION["password"];
 
-                            $stmt = $dbh->prepare("INSERT INTO credentials (users_id, site_id, username, password, notes) VALUES (?,?,?,AES_ENCRYPT(?,?),?);");
-                            $stmt->execute(array($user_id, $site_id, $username, $password, $salt, $notes));
+                            $encrypted_password = $aes->encrypt($password, $salt);
+
+                            $stmt = $dbh->prepare("INSERT INTO credentials (users_id, site_id, username, password, notes) VALUES (?,?,?,?,?);");
+                            $stmt->execute(array($user_id, $site_id, $username, $encrypted_password, $notes));
                             $_SESSION['site_id'] = $site_id;
                         } else {
                             echo '<div class="alert alert-danger" role="alert"  style="background-color: #2b5fb31f;">Please fill all fields.</div>';

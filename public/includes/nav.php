@@ -1,3 +1,11 @@
+
+<?php
+if(!isset($_SESSION['auth']))
+{
+   echo $_SESSION['auth'];
+   header('Location: ./login.php');
+}
+?>
 <header class="primary-header">
                 <div>
                     <img src="./assets/images/logo/logo2preview.png" alt="" class="logo">

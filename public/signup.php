@@ -2,6 +2,9 @@
 
 require_once './helpers/session_helper.php';
 require_once __DIR__.'/php/dbh.php';
+require_once './lib/aes.php';
+
+$aes = new AES();
 
 if(isset($_SESSION['auth']))
 {
@@ -10,34 +13,6 @@ if(isset($_SESSION['auth']))
 ?>
 <?php
     include './includes/header.php';
-
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $uname = $_POST['uname'];
-        $email = $_POST['email'];
-        $pwd = $_POST['pwd'];
-        $pwdRepeat = $_POST['pwdRepeat'];
-
-        if (!empty($uname) && !empty($email) && !empty($pwd) && !empty($pwdRepeat)) {
-            $stmt = $dbh->prepare('SELECT users_email FROM users WHERE users_name = ? OR users_email = ?;');
-            $stmt->execute(array($uname, $email));
-
-            if ($stmt->rowCount() == 0) {
-                $stmt = $dbh->prepare('INSERT INTO users (users_name, users_email, users_pwd, users_salt) VALUES (?,?,AES_ENCRYPT(?,?),?);');
-                $salt = openssl_random_pseudo_bytes(24);
-                $iterations = 10000;
-                $keyLength = 24;
-                $key = hash_pbkdf2("sha256", $pwd, $salt, $iterations, $keyLength, true);
-                $stmt->execute(array($uname, $email, $pwd, $key, $key));
-
-                echo "<meta http-equiv='refresh' content='0;url=login.php'>";
-                exit();
-            } else {
-                echo '<div class="alert alert-danger" role="alert"  style="background-color: #2b5fb31f;">User already exist</div>';
-            }
-        } else {
-            echo '<div class="alert alert-danger" role="alert"  style="background-color: #2b5fb31f;">Please fill all fields.</div>';
-        }
-    }
 ?>
     <div class="login-signup-bg">
         <div class="login-signup-wrapper">
@@ -45,6 +20,38 @@ if(isset($_SESSION['auth']))
                 <h1>Sign Up</h1>
             </div>
             <div class="form">
+                <?php
+                    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+                        $uname = $_POST['uname'];
+                        $email = $_POST['email'];
+                        $pwd = $_POST['pwd'];
+                        $pwdRepeat = $_POST['pwdRepeat'];
+
+                        if (!empty($uname) && !empty($email) && !empty($pwd) && !empty($pwdRepeat)) {
+                            $stmt = $dbh->prepare('SELECT users_email FROM users WHERE users_name = ? OR users_email = ?;');
+                            $stmt->execute(array($uname, $email));
+
+                            if ($stmt->rowCount() == 0) {
+                                $stmt = $dbh->prepare('INSERT INTO users (users_name, users_email, users_pwd, users_salt) VALUES (?,?,?,?);');
+                                $salt = openssl_random_pseudo_bytes(24);
+                                $iterations = 10000;
+                                $keyLength = 24;
+                                $key = hash_pbkdf2("sha256", $pwd, $salt, $iterations, $keyLength, true);
+
+                                $encypted_pwd = $aes->encrypt($pwd, $key);
+
+                                $stmt->execute(array($uname, $email, $encypted_pwd, $key));
+
+                                echo "<meta http-equiv='refresh' content='0;url=login.php'>";
+                                exit();
+                            } else {
+                                echo '<div class="alert alert-dark text-dark" role="alert">User already exist</div>';
+                            }
+                        } else {
+                            echo '<div class="alert alert-dark text-dark" role="alert">Please fill all fields.</div>';
+                        }
+                    }
+                ?>
                 <form method="POST">
                     <!-- Name Input -->
                     <div>

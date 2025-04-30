@@ -1,18 +1,5 @@
 <?php
-//
 require_once './helpers/session_helper.php';
-//require_once __DIR__.'/../../app/config/function.php';
-//include __DIR__."/../../app/controllers/credential.php";
-//include __DIR__."/../../app/controllers/userprofilecontroller.php";
-//include __DIR__."/../../app/controllers/sitecontroller.php";
-//include __DIR__."/../../app/controllers/passwordgeneratorcontroller.php";
-
-if(!isset($_SESSION['auth']))
-{
-//    echo $_SESSION['auth'];
-//    header('Location: ./login.php');
-}
-//
 ?>
 
 <!doctype html>
