@@ -1,3 +1,15 @@
+<?php
+
+if(!isset($_SESSION['auth']))
+{
+   header('Location: ./login.php');
+}
+
+if(!checkVerification()) {
+    header('Location: ./emailVerification.php');
+}
+
+?>
 <header class="primary-header">
                 <div>
                     <img src="./assets/images/logo/logo2preview.png" alt="" class="logo">

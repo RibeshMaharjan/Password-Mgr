@@ -1,3 +1,4 @@
 {
-    "editor.suggest.insertMode": "insert"
+    "editor.suggest.insertMode": "insert",
+    "editor.tabSize": 2
 }

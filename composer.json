@@ -1,0 +1,6 @@
+{
+    "name": "vendor/name",
+    "require": {
+        "phpmailer/phpmailer": "^6.10"
+    }
+}
