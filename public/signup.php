@@ -2,6 +2,7 @@
 
 require_once './helpers/session_helper.php';
 require_once __DIR__.'/php/dbh.php';
+require_once __DIR__.'/lib/sendMail.php';
 require_once './lib/aes.php';
 
 $aes = new AES();
@@ -32,7 +33,10 @@ if(isset($_SESSION['auth']))
                             $stmt->execute(array($uname, $email));
 
                             if ($stmt->rowCount() == 0) {
-                                $stmt = $dbh->prepare('INSERT INTO users (users_name, users_email, users_pwd, users_salt) VALUES (?,?,?,?);');
+                                // generate random 6 digit verification code
+                                $verificationCode = mt_rand(100000,999999);
+
+                                $stmt = $dbh->prepare('INSERT INTO users (users_name, users_email, users_pwd, users_salt, verification_code, verification_req_date) VALUES (?,?,?,?,?,CURRENT_TIMESTAMP);');
                                 $salt = openssl_random_pseudo_bytes(24);
                                 $iterations = 10000;
                                 $keyLength = 24;
@@ -40,7 +44,9 @@ if(isset($_SESSION['auth']))
 
                                 $encypted_pwd = $aes->encrypt($pwd, $key);
 
-                                $stmt->execute(array($uname, $email, $encypted_pwd, $key));
+                                $stmt->execute(array($uname, $email, $encypted_pwd, $key, $verificationCode));
+
+                                sendVerificationMail($email, $verificationCode);
 
                                 echo "<meta http-equiv='refresh' content='0;url=login.php'>";
                                 exit();

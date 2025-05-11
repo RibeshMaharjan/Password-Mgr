@@ -48,6 +48,7 @@ if(isset($_SESSION['auth']))
                                     $_SESSION['auth'] = true;
                                     $_SESSION["userid"] = $user["user_id"];
                                     $_SESSION["username"] = $user["users_name"];
+                                    $_SESSION["email"] = $user["users_email"];
                                     $_SESSION["password"] = $user["users_salt"];
                                 } else {
                                     echo '<div class="alert alert-dark text-dark" role="alert">Wrong password.<br>Please try again.</div>';

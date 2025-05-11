@@ -1,0 +1,82 @@
+.profile-body{
+    padding: 2rem 2rem;
+    background: $light-bg-color;
+    margin-top: 6rem;
+    border-radius: 6px;
+    box-shadow: 0 0 20px 5px $secondary-bg-color;
+
+
+    .profile-card {
+        background: $secondary-bg-color;
+        color: $primary;
+    }
+
+    .profile-form{
+        label{
+            color: $primary;
+        }
+    }
+}
+
+.profile-sidebar {
+    border-radius: 10px;
+    overflow: hidden;
+    color: $primary;
+}
+
+.avatar-circle {
+    width: 100px;
+    height: 100px;
+    background-color: #007bff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.avatar-initials {
+    color: $primary;
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.verification-badge .badge {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}
+
+
+
+.nav-tabs .nav-link {
+    color: $primary;
+    border: none;
+    padding: 12px 20px;
+    font-weight: 500;
+}
+
+.nav-tabs .nav-link.active {
+    color: $secondary;
+    border-bottom: 2px solid $secondary;
+    background: none;
+}
+
+.form-control {
+    padding: 10px 15px;
+    border-radius: 5px;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+}
+
+.twofa-status .badge {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+}

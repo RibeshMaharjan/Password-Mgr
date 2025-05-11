@@ -38,6 +38,7 @@ if(checkVerification()) {
                     <!-- Login Button -->
                     <button type="submit" name="verify">Login</button>
                 </form>
+                <p style="color: #888888; margin-top: 16px">Didn't receive the code? <a href="./php/resendVerification.php">Resend</a></p>
             </div>
         </div>
     </div>

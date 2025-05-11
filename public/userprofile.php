@@ -48,41 +48,72 @@
                     <h1>User Info</h1>
                 </div>
                 <div class="body">
-                    <form method="POST">
-                        <input type="hidden" name="userid" value="<?= $userInfo['user_id'] ?>">
-                        <div class="profile-form-input-group">
-                            <label for="username">Username</label>
-                            <input type="text" name="username" id="username" value="<?= $userInfo['users_name'] ?>">
+                    <div class="row">
+
+                        <div class="col-md-6">
+                            <form method="POST">
+                                <input type="hidden" name="userid" value="<?= $userInfo['user_id'] ?>">
+                                <div class="profile-form-input-group">
+                                    <label for="username">Username</label>
+                                    <input type="text" name="username" id="username" value="<?= $userInfo['users_name'] ?>">
+                                </div>
+                                <div class="profile-form-input-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" value="<?= $userInfo['users_email'] ?>">
+                                </div>
+                                <div class="profile-form-input-group">
+                                    <label for="password">Password</label>
+                                    <input type="text" name="password" id="password" value="<?= $userInfo['pwd'] ?>">
+                                    <div class="hidden-icon">
+                                        <i class="fa-solid fa-eye-slash"></i>
+                                    </div>
+                                </div>
+                                <script>
+                                    const hiddenIcon = document.querySelector(".hidden-icon");
+                                    hiddenIcon.addEventListener('click', function(){
+                                        const icon = document.querySelector(".hidden-icon .fa-solid");
+                                        const passwordField = document.getElementById('password');
+                                        if(icon.classList.contains("fa-eye-slash")){
+                                            icon.classList.remove("fa-eye-slash");
+                                            icon.classList.add("fa-eye");
+                                            passwordField.type = 'text';
+                                            return;
+                                        }
+                                        icon.classList.remove("fa-eye");
+                                        icon.classList.add("fa-eye-slash");
+                                        passwordField.type = 'password';
+                                    });
+                                </script>
+                                <button class="pass-mgr-button" type="submit" name="save">Save</button>
+                            </form>
                         </div>
-                        <div class="profile-form-input-group">
-                            <label for="email">Email</label>
-                            <input type="email" name="email" id="email" value="<?= $userInfo['users_email'] ?>">
-                        </div>
-                        <div class="profile-form-input-group">
-                            <label for="password">Password</label>
-                            <input type="text" name="password" id="password" value="<?= $userInfo['pwd'] ?>">
-                            <div class="hidden-icon">
-                                <i class="fa-solid fa-eye-slash"></i>
+                        <div class="col-md-6">
+                            <div class="profile-info">
+                                <?php
+                                    if(checkVerification()) {
+                                ?>
+                                    <div class="text-light">
+                                        <label>Username</label>
+                                        <span class=""><?= $userInfo['users_name'] ?></span><i class="fa-solid fa-circle-check" ></i>
+                                    </div>
+                                <?php
+                                    } else {
+                                ?>
+                                    <div class="text-light">
+                                        <label>Username</label>
+                                        <span class=""><?= $userInfo['users_name'] ?></span><i class="fa-solid fa-circle-xmark" ></i>
+                                        <div class="verification-status">
+                                            User is not verified
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
                             </div>
                         </div>
-                        <script>
-                            const hiddenIcon = document.querySelector(".hidden-icon");
-                            hiddenIcon.addEventListener('click', function(){
-                                const icon = document.querySelector(".hidden-icon .fa-solid");
-                                const passwordField = document.getElementById('password');
-                                if(icon.classList.contains("fa-eye-slash")){
-                                    icon.classList.remove("fa-eye-slash");
-                                    icon.classList.add("fa-eye");
-                                    passwordField.type = 'text';
-                                    return;
-                                }
-                                icon.classList.remove("fa-eye");
-                                icon.classList.add("fa-eye-slash");
-                                passwordField.type = 'password';
-                            });
-                        </script>
-                        <button class="pass-mgr-button" type="submit" name="save">Save</button>
-                    </form>
+                    <div class="verification-status">
+                        User is verified
+                    </div>
                 </div>
             </div>
         </main>
