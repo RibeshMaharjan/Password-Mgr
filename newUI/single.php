@@ -21,6 +21,39 @@ $aes = new AES();
                     display: none;
                 }
             </style>
+        <!-- Delete Model -->
+                    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative p-4 w-full max-w-md max-h-full">
+                        <div class="relative bg-white rounded-lg shadow-sm">
+                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                                  <div class="sm:flex sm:items-start">
+                                    <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                                      <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                      </svg>
+                                    </div>
+                                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                                      <h3 class="text-base font-semibold text-gray-900" id="modal-title">Deactivate account</h3>
+                                      <div class="mt-2">
+                                        <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                    <form action="./php/credential.php" method="post">
+                                        <input type="hidden" name="id" id="modal-account-id"/>
+                                        <button data-modal-hide="popup-modal" type="submit" name="delete" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto">
+                                            Yes, I'm sure
+                                        </button>
+                                    </form>
+                                    <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">No, cancel</button>
+                                </div>
+                              </div>
+                        </div>
+                    </div>
+                </div>
 
         <?php
 
@@ -58,10 +91,11 @@ $aes = new AES();
                 $row['decrypted_password'] = $aes->decrypt($row['password'], $_SESSION["password"]);
             }
             unset($row);
-        ?>
-        <?php
+
             foreach ($data as $row) {
         ?>
+
+
         <!-- Password Detail View -->
         <div id="passwordDetail" class="bg-white col-auto rounded-2xl shadow p-6 w-full max-w-3xl mx-auto">
             <form action="./php/credential.php" method="post">
@@ -77,9 +111,9 @@ $aes = new AES();
                         Edit
                     </a>
                     <!-- Delete Button -->
-                    <a id="deleteBtn" class="px-4 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 text-sm">
+                    <button data-modal-target="popup-modal" id="deleteBtn" data-modal-toggle="popup-modal" data-account-id="<?= $row['account_id'] ?>" class="px-4 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 text-sm" type="button">
                         Delete
-                    </a>
+                    </button>
                 </div>
             </div>
 
@@ -101,7 +135,7 @@ $aes = new AES();
                 <label class="block text-sm font-medium mb-2">Username</label>
                 <div class="flex">
                     <input type="text" name="username" id="username" value="<?= $row['username'] ?>" class="form-input flex-grow" readonly>
-                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200" onclick="copyField('username')">
+                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200 copy-button">
                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
                         </svg>
@@ -114,13 +148,13 @@ $aes = new AES();
                 <label class="block text-sm font-medium mb-2">Password</label>
                 <div class="flex">
                     <input type="password" id="password" name="password" value="<?= $row['decrypted_password'] ?>" class="form-input flex-grow" readonly>
-                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200" onclick="togglePassword()">
+                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-20 hidden-toggle" >
                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
                         </svg>
                     </a>
-                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200" onclick="copyField('password')">
+                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200 copy-button">
                         <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
                         </svg>
@@ -132,7 +166,7 @@ $aes = new AES();
             <div class="mb-6">
                 <label class="block text-sm font-medium mb-2">Notes</label>
                 <div id="notesContainer">
-                    <textarea id="notesTextarea" name="notes" class="form-input w-full" placeholder="Add your notes"><?= $row['notes'] ?></textarea>
+                    <textarea id="notesTextarea" name="notes" class="form-input w-full" placeholder="Add your notes" readonly><?= $row['notes'] ?></textarea>
                 </div>
             </div>
 
@@ -206,9 +240,6 @@ $aes = new AES();
             }
 
             // Set up edit button
-            document.getElementById('editBtn').addEventListener('click', enableEditMode);
-            document.getElementById('cancelEditBtn').addEventListener('click', disableEditMode);
-            // document.getElementById('saveEditBtn').addEventListener('click', saveChanges);
             document.getElementById('deleteBtn').addEventListener('click', deletePassword);
         });
 
@@ -218,42 +249,58 @@ $aes = new AES();
             return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
         }
 
-        // Toggle password visibility
-        function togglePassword() {
-            const passwordInput = document.getElementById('password');
-            passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
-        }
+        const hiddenIcon = document.querySelectorAll(".hidden-toggle");
+        hiddenIcon.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                let passwordInput = e.target.parentElement.parentElement.querySelector('#password');
+                passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+            })
+        })
 
-        // Copy field content to clipboard
-        function copyField(fieldId) {
-            const input = document.getElementById(fieldId);
-            input.select();
-            document.execCommand('copy');
-        }
+        const copyBtn = document.querySelectorAll(".copy-button");
+        copyBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                let passwordInput = e.target.parentElement.parentElement.querySelector('input');
+                passwordInput.select();
+                document.execCommand('copy');
+            })
+        })
 
-        // Enable edit mode
-        function enableEditMode() {
-            const passwordDetail = document.getElementById('passwordDetail');
-            passwordDetail.classList.add('edit-mode');
-            
-            // Make fields editable
-            document.getElementById('username').readOnly = false;
-            document.getElementById('password').readOnly = false;
-            document.getElementById('notesTextarea').readOnly = false;
-        }
+        const editBtn = document.querySelectorAll("#editBtn");
+        editBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const passwordDetail = e.target.parentElement.parentElement.parentElement.parentElement;
+                passwordDetail.classList.add('edit-mode');
 
-        // Disable edit mode
-        function disableEditMode() {
-            const passwordDetail = document.getElementById('passwordDetail');
-            passwordDetail.classList.remove('edit-mode');
-            
-            // Make fields readonly
-            document.getElementById('username').readOnly = true;
-            document.getElementById('password').readOnly = true;
-            document.getElementById('notesTextarea').readOnly = true;
+                // Make fields editable
+                passwordDetail.querySelector('#username').readOnly = false;
+                passwordDetail.querySelector('#password').readOnly = false;
+                passwordDetail.querySelector('#notesTextarea').readOnly = false;
+            })
+        })
 
+        const cancelBtn = document.querySelectorAll("#cancelEditBtn");
+        cancelBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const passwordDetail = e.target.parentElement.parentElement.parentElement;
+                passwordDetail.classList.remove('edit-mode');
 
-        }
+                // Make fields editable
+                passwordDetail.querySelector('#username').readOnly = true;
+                passwordDetail.querySelector('#password').readOnly = true;
+                passwordDetail.querySelector('#notesTextarea').readOnly = true;
+            })
+        })
+
+        const deleteBtn = document.querySelectorAll("#deleteBtn");
+        deleteBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const account_id = e.target.getAttribute('data-account-id');
+                const modalAccountIdInput = document.getElementById('modal-account-id');
+                console.log(account_id)
+                modalAccountIdInput.value = account_id;
+            })
+        })
 
         // Delete password
         function deletePassword() {

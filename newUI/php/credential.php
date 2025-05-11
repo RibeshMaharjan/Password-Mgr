@@ -40,6 +40,8 @@ if (isset($_POST["update"])) {
 
 if (isset($_POST["delete"])) {
     echo "delete";
+    $account_id = $_POST["id"];
+    echo $account_id;
 }
 
 if (isset($_POST["add"])) {

@@ -2,26 +2,23 @@
 <?php require './includes/header.php'; ?>
 <?php require './includes/nav.php'; ?>
     <style>
-            /* Custom styles for checkbox */
-            input[type="checkbox"] {
-                accent-color: black;
-                width: 16px;
-                height: 16px;
-            }
+        /* Custom styles for checkbox */
+        input[type="checkbox"] {
+            accent-color: black;
+            width: 16px;
+            height: 16px;
+        }
 
-            /* Center the generated password */
-            #generatedPassword {
-                text-align: center;
-                font-family: monospace;
-            }
+        /* Center the generated password */
+        #generatedPassword {
+            text-align: center;
+            font-family: monospace;
+        }
 
-            input[type="range"] {
-                accent-color: black;
-            }
-
-
-
-        </style>
+        input[type="range"] {
+            accent-color: black;
+        }
+    </style>
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-6">
         <?php
