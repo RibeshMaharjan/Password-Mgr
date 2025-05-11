@@ -10,36 +10,8 @@
 <body class="min-h-screen bg-gray-100 flex items-center justify-center">
     <div class="w-full max-w-md w-full space-y-8 px-3 py-8 bg-white rounded-xl shadow-lg">
 
-        <div class="card border-0 shadow-none">
-            <div class="text-center mb-8">
-                <h1 class="text-3xl font-bold">KeyNest</h1>
-                <p class="text-gray-600 mt-2">Sign in to your account</p>
-            </div>
-            <form id="loginForm" class="space-y-4">
-                <div>
-                    <!-- <label class="block text-sm font-medium mb-1">Email</label> -->
-                    <input type="email" name="email" class="form-input h-9 shadow-sm" placeholder="Email" required>
-                </div>
-                <div>
-                    <!-- <label class="block text-sm font-medium mb-1">Password</label> -->
-                    <input type="password" name="password" class="form-input h-9 shadow-sm" placeholder="Password" required>
-                </div>
-                <div class="flex items-center justify-end">
-                    <a href="#" class="text-sm text-gray-900 hover:underline">Forgot password?</a>
-                </div>
-                <button type="submit" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200 w-full">Sign In</button>
-            </form>
-
-            <div class="mt-6 text-center">
-                <p class="text-sm text-gray-600">
-                    Don't have an account?
-                    <a href="#" class="text-gray-900 hover:underline" id="showRegister">Register</a>
-                </p>
-            </div>
-        </div>
-
         <!-- Register Form (Hidden by default) -->
-        <div id="registerForm" class="card shadow-none mt-6 hidden">
+        <div id="registerForm" class="card shadow-none mt-6">
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold">KeyNest</h1>
                 <p class="text-gray-600 mt-2">Create your new account</p>
@@ -67,14 +39,14 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-gray-600">
                     Already have an account?
-                    <a href="#" class="text-gray-900 hover:underline" id="showLogin">Sign In</a>
+                    <a href="./login.php" class="text-gray-900 hover:underline" id="showLogin">Sign In</a>
                 </p>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="assets/js/auth.js"></script>
-    <script src="assets/js/login.js"></script>
+<!--    <script src="assets/js/auth.js"></script>-->
+<!--    <script src="assets/js/login.js"></script>-->
 </body>
 </html> 

@@ -33,12 +33,11 @@
                     <a href="#features" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Features</a>
                     <a href="#how-it-works" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">How It Works</a>
                     <a href="#extension" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Extensions</a>
-                    <a href="#pricing" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Pricing</a>
                 </nav>
 
                 <div class="flex items-center space-x-4">
-                    <a href="login.html" class="px-4 py-2 border rounded-md hover:bg-gray-100">Login</a>
-                    <a href="signup.html" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">Sign Up</a>
+                    <a href="login.php" class="px-4 py-2 border rounded-md hover:bg-gray-100">Login</a>
+                    <a href="signup.php" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -52,7 +51,7 @@
                     <h2 class="text-4xl md:text-5xl font-bold mb-4">Secure Your Digital Life with KeyNest</h2>
                     <p class="text-xl mb-8 text-gray-300">Never forget a password again. KeyNest stores all your passwords securely and makes them available across all your devices.</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="signup.html" class="px-6 py-3 bg-white text-black font-bold rounded-lg text-center hover:bg-gray-100 transition">Get Started - Free</a>
+                        <a href="signup.php" class="px-6 py-3 bg-white text-black font-bold rounded-lg text-center hover:bg-gray-100 transition">Get Started - Free</a>
                         <a href="#features" class="px-6 py-3 bg-transparent border border-white text-white font-bold rounded-lg text-center hover:bg-white/10 transition">Learn More</a>
                     </div>
                 </div>
@@ -187,7 +186,7 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-6">Ready to Secure Your Passwords?</h2>
             <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-300">Join thousands of users who trust KeyNest to manage their passwords securely.</p>
-            <a href="signup.html" class="px-8 py-3 bg-white text-black font-bold rounded-lg inline-block hover:bg-gray-100 transition">Get Started Free</a>
+            <a href="signup.php" class="px-8 py-3 bg-white text-black font-bold rounded-lg inline-block hover:bg-gray-100 transition">Get Started Free</a>
             <p class="mt-4 text-sm text-gray-300">No credit card required. Cancel anytime.</p>
         </div>
     </section>

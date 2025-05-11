@@ -15,8 +15,8 @@
                 <h1 class="text-2xl font-bold">Password Manager</h1>
                 
                 <nav class="flex items-center space-x-8 absolute left-1/2 transform -translate-x-1/2">
-                    <a href="dashboard.html" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Dashboard</a>
-                    <a href="password-generator.html" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Password Generator</a>
+                    <a href="dashboard.php" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Dashboard</a>
+                    <a href="password-generator.php" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Password Generator</a>
                     <a href="profile.html" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Profile</a>
                 </nav>
 
