@@ -51,11 +51,12 @@ if(isset($_SESSION['auth']))
                 ?>
                 <div>
                     <!-- <label class="block text-sm font-medium mb-1">Email</label> -->
-                    <input type="text" name="uname" class="form-input h-9 shadow-sm" placeholder="Username" value="<?= $_POST['uname'] ?? '' ?>" required>
+                    <input type="text" name="uname" class="form-input h-9 shadow-sm" placeholder="Username" value="<?= $_SESSION['uname'] ?? '' ?>" required>
+                    <?php if(isset($_SESSION['uname'])) unset($_SESSION['uname']); ?>
                 </div>
                 <div>
                     <!-- <label class="block text-sm font-medium mb-1">Password</label> -->
-                    <input type="password" name="pwd" class="form-input h-9 shadow-sm" placeholder="Password" value="<?= $_POST['pwd'] ?? '' ?>" required>
+                    <input type="password" name="pwd" class="form-input h-9 shadow-sm" placeholder="Password" required>
                 </div>
                 <div class="flex items-center justify-end">
                     <a href="#" class="text-sm text-gray-900 hover:underline">Forgot password?</a>

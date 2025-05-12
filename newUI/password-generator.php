@@ -2,22 +2,10 @@
 <?php require './includes/header.php'; ?>
 <?php require './includes/nav.php'; ?>
     <style>
-        /* Custom styles for checkbox */
-        input[type="checkbox"] {
-            accent-color: black;
-            width: 16px;
-            height: 16px;
+        .accent {
+            accent-color: red;
         }
 
-        /* Center the generated password */
-        #generatedPassword {
-            text-align: center;
-            font-family: monospace;
-        }
-
-        input[type="range"] {
-            accent-color: black;
-        }
     </style>
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-6">
@@ -37,10 +25,9 @@
                 $countSelected = count(array_filter($selectedOptions));
 
                 if($countSelected < 2){
-                    $_SESSION['message'] = "Select at least Two";
-                }
-                if(!$lowercase || !$uppercase || !$number || !$symbols) {
-                    $_SESSION['alert'] = "Your password isn't strong enough";
+                    $_SESSION['error'] = "Select at least Two";
+                } else if(!$lowercase || !$uppercase || !$number || !$symbols) {
+                    $_SESSION['error'] = "Your password isn't strong enough";
                 }
                 if($countSelected >= 2 && ($lowercase || $uppercase || $number || $symbols)) {
                     $password = generatePasswords($length, $lowercase, $uppercase, $number, $symbols);
@@ -50,36 +37,33 @@
         <div class="container mx-auto p-4 max-w-2xl">
             <div class="bg-white rounded-2xl shadow p-6">
                 <h2 class="text-xl font-bold mb-6">Password Generator</h2>
-                <?php
-
-                       if(isset($_SESSION['message']) || isset($_SESSION['alert'])) {
-                           echo '
-                               <div class="notifications-container">
-                               <div class="error-alert">
-                                       <i class="fa-solid fa-circle-xmark weak-icon"></i>
-                                       <i class="fa-solid fa-circle-check strong-icon"></i>
-                                       <div class="error-prompt-container">
-                                           <p class="error-prompt-heading">';
-                                           if (isset($_SESSION['alert'])) {
-                                               echo $_SESSION['alert'];  // Display the alert message
-                                               unset($_SESSION['alert']); // Clear the alert after displaying
-                                           }
-                                           echo '</p>
-                                           <div class="error-prompt-wrap">
-                                               <ul class="error-prompt-list" role="list">';
-                                               if (isset($_SESSION['message'])) {
-                                                   echo '<li id="selectedOption">'. $_SESSION['message'] .'</li>';  // Display the alert message
-                                                   unset($_SESSION['message']); // Clear the alert after displaying
-                                               }
-                                               echo '
-                                               </ul>
-                                           </div>
-                                       </div>
-                               </div>
-                               </div> 
-                           ';
-                       }
-                   ?>
+                <!-- Alert Message-->
+               <?php
+                   if(isset($_SESSION['error'])) {
+                       echo '
+                           <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                             </svg>
+                             <span class="sr-only">Info</span>
+                             <div class="message-container">'.$_SESSION['error'].'</div>
+                           </div>
+                       ';
+                        unset($_SESSION['error']);
+                   }
+                   if(isset($_SESSION['success'])) {
+                       echo '
+                           <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
+                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                             </svg>
+                             <span class="sr-only">Info</span>
+                             <div class="message-container">'.$_SESSION['success'].'</div>
+                           </div>
+                       ';
+                        unset($_SESSION['success']);
+                   }
+               ?>
                 <form action="" method="POST" class="generator-form">
 
                 <div class="space-y-6">
@@ -87,26 +71,26 @@
                     <div class="mb-4">
                         <label class="block text-sm font-medium mb-2">Password Length: <span id="lengthValue">12</span></label>
                         <div class="slider-container mt-3 mb-3">
-                            <input type="range" name="length" id="lengthSlider" min="8" max="32" value="12" class="w-full">
+                            <input type="range" name="length" id="lengthSlider" min="8" max="32" value="12" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent" />
                         </div>
                     </div>
 
                     <!-- Options -->
                     <div class="space-y-3">
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" name="uppercase" id="uppercase" checked class="w-4 h-4 border-gray-300 rounded">
+                            <input type="checkbox" name="uppercase" id="uppercase" checked class="w-4 h-4 border border-gray-300 rounded accent">
                             <label for="uppercase" class="text-sm">Include Uppercase Letters</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" name="lowercase" id="lowercase" checked class="w-4 h-4 border-gray-300 rounded">
+                            <input type="checkbox" name="lowercase" id="lowercase" checked class="w-4 h-4 border border-gray-300 rounded">
                             <label for="lowercase" class="text-sm">Include Lowercase Letters</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" name="number" id="numbers" checked class="w-4 h-4 border-gray-300 rounded">
+                            <input type="checkbox" name="number" id="numbers" checked class="w-4 h-4 border border-gray-300 rounded">
                             <label for="numbers" class="text-sm">Include Numbers</label>
                         </div>
                         <div class="flex items-center space-x-2">
-                            <input type="checkbox" name="symbol" id="symbols" checked class="w-4 h-4 border-gray-300 rounded">
+                            <input type="checkbox" name="symbol" id="symbols" checked class="w-4 h-4 border border-gray-300 rounded">
                             <label for="symbols" class="text-sm">Include Symbols</label>
                         </div>
                     </div>

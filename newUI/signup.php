@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Password Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="assets/css/styles.css">
-</head>
+<?php
+require_once './helpers/session_helper.php';
+require_once './php/dbh.php';
+?>
+
+<?php require './includes/header.php'; ?>
 <body class="min-h-screen bg-gray-100 flex items-center justify-center">
     <div class="w-full max-w-md w-full space-y-8 px-3 py-8 bg-white rounded-xl shadow-lg">
 
@@ -44,9 +41,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Scripts -->
-<!--    <script src="assets/js/auth.js"></script>-->
-<!--    <script src="assets/js/login.js"></script>-->
-</body>
-</html> 
+<?php require './includes/footer.php'; ?>

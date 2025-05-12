@@ -6,6 +6,33 @@ $aes = new AES();
 ?>
     <!-- Main Content -->
     <main class="container mx-auto px-4 py-6">
+        <!-- Alert Message-->
+                <?php
+                   if(isset($_SESSION['error'])) {
+                       echo '
+                           <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                             </svg>
+                             <span class="sr-only">Info</span>
+                             <div class="message-container">'.$_SESSION['error'].'</div>
+                           </div>
+                       ';
+                       unset($_SESSION['error']);
+                   }
+                   if(isset($_SESSION['success'])) {
+                       echo '
+                           <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
+                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                             </svg>
+                             <span class="sr-only">Info</span>
+                             <div class="message-container">'.$_SESSION['success'].'</div>
+                           </div>
+                       ';
+                       unset($_SESSION['success']);
+                   }
+                ?>
         <style>
                 .eye-icon, .copy-icon {
                     cursor: pointer;
@@ -22,49 +49,48 @@ $aes = new AES();
                 }
             </style>
         <!-- Delete Model -->
-                    <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                    <div class="relative p-4 w-full max-w-md max-h-full">
-                        <div class="relative bg-white rounded-lg shadow-sm">
-                            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-                                  <div class="sm:flex sm:items-start">
-                                    <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
-                                      <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
-                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                      </svg>
-                                    </div>
-                                    <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                      <h3 class="text-base font-semibold text-gray-900" id="modal-title">Deactivate account</h3>
-                                      <div class="mt-2">
-                                        <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.</p>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                    <form action="./php/credential.php" method="post">
-                                        <input type="hidden" name="id" id="modal-account-id"/>
-                                        <button data-modal-hide="popup-modal" type="submit" name="delete" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto">
-                                            Yes, I'm sure
-                                        </button>
-                                    </form>
-                                    <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">No, cancel</button>
-                                </div>
+        <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow-sm">
+                    <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                              <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                              </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <h3 class="text-base font-semibold text-gray-900" id="modal-title">Deactivate account</h3>
+                              <div class="mt-2">
+                                <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.</p>
                               </div>
+                            </div>
+                          </div>
                         </div>
-                    </div>
+                        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                            <form action="./php/credential.php" method="post">
+                                <input type="hidden" name="id" id="modal-account-id"/>
+                                <input type="hidden" name="site_id" value="<?= $_GET['id'] ?>" id="modal-site-id"/>
+                                <button data-modal-hide="popup-modal" type="submit" name="delete_credential" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto">
+                                    Yes, I'm sure
+                                </button>
+                            </form>
+                            <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">No, cancel</button>
+                        </div>
+                      </div>
                 </div>
-
+            </div>
+        </div>
         <?php
-
-
             if (isset($_GET['id'])) {
                 $_SESSION['site_id'] = $_GET['id'];
             }
             $site_id = $_GET['id'];
 
-            $stmt = $dbh->prepare("SELECT * FROM sites WHERE site_id = :site_id;");
+            $stmt = $dbh->prepare("SELECT * FROM sites WHERE user_id = :user_id AND site_id = :site_id;");
             $stmt->bindParam(':site_id', $site_id);
+            $stmt->bindParam(':user_id', $_SESSION["userid"]);
             $stmt->execute();
 
             $site = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -94,35 +120,32 @@ $aes = new AES();
 
             foreach ($data as $row) {
         ?>
-
-
         <!-- Password Detail View -->
         <div id="passwordDetail" class="bg-white col-auto rounded-2xl shadow p-6 w-full max-w-3xl mx-auto">
             <form action="./php/credential.php" method="post">
-
-            <div class="flex justify-between items-center mb-6">
-                <h2 class="text-xl font-bold capitalize" id="passwordTitle"><?= $site['site_name'] ?></h2>
-                <div class="flex space-x-2">
-                    <a href="<?= $site['site_url'] ?>" id="visitSiteBtn" class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 text-sm" target="_blank">
-                        Visit Site
-                    </a>
-                    <!-- Edit Button -->
-                    <a id="editBtn" class="px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 text-sm">
-                        Edit
-                    </a>
-                    <!-- Delete Button -->
-                    <button data-modal-target="popup-modal" id="deleteBtn" data-modal-toggle="popup-modal" data-account-id="<?= $row['account_id'] ?>" class="px-4 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 text-sm" type="button">
-                        Delete
-                    </button>
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold capitalize" id="passwordTitle"><?= $site['site_name'] ?></h2>
+                    <div class="flex space-x-2">
+                        <a href="<?= $site['site_url'] ?>" id="visitSiteBtn" class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 text-sm" target="_blank">
+                            Visit Site
+                        </a>
+                        <!-- Edit Button -->
+                        <a id="editBtn" class="px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 text-sm">
+                            Edit
+                        </a>
+                        <!-- Delete Button -->
+                        <button data-modal-target="popup-modal" id="deleteBtn" data-modal-toggle="popup-modal" data-account-id="<?= $row['account_id'] ?>" class="px-4 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 text-sm" type="button">
+                            Delete
+                        </button>
+                    </div>
                 </div>
-            </div>
 
             <!-- Edit Mode Actions -->
             <div class="edit-actions mb-4 justify-end space-x-2">
                 <a id="cancelEditBtn" class="px-4 py-2 border rounded-md hover:bg-gray-100 text-sm">
                     Cancel
                 </a>
-                <button id="saveEditBtn" name="update" type="submit" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 text-sm">
+                <button id="saveEditBtn" name="update_credential" type="submit" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 text-sm">
                     Save Changes
                 </button>
             </div>
@@ -297,29 +320,9 @@ $aes = new AES();
             btn.addEventListener('click', (e) => {
                 const account_id = e.target.getAttribute('data-account-id');
                 const modalAccountIdInput = document.getElementById('modal-account-id');
-                console.log(account_id)
                 modalAccountIdInput.value = account_id;
             })
         })
-
-        // Delete password
-        function deletePassword() {
-            if (!currentPassword) return;
-            
-            if (confirm('Are you sure you want to delete this password? This action cannot be undone.')) {
-                // Get passwords from localStorage
-                const passwords = JSON.parse(localStorage.getItem('passwords')) || [];
-                
-                // Filter out the current password
-                const updatedPasswords = passwords.filter(p => p.id != currentPassword.id);
-                
-                // Save to localStorage
-                localStorage.setItem('passwords', JSON.stringify(updatedPasswords));
-                
-                // Redirect to dashboard
-                window.location.href = 'dashboard.html';
-            }
-        }
     </script>
 
 <?php require './includes/footer.php'; ?>

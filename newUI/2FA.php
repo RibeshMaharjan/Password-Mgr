@@ -3,17 +3,11 @@ require_once './helpers/session_helper.php';
 require_once './php/dbh.php';
 require_once './lib/functions.php';
 
-if(!isset($_SESSION['auth']))
+if(isset($_SESSION['auth']))
 {
-    header('Location: ./login.php');
-    exit();
-}
-
-if(checkVerification()) {
     header('Location: ./dashboard.php');
     exit();
 }
-
 ?>
 
 <?php require './includes/header.php'; ?>
@@ -22,6 +16,7 @@ if(checkVerification()) {
         <div class="card border-0 shadow-none">
             <!-- Alert Message-->
             <?php
+                echo $_SESSION["userid"];
                 if(isset($_SESSION['error'])) {
                     echo '
                         <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
@@ -49,17 +44,17 @@ if(checkVerification()) {
             ?>
             <div class="text-center mb-8">
                 <h1 class="text-3xl font-bold">KeyNest</h1>
-                <p class="text-gray-600 mt-2">Verify your email</p>
+                <p class="text-gray-600 mt-2">Enter your verification code</p>
             </div>
             <form id="loginForm" action="php/verifyUser.php" method="post" class="space-y-4">
                 <div>
                     <!-- <label class="block text-sm font-medium mb-1">Email</label> -->
-                    <input type="text" name="verification_code" class="form-input h-9 shadow-sm" placeholder="Verification Code" required>
+                    <input type="text" name="otp_code" class="form-input h-9 shadow-sm" placeholder="Verification Code" required>
                 </div>
                 <div class="flex items-center justify-end">
                     <a href="./php/resendVerification.php" class="text-sm text-gray-900 hover:underline">Resend Code</a>
                 </div>
-                <button type="submit" name="verify" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200 w-full">Verify</button>
+                <button type="submit" name="verify_otp" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200 w-full">Verify</button>
             </form>
 
             <div class="mt-6 text-center">
