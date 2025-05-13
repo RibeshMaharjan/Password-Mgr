@@ -96,18 +96,19 @@ $aes = new AES();
             $site = $stmt->fetch(PDO::FETCH_ASSOC);
         ?>
         <!-- Back Button -->
-        <div class="mb-6">
-            <a href="dashboard.php" class="flex items-center text-gray-600 hover:text-gray-900">
+        <div class="mb-6 flex justify-between items-center">
+            <a href="dashboard.php" class="w-fit flex items-center text-gray-600 hover:text-gray-900">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
                 </svg>
                 Back to Dashboard
             </a>
+            <!-- Add Password Modal toggle -->
+            <button data-modal-target="password-modal" data-modal-toggle="password-modal"  id="addPasswordBtn" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Password</button>
         </div>
         <div class="grid grid-cols-2 gap-4">
 
         <?php
-
             $stmt = $dbh->prepare("SELECT credentials.account_id, credentials.username, credentials.password, credentials.notes, credentials.created_at, credentials.updated_at, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
             $stmt->execute(array($_SESSION["userid"], $site_id));
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -117,7 +118,6 @@ $aes = new AES();
                 $row['decrypted_password'] = $aes->decrypt($row['password'], $_SESSION["password"]);
             }
             unset($row);
-
             foreach ($data as $row) {
         ?>
         <!-- Password Detail View -->
@@ -244,28 +244,68 @@ $aes = new AES();
 
     </main>
 
-    <!-- Scripts -->
-    <script src="assets/js/auth.js"></script>
-    <script src="assets/js/navigation.js"></script>
+    <!-- Add Password modal -->
+       <div id="password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+           <div class="relative p-4 w-full max-w-2xl max-h-full">
+               <!-- Modal content -->
+               <div class="relative bg-white rounded-lg shadow-sm">
+                   <!-- Modal header -->
+                   <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+                       <h3 class="text-xl font-semibold text-gray-900">
+                           Add New Password
+                       </h3>
+                       <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="password-modal">
+                           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                           </svg>
+                           <span class="sr-only">Close modal</span>
+                       </button>
+                   </div>
+                   <!-- Modal body -->
+                   <div class="p-4 md:p-5">
+                       <form class="space-y-4 grid grid-cols-2 gap-4" action="php/credential.php" method="post">
+                           <div class="mt-4 mb-0">
+                               <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Your Username/Email</label>
+                               <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="asura_007" required />
+                           </div>
+                           <div>
+                               <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Your password</label>
+                               <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
+                           </div>
+                           <div class="">
+                               <label for="site_id" class="block mb-2 text-sm font-medium text-gray-900">Sites</label>
+                               <select id="site_id" name="site_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                   <option selected="">Select Site</option>
+                                   <?php
+                                       $stmt = $dbh->prepare("SELECT * FROM sites WHERE user_id = :user_id");
+                                       $stmt->bindParam(':user_id', $_SESSION['userid']);
+                                       $stmt->execute();
+                                       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                       foreach($result as $row){
+                                           echo '<option value="'. $row['site_id'] .'" '. ($row['site_id'] == $_GET['id'] ? 'selected' : '') .'>' .$row['site_name'].'</option>';
+                                       };
+                                   ?>
+                               </select>
+                           </div>
+                           <div class="col-span-2">
+                               <label for="notes" class="block mb-2 text-sm font-medium text-gray-900">Notes</label>
+                               <textarea id="notes" name="notes" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Place your notes here"></textarea>
+                           </div>
+                           <div class="col-span-2 grid grid-cols-subgrid gap-4">
+                               <button type="submit" name="add_credential" class="col-start-2 w-full text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Password</button>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+
     <script>
-        // Get password ID from URL parameter
-        const urlParams = new URLSearchParams(window.location.search);
-        const passwordId = urlParams.get('id');
-        let currentPassword = null;
-
-        document.addEventListener('DOMContentLoaded', () => {
-            // If password ID exists, load password data
-            if (passwordId) {
-                // loadPasswordData(passwordId);
-            } else {
-                // Redirect to dashboard if no ID provided
-                window.location.href = 'dashboard.html';
-            }
-
-            // Set up edit button
-            document.getElementById('deleteBtn').addEventListener('click', deletePassword);
-        });
-
+        const formData = {
+            usernameInput: "",
+            passwordInput: "",
+            notesInput: ""
+        };
 
         // Helper function to format dates
         function formatDate(date) {
@@ -295,6 +335,10 @@ $aes = new AES();
                 const passwordDetail = e.target.parentElement.parentElement.parentElement.parentElement;
                 passwordDetail.classList.add('edit-mode');
 
+                formData.usernameInput = passwordDetail.querySelector('#username').value;
+                formData.passwordInput = passwordDetail.querySelector('#password').value;
+                formData.notesInput = passwordDetail.querySelector('#notesTextarea').value;
+
                 // Make fields editable
                 passwordDetail.querySelector('#username').readOnly = false;
                 passwordDetail.querySelector('#password').readOnly = false;
@@ -307,6 +351,10 @@ $aes = new AES();
             btn.addEventListener('click', (e) => {
                 const passwordDetail = e.target.parentElement.parentElement.parentElement;
                 passwordDetail.classList.remove('edit-mode');
+
+                passwordDetail.querySelector('#username').value = formData.usernameInput;
+                passwordDetail.querySelector('#password').value = formData.passwordInput;
+                passwordDetail.querySelector('#notesTextarea').value = formData.notesInput;
 
                 // Make fields editable
                 passwordDetail.querySelector('#username').readOnly = true;

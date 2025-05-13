@@ -41,11 +41,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = profileForm.elements['email'];
     const usernameInput = profileForm.elements['username'];
 
+    const formData = {
+        nameInput: "",
+        emailInput: "",
+        usernameInput: ""
+    };
+
     let editing = false;
 
     // Edit/Save Profile toggle with separate Cancel and Save buttons
     editProfileBtn.addEventListener('click', () => {
         if (!editing) {
+            formData.nameInput = nameInput.value;
+            formData.emailInput = emailInput.value;
+            formData.usernameInput = usernameInput.value;
+
             // Enable fields
             nameInput.disabled = false;
             emailInput.disabled = false;
@@ -65,6 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function cancelEditing() {
+
+        nameInput.value = formData.nameInput;
+        emailInput.value = formData.emailInput;
+        usernameInput.value = formData.usernameInput;
+
         // Disable fields
         nameInput.disabled = true;
         emailInput.disabled = true;

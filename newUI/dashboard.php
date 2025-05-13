@@ -223,7 +223,7 @@
     </div>
 </main>
 
-    <!-- Main modal -->
+    <!-- Add Password modal -->
     <div id="password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-2xl max-h-full">
             <!-- Modal content -->
@@ -305,7 +305,7 @@
                             </div>
                             <div class="mt-4 mb-0">
                                 <label for="site_url" class="block mb-2 text-sm font-medium text-gray-900">Site Url</label>
-                                Update Site               <input type="text" name="site_url" id="site_url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="google.com" required />
+                                <input type="text" name="site_url" id="site_url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="google.com" required />
                             </div>
                             <button type="submit" name="add_site" class="w-full text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Site</button>
                         </form>
@@ -322,7 +322,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-900">
-                            Add New Site
+                            Update your Site Details
                         </h3>
                         <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="update-site-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -343,7 +343,7 @@
                                 <label for="model_site_url" class="block mb-2 text-sm font-medium text-gray-900">Site Url</label>
                                 <input type="text" name="site_url" id="model_site_url" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="google.com" required />
                             </div>
-                            <button type="submit" name="update_site" class="w-full text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Site</button>
+                            <button type="submit" name="update_site" class="w-full text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Update Site</button>
                         </form>
                     </div>
                 </div>

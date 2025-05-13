@@ -25,8 +25,10 @@ if (isset($_POST["update_credential"])) {
 
         try {
             $dbh->beginTransaction();
-            $updatestmt = $dbh->prepare("INSERT INTO password_history (account_id, previous_username, previous_password) VALUES (?,?,?);");
-            $updatestmt->execute(array($id, $old_username, $old_password));
+            if($old_password != $encypted_pwd){
+                $updatestmt = $dbh->prepare("INSERT INTO password_history (account_id, previous_username, previous_password) VALUES (?,?,?);");
+                $updatestmt->execute(array($id, $old_username, $old_password));
+            }
 
             $stmt = $dbh->prepare("UPDATE credentials SET notes = ?, username = ?, password = ?, updated_at = CURRENT_TIMESTAMP WHERE account_id = ?;");
             $stmt->execute(array($notes, $username, $encypted_pwd, $id));
