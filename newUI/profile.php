@@ -13,7 +13,7 @@
 
 <!-- Main Content -->
 <main class="container mx-auto px-4 py-6">
-    <!-- Delete Model -->
+    <!-- 2FA Model -->
     <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
         <div class="relative p-4 w-full max-w-md max-h-full">
             <div class="relative bg-white rounded-lg shadow-sm">
@@ -29,9 +29,9 @@
                                       </svg>
                                     </div>
                                     <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                      <h3 class="text-base font-semibold text-gray-900" id="modal-title">Deactivate account</h3>
+                                      <h3 class="text-base font-semibold text-gray-900" id="modal-title">Diable 2FA</h3>
                                       <div class="mt-2">
-                                        <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.</p>
+                                        <p class="text-sm text-gray-500">Are you sure you want to disable the 2FA for your account?</p>
                                       </div>
                                     </div>
                                   </div>
@@ -43,7 +43,7 @@
                                             Yes, I am sure
                                         </button>
                                     </form>
-                                    <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">No, cancel</button>
+                                    <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto" onclick="toggleCheckbox()">No, cancel</button>
                                 </div>
                         ';
                     } else {
@@ -56,9 +56,9 @@
                                   </svg>
                                 </div>
                                 <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                                  <h3 class="text-base font-semibold text-gray-900" id="modal-title">Deactivate account</h3>
+                                  <h3 class="text-base font-semibold text-gray-900" id="modal-title">Enable 2FA</h3>
                                   <div class="mt-2">
-                                    <p class="text-sm text-gray-500">A 6 digit code will be send to your Mail.</p>
+                                    <p class="text-sm text-gray-500">A 6-digit code will be send to your Mail.</p>
                                   </div>
                                 </div>
                               </div>
@@ -70,7 +70,7 @@
                                         Yes, I am sure
                                     </button>
                                 </form>
-                                <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">No, cancel</button>
+                                <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto" onclick="toggleCheckbox()">No, cancel</button>
                             </div>
                         ';
                     }
@@ -234,5 +234,15 @@
         </div>
     </div>
 </main>
+
+<script>
+    function toggleCheckbox() {
+        if(document.querySelector('input[type="checkbox"]').checked) {
+            document.querySelector('input[type="checkbox"]').checked = false;
+        } else {
+            document.querySelector('input[type="checkbox"]').checked = true;
+        }
+    }
+</script>
 
 <?php include_once 'includes/footer.php'; ?>

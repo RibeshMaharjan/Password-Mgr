@@ -89,41 +89,7 @@ if (isset($_POST['changePassword'])) {
         exit;
     }
 
-    if($newPassword !== $newPasswordConfirm) {
-        $_SESSION['error'] = "Passwords do not match.";
-        header("location: ../profile.php");
-        exit;
-    }
-
-    if(strlen($newPassword) < 8) {
-        $_SESSION['error'] = "Password must be at least 8 characters.";
-        header("location: ../profile.php");
-        exit;
-    }
-
-    if (!preg_match('/[A-Z]/', $newPassword)) {
-        $_SESSION['error'] = "Password must contain at least 1 uppercase letter.";
-        header("location: ../profile.php");
-        exit;
-    }
-
-    if (!preg_match('/[a-z]/', $newPassword)) {
-        $_SESSION['error'] = "Password must contain at least 1 lowercase letter.";
-        header("location: ../profile.php");
-        exit;
-    }
-
-    if(!preg_match('/[0-9]/', $newPassword)) {
-        $_SESSION['error'] = "Password must contain at least 1 number.";
-        header("location: ../profile.php");
-        exit;
-    }
-
-    if (!preg_match('/[@$!%*#?&]/', $newPassword)) {
-        $_SESSION['error'] = "Password must contain at least 1 special character.";
-        header("location: ../profile.php");
-        exit;
-    }
+    validateVassword($newPassword, $newPasswordConfirm);
 
     $encypted_pwd = $aes->encrypt($newPassword, $saltKey);
 

@@ -16,7 +16,6 @@ if(isset($_SESSION['auth']))
         <div class="card border-0 shadow-none">
             <!-- Alert Message-->
             <?php
-                echo $_SESSION["userid"];
                 if(isset($_SESSION['error'])) {
                     echo '
                         <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">

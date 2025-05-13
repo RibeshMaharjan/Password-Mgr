@@ -61,7 +61,7 @@ if(isset($_SESSION['auth']))
                 <div class="flex items-center justify-end">
                     <a href="#" class="text-sm text-gray-900 hover:underline">Forgot password?</a>
                 </div>
-                <button type="submit" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200 w-full">Sign In</button>
+                <button type="submit" name="login" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200 w-full">Sign In</button>
             </form>
 
             <div class="mt-6 text-center">

@@ -1,4 +1,24 @@
 <?php
+//
+//// Set a custom exception handler
+//set_exception_handler(function ($exception) {
+//    // Log the exception or handle it here
+//    $_SESSION['error'] = 'An unexpected error occurred. Please try again later.';
+//    header('Location: ./../signup.php');
+//    exit();
+//});
+//
+//// Set a custom error handler to catch fatal errors
+//register_shutdown_function(function () {
+//    $error = error_get_last();
+//    if ($error !== NULL && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR])) {
+//        // Fatal error occurred
+//        $_SESSION['error'] = 'A critical error occurred. Please try again later.';
+//        header('Location: ./../signup.php');
+//        exit();
+//    }
+//});
+
 require_once __DIR__.'/../helpers/session_helper.php';
 include_once __DIR__.'/../lib/functions.php';
 ?>

@@ -9,7 +9,7 @@ function getUserInfo()
     global $dbh;
     global $aes;
     $user_id = $_SESSION["userid"];
-    $stmt = $dbh->prepare("SELECT * FROM users u JOIN auth_settings a WHERE u.user_id = :user_id");
+    $stmt = $dbh->prepare("SELECT * FROM users u JOIN auth_settings a ON u.user_id = a.user_id WHERE u.user_id = :user_id");
     $stmt->bindParam(':user_id', $user_id);
     $stmt->execute();
 
