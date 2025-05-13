@@ -1,13 +1,10 @@
 
 <?php
 
-$name = 'Ribesh';
-$email = 'ribesh.maharjan04@gmail.com';
-$subject = 'Testing';
-$message = 'This is working!!!';
-$OTP = '123456';
-
 require __DIR__.'/../../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../../');
+$dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -27,10 +24,10 @@ function sendVerificationMail(
     $mail->Port = 587;
     $mail->SMTPSecure = PHPmailer::ENCRYPTION_STARTTLS;;
     $mail->SMTPAuth = true;
-    $mail->Username = 'ribubaucha@gmail.com';
-    $mail->Password = 'hzep vsiz dxsq fjnv';
+    $mail->Username = $_ENV['GMAIL_MAIL'];
+    $mail->Password = $_ENV['GMAIL_PASS'];
 
-    $mail->setFrom('passwordmgr@ribesh-maharjan.com.np', 'KeyNest');
+    $mail->setFrom($_ENV['APP_MAIL'], $_ENV['APP_NAME']);
     $mail->addAddress($userEmail);
 
     $mail->Subject = 'Verify your email';
@@ -84,10 +81,10 @@ function sendOTPMail(
     $mail->Port = 587;
     $mail->SMTPSecure = PHPmailer::ENCRYPTION_STARTTLS;;
     $mail->SMTPAuth = true;
-    $mail->Username = 'ribubaucha@gmail.com';
-    $mail->Password = 'hzep vsiz dxsq fjnv';
+    $mail->Username = $_ENV['GMAIL_MAIL'];
+    $mail->Password = $_ENV['GMAIL_PASS'];
 
-    $mail->setFrom('passwordmgr@ribesh-maharjan.com.np', 'KeyNest');
+    $mail->setFrom($_ENV['APP_MAIL'], $_ENV['APP_NAME']);
     $mail->addAddress($userEmail);
 
     $mail->Subject = 'Your two-factor sign in code';
