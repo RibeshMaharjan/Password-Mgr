@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .container {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        button {
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #3367d6;
+        }
+        .notification {
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 4px;
+            display: none;
+        }
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Verify Your OTP</h1>
+        
+        <div id="notification" class="notification"></div>
+        
+        <form id="otpForm">
+            <div class="form-group">
+                <label for="otpInput">Enter OTP Code</label>
+                <input type="text" id="otpInput" placeholder="Enter 6-digit code" maxlength="6" required>
+                <small>Please enter the verification code sent to your email</small>
+            </div>
+            
+            <button type="submit" id="verifyBtn">Verify</button>
+        </form>
+        
+        <div id="loading" class="loading">
+            <div class="spinner"></div> Verifying...
+        </div>
+    </div>
+
+    <script>
+        // DOM elements
+        const otpForm = document.getElementById('otpForm');
+        const otpInput = document.getElementById('otpInput');
+        const verifyBtn = document.getElementById('verifyBtn');
+        const notification = document.getElementById('notification');
+        const loading = document.getElementById('loading');
+
+        // Show notification function
+        function showNotification(message, type) {
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+            
+            // Hide after 5 seconds
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Set loading state
+        function setLoadingState(isLoading) {
+            if (isLoading) {
+                loading.style.display = 'block';
+                verifyBtn.disabled = true;
+            } else {
+                loading.style.display = 'none';
+                verifyBtn.disabled = false;
+            }
+        }
+
+        // Verify OTP function
+        async function verifyOtp(otp) {
+            try {
+                // Validate input
+                if (!otp || otp.trim() === '') {
+                    throw new Error('OTP is required');
+                }
+
+                // Make request to verifyOtp.php endpoint
+                const response = await fetch("http://localhost/Password-Mgr/newUi/api/verifyOtp.php", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        otp: otp
+                    }),
+                    credentials: 'include'
+                });
+
+                // Check if response is ok
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                // Parse response
+                const result = await response.json();
+
+                // Handle successful response
+                if (result.success) {
+                    // In a real extension, you would store the token in chrome.storage
+                    // chrome.storage.local.set({
+                    //     token: result.token,
+                    //     username: result.email
+                    // });
+                    
+                    // For this example, we'll just log it
+                    console.log('Token received:', result.token);
+                    console.log('Email:', result.email);
+                    
+                    return {
+                        success: true,
+                        message: result.message,
+                        token: result.token,
+                        email: result.email
+                    };
+                } else {
+                    // Handle error response
+                    return {
+                        success: false,
+                        message: result.message
+                    };
+                }
+            } catch (error) {
+                console.error("OTP verification error:", error);
+                return {
+                    success: false,
+                    message: "Connection error: " + error.message
+                };
+            }
+        }
+
+        // Form submit event listener
+        otpForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (otpInput.value.trim() === '') {
+                showNotification("Please enter your OTP", "error");
+                otpInput.focus();
+                return;
+            }
+            
+            // Show loading state
+            setLoadingState(true);
+            
+            try {
+                const result = await verifyOtp(otpInput.value);
+                
+                if (result.success) {
+                    showNotification(result.message, "success");
+                    // In a real extension, you would redirect or update UI
+                    setTimeout(() => {
+                        alert("Authentication successful! In a real extension, you would be redirected to the main page.");
+                    }, 1000);
+                } else {
+                    showNotification(result.message, "error");
+                }
+            } catch (error) {
+                console.error("Verification error:", error);
+                showNotification("Connection error", "error");
+            } finally {
+                setLoadingState(false);
+            }
+        });
+
+        // Focus on OTP input when page loads
+        window.onload = () => {
+            otpInput.focus();
+        };
+    </script>
+</body>
+</html>
