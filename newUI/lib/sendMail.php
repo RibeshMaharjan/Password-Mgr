@@ -1,13 +1,10 @@
 
 <?php
 
-$name = 'Ribesh';
-$email = 'ribesh.maharjan04@gmail.com';
-$subject = 'Testing';
-$message = 'This is working!!!';
-$OTP = '123456';
-
 require __DIR__.'/../../vendor/autoload.php';
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../../');
+$dotenv->load();
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -27,10 +24,10 @@ function sendVerificationMail(
     $mail->Port = 587;
     $mail->SMTPSecure = PHPmailer::ENCRYPTION_STARTTLS;;
     $mail->SMTPAuth = true;
-    $mail->Username = 'ribubaucha@gmail.com';
-    $mail->Password = 'hzep vsiz dxsq fjnv';
+    $mail->Username = $_ENV['GMAIL_MAIL'];
+    $mail->Password = $_ENV['GMAIL_PASS'];
 
-    $mail->setFrom('passwordmgr@ribesh-maharjan.com.np', 'KeyNest');
+    $mail->setFrom($_ENV['APP_MAIL'], $_ENV['APP_NAME']);
     $mail->addAddress($userEmail);
 
     $mail->Subject = 'Verify your email';
@@ -84,10 +81,10 @@ function sendOTPMail(
     $mail->Port = 587;
     $mail->SMTPSecure = PHPmailer::ENCRYPTION_STARTTLS;;
     $mail->SMTPAuth = true;
-    $mail->Username = 'ribubaucha@gmail.com';
-    $mail->Password = 'hzep vsiz dxsq fjnv';
+    $mail->Username = $_ENV['GMAIL_MAIL'];
+    $mail->Password = $_ENV['GMAIL_PASS'];
 
-    $mail->setFrom('passwordmgr@ribesh-maharjan.com.np', 'KeyNest');
+    $mail->setFrom($_ENV['APP_MAIL'], $_ENV['APP_NAME']);
     $mail->addAddress($userEmail);
 
     $mail->Subject = 'Your two-factor sign in code';
@@ -108,7 +105,7 @@ function sendOTPMail(
               <span style="font-size: 32px; font-weight: bold; letter-spacing: 5px; color: #4CAF50;">'. $OTP .'</span>
             </div>
             <p>Hello '. $username .',</p>
-            <p>You recently tried to log in from a new device, browser, or location. In order to complete your login, please use the above code.</p>
+            <p>You recently tried to log in from a new device, browser, or location. To complete your login, please use the above code.</p>
             <p>This code will expire in 1 minute for security reasons.</p>
             <p>If this wasn\'t you, please change your password</p>
             <p>Best regards,<br>KeyNest</p>
