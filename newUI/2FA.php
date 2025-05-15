@@ -51,7 +51,7 @@ if(isset($_SESSION['auth']))
                     <input type="text" name="otp_code" class="form-input h-9 shadow-sm" placeholder="Verification Code" required>
                 </div>
                 <div class="flex items-center justify-end">
-                    <a href="./php/resendVerification.php" class="text-sm text-gray-900 hover:underline">Resend Code</a>
+                    <a href="./php/resendVerification.php?type=2FA" class="text-sm text-gray-900 hover:underline">Resend Code</a>
                 </div>
                 <button type="submit" name="verify_otp" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200 w-full">Verify</button>
             </form>
