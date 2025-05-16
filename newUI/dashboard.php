@@ -1,5 +1,18 @@
-<?php require './includes/header.php'; ?>
-<?php require './includes/nav.php'; ?>
+<?php 
+require './includes/header.php';
+require './includes/nav.php';
+
+// Establish database connection directly
+$dbParams = array(
+    'host' => 'localhost',
+    'username' => 'root',
+    'password' => '',
+    'dbname' => 'passwordmgr'
+);
+
+$dbh = new PDO("mysql:host=" . $dbParams['host'] . ";dbname=" . $dbParams['dbname'] . "", $dbParams['username'], $dbParams['password']);
+$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+?>
 <!-- Main Content -->
 <main class="container mx-auto px-4 py-6">
     <!-- Main Dashboard View -->
@@ -42,7 +55,8 @@
                                 $stmt = $dbh->prepare('SELECT COUNT(*) as total_passwords FROM credentials WHERE users_id = ?;');
                                 $stmt->execute(array($_SESSION['userid']));
                                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                                echo $result['total_passwords'];
+                                $totalPasswords = $result['total_passwords'];
+                                echo $totalPasswords;
                             ?>
                         </h3>
                     </div>
@@ -63,7 +77,8 @@
                                 $stmt = $dbh->prepare('SELECT COUNT(*) as total_sites FROM sites WHERE user_id = ?;');
                                 $stmt->execute(array($_SESSION['userid']));
                                 $result = $stmt->fetch(PDO::FETCH_ASSOC);
-                                echo $result['total_sites'];
+                                $totalSites = $result['total_sites'];
+                                echo $totalSites;
                             ?>
                         </h3>
                     </div>
@@ -79,7 +94,25 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <p class="text-sm text-gray-600">Reused Passwords</p>
-                        <h3 class="text-2xl font-bold text-yellow-600" id="reusedPasswords">0</h3>
+                        <h3 class="text-2xl font-bold text-yellow-600" id="reusedPasswords">
+                        <?php
+                          // More efficient query to directly count reused passwords
+                          $stmt = $dbh->prepare('
+                              SELECT SUM(reuse_count) as total_reused
+                              FROM (
+                                  SELECT COUNT(*) - 1 as reuse_count
+                                  FROM credentials
+                                  WHERE users_id = ?
+                                  GROUP BY password
+                                  HAVING COUNT(*) > 1
+                              ) as reused_passwords
+                          ');
+                          $stmt->execute(array($_SESSION['userid']));
+                          $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+                          echo $result['total_reused'] ?? 0;
+                        ?>
+                        </h3>
                     </div>
                     <div class="p-3 bg-yellow-100 rounded-full">
                         <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -90,19 +123,29 @@
             </div>
 
             <div class="card">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <p class="text-sm text-gray-600">Security Score</p>
-                        <h3 class="text-2xl font-bold text-green-600" id="securityScore">0</h3>
-                    </div>
-                    <div class="p-3 bg-green-100 rounded-full">
-                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                    </div>
+              <div class="flex items-center justify-between">
+                <div>
+                  <p class="text-sm text-gray-600">Avg. Passwords per Site</p>
+                  <h3 class="text-2xl font-bold text-green-600" id="avgPasswordsPerSite">
+                      <?php
+                      if ($totalSites > 0) {
+                          $avgPasswordsPerSite = round($totalPasswords / $totalSites, 1);
+                          echo $avgPasswordsPerSite;
+                      } else {
+                          echo "0";
+                      }
+                      ?>
+                  </h3>
                 </div>
+                <div class="p-3 bg-green-100 rounded-full">
+                  <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                          d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                  </svg>
+                </div>
+              </div>
             </div>
-        </div>
+          </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <!-- Password List -->
@@ -182,12 +225,12 @@
                         <button class="btn btn-outline w-full text-left" onclick="window.location.href='password-generator.php'">
                             Generate New Password
                         </button>
-                        <button class="btn btn-outline w-full text-left" id="importPasswordsBtn">
-                            Import Passwords
-                        </button>
-                        <button class="btn btn-outline w-full text-left" id="exportPasswordsBtn">
-                            Export Passwords
-                        </button>
+<!--                        <button class="btn btn-outline w-full text-left" id="importPasswordsBtn">-->
+<!--                            Import Passwords-->
+<!--                        </button>-->
+<!--                        <button class="btn btn-outline w-full text-left" id="exportPasswordsBtn">-->
+<!--                            Export Passwords-->
+<!--                        </button>-->
                     </div>
                 </div>
 

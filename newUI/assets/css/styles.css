@@ -82,3 +82,18 @@
     accent-color: red;
     background-color: blue;
 }
+
+/* Loading Screen Styles */
+#loading-overlay {
+    transition: opacity 0.3s ease;
+}
+
+#loading-overlay.hidden {
+    display: none;
+    opacity: 0;
+}
+
+#loading-overlay:not(.hidden) {
+    display: flex;
+    opacity: 1;
+}
