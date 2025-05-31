@@ -118,7 +118,11 @@
                 ?>
                 <h2 class="text-lg font-bold">User Profile</h2>
                 <div class="flex flex-col items-center mb-4">
-                    <div class="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center text-4xl font-semibold text-gray-500" id="userAvatar">J</div>
+                    <div class="w-32 h-32 rounded-full bg-gray-100 flex items-center justify-center text-4xl font-semibold text-gray-500" id="userAvatar">
+                        <?php
+                        echo substr($userInfo['users_fullname'], 0, 1);
+                        ?>
+                    </div>
                 </div>
                 <form action="./php/updateUserprofile.php" method="POST" id="profileForm" class="space-y-6">
                     <input type="hidden" name="userid" value="<?= $userInfo['user_id'] ?>">

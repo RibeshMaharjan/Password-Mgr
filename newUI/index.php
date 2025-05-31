@@ -51,12 +51,12 @@
                     <h2 class="text-4xl md:text-5xl font-bold mb-4">Secure Your Digital Life with KeyNest</h2>
                     <p class="text-xl mb-8 text-gray-300">Never forget a password again. KeyNest stores all your passwords securely and makes them available across all your devices.</p>
                     <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                        <a href="signup.php" class="px-6 py-3 bg-white text-black font-bold rounded-lg text-center hover:bg-gray-100 transition">Get Started - Free</a>
+                        <a href="signup.php" class="px-6 py-3 bg-white text-black font-bold rounded-lg text-center hover:bg-gray-100 transition">Get Started</a>
                         <a href="#features" class="px-6 py-3 bg-transparent border border-white text-white font-bold rounded-lg text-center hover:bg-white/10 transition">Learn More</a>
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
-                    <img src="https://placehold.co/600x400/333/white?text=KeyNest+Dashboard" alt="KeyNest Dashboard" class="hero-image w-full max-w-lg">
+                    <img src="./assets/images/dashboard.png" alt="KeyNest Dashboard" class="hero-image w-full max-w-lg">
                 </div>
             </div>
         </div>
@@ -74,8 +74,8 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                         </svg>
                     </div>
-                    <h3 class="text-xl font-semibold mb-2">End-to-End Encryption</h3>
-                    <p class="text-gray-600">Your passwords are encrypted before they leave your device, ensuring that only you can access them.</p>
+                    <h3 class="text-xl font-semibold mb-2">Password Encryption</h3>
+                    <p class="text-gray-600">Your passwords are encrypted ensuring that only you can access them.</p>
                 </div>
                 
                 <!-- Feature 2 -->
@@ -86,7 +86,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Cross-Platform Access</h3>
-                    <p class="text-gray-600">Access your passwords on all your devices - desktop, mobile, and tablet - with automatic synchronization.</p>
+                    <p class="text-gray-600">Access your passwords on all your devices - desktop, mobile, and tablet</p>
                 </div>
                 
                 <!-- Feature 3 -->
@@ -97,7 +97,7 @@
                         </svg>
                     </div>
                     <h3 class="text-xl font-semibold mb-2">Password Health Check</h3>
-                    <p class="text-gray-600">Identifies weak, reused, and compromised passwords to help you keep your accounts secure.</p>
+                    <p class="text-gray-600">Identifies weak and reused passwords to help you keep your accounts secure.</p>
                 </div>
             </div>
         </div>
@@ -112,7 +112,7 @@
                 <div class="text-center">
                     <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">1</div>
                     <h3 class="text-xl font-semibold mb-2">Sign Up</h3>
-                    <p class="text-gray-600">Create your free account and set a strong master password.</p>
+                    <p class="text-gray-600">Create your account and set a strong master password.</p>
                 </div>
                 
                 <!-- Step 2 -->
@@ -125,8 +125,8 @@
                 <!-- Step 3 -->
                 <div class="text-center">
                     <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4 text-white font-bold text-xl">3</div>
-                    <h3 class="text-xl font-semibold mb-2">Access Everywhere</h3>
-                    <p class="text-gray-600">Use KeyNest on all your devices with our browser extensions and mobile apps.</p>
+                    <h3 class="text-xl font-semibold mb-2">Easy Access</h3>
+                    <p class="text-gray-600">Use KeyNest extension on your Chrome browser for easy access.</p>
                 </div>
             </div>
         </div>
@@ -146,18 +146,18 @@
                             </svg>
                             <span>Auto-fill login forms with one click</span>
                         </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span>Generate strong passwords while browsing</span>
-                        </li>
-                        <li class="flex items-start">
-                            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            <span>Automatically save new passwords</span>
-                        </li>
+<!--                        <li class="flex items-start">-->
+<!--                            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
+<!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>-->
+<!--                            </svg>-->
+<!--                            <span>Generate strong passwords while browsing</span>-->
+<!--                        </li>-->
+<!--                        <li class="flex items-start">-->
+<!--                            <svg class="w-6 h-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">-->
+<!--                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>-->
+<!--                            </svg>-->
+<!--                            <span>Automatically save new passwords</span>-->
+<!--                        </li>-->
                     </ul>
                     <div class="flex space-x-4">
                         <a href="#" class="flex items-center bg-gray-900 text-white px-4 py-2 rounded-md hover:bg-gray-800">
@@ -166,16 +166,16 @@
                             </svg>
                             Chrome Extension
                         </a>
-                        <a href="#" class="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">
-                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                            </svg>
-                            Firefox Extension
-                        </a>
+<!--                        <a href="#" class="flex items-center bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700">-->
+<!--                            <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24">-->
+<!--                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1h-6v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>-->
+<!--                            </svg>-->
+<!--                            Firefox Extension-->
+<!--                        </a>-->
                     </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
-                    <img src="https://placehold.co/500x300/333/white?text=Browser+Extension" alt="KeyNest Browser Extension" class="w-full max-w-md rounded-lg shadow-lg">
+                    <img src="./assets/images/extension.png" alt="KeyNest Browser Extension" class="w-full max-w-md rounded-lg shadow-lg">
                 </div>
             </div>
         </div>
@@ -185,9 +185,9 @@
     <section class="py-16 gradient-bg text-white">
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-3xl font-bold mb-6">Ready to Secure Your Passwords?</h2>
-            <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-300">Join thousands of users who trust KeyNest to manage their passwords securely.</p>
-            <a href="signup.php" class="px-8 py-3 bg-white text-black font-bold rounded-lg inline-block hover:bg-gray-100 transition">Get Started Free</a>
-            <p class="mt-4 text-sm text-gray-300">No credit card required. Cancel anytime.</p>
+            <p class="text-xl mb-8 max-w-2xl mx-auto text-gray-300">Join KeyNest to manage your passwords securely.</p>
+            <a href="signup.php" class="px-8 py-3 bg-white text-black font-bold rounded-lg inline-block hover:bg-gray-100 transition">Get Started</a>
+<!--            <p class="mt-4 text-sm text-gray-300">No credit card required. Cancel anytime.</p>-->
         </div>
     </section>
 
@@ -220,29 +220,29 @@
                     <h4 class="font-semibold mb-4">Product</h4>
                     <ul class="space-y-2">
                         <li><a href="#features" class="text-gray-400 hover:text-white">Features</a></li>
-                        <li><a href="#pricing" class="text-gray-400 hover:text-white">Pricing</a></li>
+<!--                        <li><a href="#pricing" class="text-gray-400 hover:text-white">Pricing</a></li>-->
                         <li><a href="#extension" class="text-gray-400 hover:text-white">Browser Extensions</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Mobile Apps</a></li>
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Mobile Apps</a></li>-->
                     </ul>
                 </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Resources</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Security</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Community</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="font-semibold mb-4">Company</h4>
-                    <ul class="space-y-2">
-                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>
-                    </ul>
-                </div>
+<!--                <div>-->
+<!--                    <h4 class="font-semibold mb-4">Resources</h4>-->
+<!--                    <ul class="space-y-2">-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Blog</a></li>-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Help Center</a></li>-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Security</a></li>-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Community</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <h4 class="font-semibold mb-4">Company</h4>-->
+<!--                    <ul class="space-y-2">-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Careers</a></li>-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Privacy Policy</a></li>-->
+<!--                        <li><a href="#" class="text-gray-400 hover:text-white">Terms of Service</a></li>-->
+<!--                    </ul>-->
+<!--                </div>-->
             </div>
             <div class="mt-8 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
                 <p>&copy; 2024 KeyNest. All rights reserved.</p>

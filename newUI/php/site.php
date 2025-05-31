@@ -21,8 +21,8 @@ if (isset($_POST["add_site"])) {
         exit();
     }
 
-    $stmt = $dbh->prepare("SELECT * FROM sites WHERE site_url = ?;");
-    $stmt->execute(array($site_url));
+    $stmt = $dbh->prepare("SELECT * FROM sites WHERE site_url = ? AND user_id = ?;");
+    $stmt->execute(array($site_url, $_SESSION['userid']));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($data['site_url'] == $site_url) {
@@ -62,8 +62,8 @@ if (isset($_POST["update_site"])) {
         exit();
     }
 
-    $stmt = $dbh->prepare("SELECT * FROM `sites` WHERE site_id != ?;");
-    $stmt->execute(array($site_id));
+    $stmt = $dbh->prepare("SELECT * FROM `sites` WHERE site_id != ? AND user_id = ?;");
+    $stmt->execute(array($site_id, $_SESSION['userid']));
     $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if($data['site_url'] == $site_url) {

@@ -61,9 +61,9 @@ $aes = new AES();
                               </svg>
                             </div>
                             <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-                              <h3 class="text-base font-semibold text-gray-900" id="modal-title">Deactivate account</h3>
+                              <h3 class="text-base font-semibold text-gray-900" id="modal-title">Are you sure you want to delete?</h3>
                               <div class="mt-2">
-                                <p class="text-sm text-gray-500">Are you sure you want to deactivate your account? All of your data will be permanently removed. This action cannot be undone.</p>
+                                <p class="text-sm text-gray-500">Your data will be permanently removed. This action cannot be undone.</p>
                               </div>
                             </div>
                           </div>
