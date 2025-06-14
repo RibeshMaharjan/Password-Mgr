@@ -1,228 +1,376 @@
-<?php include_once './php/dbh.php'; ?>
-<?php include_once './lib/aes.php'; ?>
 <?php include './includes/header.php'; ?>
 <?php include './includes/nav.php'; ?>
+<?php include_once './lib/aes.php'; ?>
 <?php
 $aes = new AES();
 ?>
-<div class="container">
-    <main>
-        <?php
-        if (isset($_POST['site_id'])) {
-            $_SESSION['site_id'] = $_POST['site_id'];
-        }
-        $site_id = $_SESSION['site_id'];
-
-        $stmt = $dbh->prepare("SELECT * FROM sites WHERE site_id = :site_id;");
-        $stmt->bindParam(':site_id', $site_id);
-        $stmt->execute();
-
-        $site = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        ?>
-
-        <!-- Modal -->
-        <div class="modal fade" id="credential-edit" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="./php/updateCredential.php" id="form-credential-edit" method="POST">
-                            <input type="hidden" name="id" id="id">
-                            <div class="form-floating mb-3">
-                                <input type="text" class="form-control" id="username" placeholder="Username" name="username">
-                                <label for="floatingPassword">Username</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="password" class="form-control" id="password" placeholder="Password" name="password">
-                                <label for="floatingPassword">Password</label>
-                            </div>
-                            <div class="form-floating mb-3">
-                                <input type="textarea" class="form-control" id="notes" placeholder="Notes" name="notes">
-                                <label for="floatingInput">Notes</label>
-                            </div>
-                            <button type="submit" class="btn btn-primary" name="update">Submit</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Delete Modal -->
-        <div class="modal fade" id="credential-delete" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="staticBackdropLabel">Confirmation</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="./php/deleteCredential.php" method="POST" id="form-delete">
-                            <label>Are you Sure?</label>
-                            <input type="hidden" name="id" id="delete-id">
-                            <button type="submit" class="btn btn-primary" name="delete">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="credential-single-body">
-            <div class="title">
-                <div class="back-icon">
-                    <i class="fa-solid fa-arrow-left" onclick="window.location.href = 'index.php';"></i>
-                </div>
-                <h1>Your <?= $site['site_name'] ?> Credentials</h1>
-                <div class="button-section">
-                    <a class="pass-mgr-button dashboard-add-button" data-bs-toggle="collapse" href="#credential-add-form" role="button" aria-expanded="false" aria-controls="credential-add-form"><i class="fa-solid fa-plus"></i>Add New</a>
-                </div>
-            </div>
-            <?php
-            if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add'])) {
-                $user_id = $_SESSION["userid"];
-                $username = $_POST["username"];
-                $password = $_POST["password"];
-                $notes = $_POST["notes"];
-                $site_id = $site['site_id'];
-
-                if (!empty($username) && !empty($password) && !empty($site_id)) {
-                    $salt = $_SESSION["password"];
-
-                    $encrypted_password = $aes->encrypt($password, $salt);
-
-                    $stmt = $dbh->prepare("INSERT INTO credentials (users_id, site_id, username, password, notes) VALUES (?,?,?,?,?);");
-                    $stmt->execute(array($user_id, $site_id, $username, $encrypted_password, $notes));
-                    $_SESSION['site_id'] = $site_id;
-                } else {
-                    echo '<div class="alert alert-dark text-dark" role="alert">Please fill all fields.</div>';
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-6">
+        <!-- Alert Message-->
+                <?php
+                   if(isset($_SESSION['error'])) {
+                       echo '
+                           <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50" role="alert">
+                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                             </svg>
+                             <span class="sr-only">Info</span>
+                             <div class="message-container">'.$_SESSION['error'].'</div>
+                           </div>
+                       ';
+                       unset($_SESSION['error']);
+                   }
+                   if(isset($_SESSION['success'])) {
+                       echo '
+                           <div class="flex items-center p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50" role="alert">
+                             <svg class="shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                               <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                             </svg>
+                             <span class="sr-only">Info</span>
+                             <div class="message-container">'.$_SESSION['success'].'</div>
+                           </div>
+                       ';
+                       unset($_SESSION['success']);
+                   }
+                ?>
+        <style>
+                .eye-icon, .copy-icon {
+                    cursor: pointer;
                 }
-            }
-            ?>
-            <div class="credential-add-form collapse" id="credential-add-form">
-                <h3 class="add-form-title">Enter your Credentials</h3>
-                <form method="POST">
-                    <div class="credential-left">
-                        <div class="credential-info-group">
-                            <label for="username">Username</label>
-                            <input type="text" placeholder="site" name="username" value="<?= $_POST['username'] ?? '' ?>">
+                .password-history-item {
+                    padding: 12px 0;
+                    border-bottom: 1px solid #eee;
+                }
+                .edit-mode .edit-actions {
+                    display: flex;
+                }
+                .edit-actions {
+                    display: none;
+                }
+            </style>
+        <!-- Delete Model -->
+        <div id="popup-modal" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow-sm">
+                    <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                        <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                          <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:size-10">
+                              <svg class="size-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                              </svg>
+                            </div>
+                            <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                              <h3 class="text-base font-semibold text-gray-900" id="modal-title">Are you sure you want to delete?</h3>
+                              <div class="mt-2">
+                                <p class="text-sm text-gray-500">Your data will be permanently removed. This action cannot be undone.</p>
+                              </div>
+                            </div>
+                          </div>
                         </div>
-                        <div class="credential-info-group">
-                            <label for="password">Password</label>
-                            <input type="text" placeholder="Password" name="password" value="<?= $_POST['password'] ?? '' ?>">
+                        <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                            <form action="./php/credential.php" method="post">
+                                <input type="hidden" name="id" id="modal-account-id"/>
+                                <input type="hidden" name="site_id" value="<?= $_GET['id'] ?>" id="modal-site-id"/>
+                                <button data-modal-hide="popup-modal" type="submit" name="delete_credential" class="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 sm:ml-3 sm:w-auto">
+                                    Yes, I'm sure
+                                </button>
+                            </form>
+                            <button data-modal-hide="popup-modal" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">No, cancel</button>
                         </div>
-                    </div>
-                    <div class="credential-right">
-                        <div class="credential-info-group">
-                            <label for="site">Site</label>
-                            <input type="hidden" name="site_id" value="<?= $site['site_id'] ?>">
-                            <div class="input"><?= $site['site_url'] ?></div>
-                        </div>
-                        <div class="credential-info-group">
-                            <label for="notes">Notes</label>
-                            <input type="textarea" name="notes" placeholder="No Notes Added" value="<?= $_POST['notes'] ?? '' ?>">
-                        </div>
-                    </div>
-                    <div class="credential-button-group">
-                        <button type="submit" class="pass-mgr-button submit-btn" name="add">Submit</button>
-                    </div>
-                </form>
+                      </div>
+                </div>
             </div>
-            <?php
+        </div>
+        <?php
+            if (isset($_GET['id'])) {
+                $_SESSION['site_id'] = $_GET['id'];
+            }
+            $site_id = $_GET['id'];
 
-            $stmt = $dbh->prepare("SELECT credentials.account_id, credentials.username, credentials.password, credentials.notes, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
+            $stmt = $dbh->prepare("SELECT * FROM sites WHERE user_id = :user_id AND site_id = :site_id;");
+            $stmt->bindParam(':site_id', $site_id);
+            $stmt->bindParam(':user_id', $_SESSION["userid"]);
+            $stmt->execute();
+
+            $site = $stmt->fetch(PDO::FETCH_ASSOC);
+        ?>
+        <!-- Back Button -->
+        <div class="mb-6 flex justify-between items-center">
+            <a href="dashboard.php" class="w-fit flex items-center text-gray-600 hover:text-gray-900">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+                </svg>
+                Back to Dashboard
+            </a>
+            <!-- Add Password Modal toggle -->
+            <button data-modal-target="password-modal" data-modal-toggle="password-modal"  id="addPasswordBtn" class="h-9 bg-black rounded-md text-white text-sm px-4 py-2 hover:bg-gray-800 transition-all duration-200"><i class="fa-solid fa-circle-plus mr-2"></i>Add New Password</button>
+        </div>
+        <div class="grid grid-cols-2 gap-4">
+
+        <?php
+            $stmt = $dbh->prepare("SELECT credentials.account_id, credentials.username, credentials.password, credentials.notes, credentials.created_at, credentials.updated_at, sites.site_name, sites.site_url FROM credentials INNER JOIN sites ON credentials.site_id = sites.site_id WHERE credentials.users_id = ? AND sites.site_id=?;");
             $stmt->execute(array($_SESSION["userid"], $site_id));
             $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            
+
             foreach($data as &$row) {
                 $row['decrypted_password'] = $aes->decrypt($row['password'], $_SESSION["password"]);
             }
             unset($row);
-            ?>
-            <div class="credential-listing">
-                <?php
-                foreach ($data as $row) {
-                ?>
-                    <form action="" method="post">
-                        <div class="credentials">
-                            <div class="credential-left">
-                                <input type="hidden" name="account_id" id="account_id" value="<?= $row['account_id'] ?>">
-                                <div class="credential-info-group">
-                                    <label for="username">Username</label>
-                                    <div class="input-container">
-                                        <input type="text" value="<?= $row['username'] ?>">
-                                        <div class="copy-icon copy-btn" onclick="copyToClipboard(event)">
-                                            <i class="fa-solid fa-copy"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="credential-info-group">
-                                    <label for="password">Password</label>
-                                    <div class="input-container">
-                                        <input type="password" value="<?= $row['decrypted_password'] ?>">
-                                        <div class="hidden-icon">
-                                            <i class="fa-solid fa-eye-slash"></i>
-                                        </div>
-                                        <div class="copy-icon copy-btn" onclick="copyToClipboard(event)">
-                                            <i class="fa-solid fa-copy"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="credential-right">
-                                <div class="credential-info-group">
-                                    <label for="site">Site</label>
-                                    <div class="input"><?= $row['site_url'] ?></div>
-                                </div>
-                                <div class="credential-info-group">
-                                    <label for="notes">Notes</label>
-                                    <input type="textarea" value="<?= $row['notes'] ?>" placeholder="No Notes Added">
-                                </div>
-                            </div>
-                            <div class="credential-button-group">
-                                <button type="button" class="pass-mgr-button edit-btn" id="edit-btn">
-                                    Edit
-                                </button>
-                                <button type="button" class="pass-mgr-button delete-btn" id="delete-btn" data-bs-toggle="modal" data-bs-target="#credential-delete">
-                                    Delete
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                <?php
-                }
-                ?>
+            foreach ($data as $row) {
+        ?>
+        <!-- Password Detail View -->
+        <div id="passwordDetail" class="bg-white col-auto rounded-2xl shadow p-6 w-full max-w-3xl mx-auto">
+            <form action="./php/credential.php" method="post">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-xl font-bold capitalize" id="passwordTitle"><?= $site['site_name'] ?></h2>
+                    <div class="flex space-x-2">
+                        <a href="<?= $site['site_url'] ?>" id="visitSiteBtn" class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 text-sm" target="_blank">
+                            Visit Site
+                        </a>
+                        <!-- Edit Button -->
+                        <a id="editBtn" class="px-4 py-2 bg-blue-100 text-blue-600 rounded-md hover:bg-blue-200 text-sm">
+                            Edit
+                        </a>
+                        <!-- Delete Button -->
+                        <button data-modal-target="popup-modal" id="deleteBtn" data-modal-toggle="popup-modal" data-account-id="<?= $row['account_id'] ?>" class="px-4 py-2 bg-red-100 text-red-600 rounded-md hover:bg-red-200 text-sm" type="button">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+
+            <!-- Edit Mode Actions -->
+            <div class="edit-actions mb-4 justify-end space-x-2">
+                <a id="cancelEditBtn" class="px-4 py-2 border rounded-md hover:bg-gray-100 text-sm">
+                    Cancel
+                </a>
+                <button id="saveEditBtn" name="update_credential" type="submit" class="px-4 py-2 bg-black text-white rounded-md hover:bg-gray-800 text-sm">
+                    Save Changes
+                </button>
             </div>
-            <script>
-                const hiddenIcon = document.querySelectorAll(".hidden-icon");
-
-                hiddenIcon.forEach(hiddenIcon => {
-                    hiddenIcon.addEventListener('click', function(e) {
-                        const icon = document.querySelector(".hidden-icon .fa-solid");
-                        const inputContainer = e.target.closest(".input-container");
-                        const passwordField = inputContainer.querySelector("input");
-                        if (icon.classList.contains("fa-eye-slash")) {
-                            icon.classList.remove("fa-eye-slash");
-                            icon.classList.add("fa-eye");
-                            passwordField.type = 'text';
-                            return;
-                        }
-                        icon.classList.remove("fa-eye");
-                        icon.classList.add("fa-eye-slash");
-                        passwordField.type = 'password';
-                    });
-                });
 
 
-                function copyToClipboard(event) {
-                    const inputContainer = event.target.closest(".input-container");
-                    const inputField = inputContainer.querySelector("input");
-                    copyText = inputField.value;
-                    navigator.clipboard.writeText(copyText);
+            <input type="hidden" name="id" value="<?= $row['account_id'] ?>" />
+            <input type="hidden" name="site_id" value="<?= $site['site_id'] ?>" />
+            <!-- Username field -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Username</label>
+                <div class="flex">
+                    <input type="text" name="username" id="username" value="<?= $row['username'] ?>" class="form-input flex-grow" readonly>
+                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200 copy-button">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Password field -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Password</label>
+                <div class="flex">
+                    <input type="password" id="password" name="password" value="<?= $row['decrypted_password'] ?>" class="form-input flex-grow" readonly>
+                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-20 hidden-toggle" >
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                        </svg>
+                    </a>
+                    <a class="ml-2 p-2 py-3 bg-gray-100 rounded-md hover:bg-gray-200 copy-button">
+                        <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Notes field -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium mb-2">Notes</label>
+                <div id="notesContainer">
+                    <textarea id="notesTextarea" name="notes" class="form-input w-full" placeholder="Add your notes" readonly><?= $row['notes'] ?></textarea>
+                </div>
+            </div>
+
+            <!-- Timestamps -->
+            <div class="flex justify-between text-sm text-gray-600 mb-8">
+                <div>
+                    <svg class="w-4 h-4 inline mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Created: <span id="createdDate"><?= $row['created_at'] ?></span>
+                </div>
+                <div>
+                    Last modified: <span id="modifiedDate"><?= $row['updated_at'] ?></span>
+                </div>
+            </div>
+        </form>
+
+
+            <?php
+
+                $stmt = $dbh->prepare("SELECT * from password_history WHERE account_id = ?;");
+                $stmt->execute(array($row['account_id']));
+                $history = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach($history as &$row) {
+                    $row['decrypted_password'] = $aes->decrypt($row['previous_password'], $_SESSION["password"]);
                 }
-            </script>
+                unset($row);
+            ?>
+            <!-- Password History -->
+            <div>
+                <h3 class="text-lg font-semibold mb-4">Password History</h3>
+                <div id="passwordHistory">
+                    <?php
+                        foreach ($history as $item) {
+                            echo "
+                                    <div class='password-history-item flex justify-between'>
+                                        <div class='font-mono'>". $item['decrypted_password'] ."</div>
+                                        <div class='text-gray-500'>". $item['changed_time'] ."</div>
+                                    </div>
+                                ";
+
+                        }
+                    ?>
+                </div>
+            </div>
         </div>
+        <?php
+            }
+        ?>
+        </div>
+
     </main>
-</div>
-<?PHP include './includes/footer.php' ?>
+
+    <!-- Add Password modal -->
+       <div id="password-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+           <div class="relative p-4 w-full max-w-2xl max-h-full">
+               <!-- Modal content -->
+               <div class="relative bg-white rounded-lg shadow-sm">
+                   <!-- Modal header -->
+                   <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200">
+                       <h3 class="text-xl font-semibold text-gray-900">
+                           Add New Password
+                       </h3>
+                       <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="password-modal">
+                           <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                           </svg>
+                           <span class="sr-only">Close modal</span>
+                       </button>
+                   </div>
+                   <!-- Modal body -->
+                   <div class="p-4 md:p-5">
+                       <form class="space-y-4 grid grid-cols-2 gap-4" action="php/credential.php" method="post">
+                           <div class="mt-4 mb-0">
+                               <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Your Username/Email</label>
+                               <input type="text" name="username" id="username" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="asura_007" required />
+                           </div>
+                           <div>
+                               <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Your password</label>
+                               <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " required />
+                           </div>
+                           <div class="">
+                               <label for="site_id" class="block mb-2 text-sm font-medium text-gray-900">Sites</label>
+                               <select id="site_id" name="site_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5">
+                                   <option selected="">Select Site</option>
+                                   <?php
+                                       $stmt = $dbh->prepare("SELECT * FROM sites WHERE user_id = :user_id");
+                                       $stmt->bindParam(':user_id', $_SESSION['userid']);
+                                       $stmt->execute();
+                                       $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                                       foreach($result as $row){
+                                           echo '<option value="'. $row['site_id'] .'" '. ($row['site_id'] == $_GET['id'] ? 'selected' : '') .'>' .$row['site_name'].'</option>';
+                                       };
+                                   ?>
+                               </select>
+                           </div>
+                           <div class="col-span-2">
+                               <label for="notes" class="block mb-2 text-sm font-medium text-gray-900">Notes</label>
+                               <textarea id="notes" name="notes" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500" placeholder="Place your notes here"></textarea>
+                           </div>
+                           <div class="col-span-2 grid grid-cols-subgrid gap-4">
+                               <button type="submit" name="add_credential" class="col-start-2 w-full text-white bg-gray-900 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add New Password</button>
+                           </div>
+                       </form>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+    <script>
+        const formData = {
+            usernameInput: "",
+            passwordInput: "",
+            notesInput: ""
+        };
+
+        // Helper function to format dates
+        function formatDate(date) {
+            return `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+        }
+
+        const hiddenIcon = document.querySelectorAll(".hidden-toggle");
+        hiddenIcon.forEach(icon => {
+            icon.addEventListener('click', (e) => {
+                let passwordInput = e.target.parentElement.parentElement.querySelector('#password');
+                passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+            })
+        })
+
+        const copyBtn = document.querySelectorAll(".copy-button");
+        copyBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                let passwordInput = e.target.parentElement.parentElement.querySelector('input');
+                passwordInput.select();
+                document.execCommand('copy');
+            })
+        })
+
+        const editBtn = document.querySelectorAll("#editBtn");
+        editBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const passwordDetail = e.target.parentElement.parentElement.parentElement.parentElement;
+                passwordDetail.classList.add('edit-mode');
+
+                formData.usernameInput = passwordDetail.querySelector('#username').value;
+                formData.passwordInput = passwordDetail.querySelector('#password').value;
+                formData.notesInput = passwordDetail.querySelector('#notesTextarea').value;
+
+                // Make fields editable
+                passwordDetail.querySelector('#username').readOnly = false;
+                passwordDetail.querySelector('#password').readOnly = false;
+                passwordDetail.querySelector('#notesTextarea').readOnly = false;
+            })
+        })
+
+        const cancelBtn = document.querySelectorAll("#cancelEditBtn");
+        cancelBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const passwordDetail = e.target.parentElement.parentElement.parentElement;
+                passwordDetail.classList.remove('edit-mode');
+
+                passwordDetail.querySelector('#username').value = formData.usernameInput;
+                passwordDetail.querySelector('#password').value = formData.passwordInput;
+                passwordDetail.querySelector('#notesTextarea').value = formData.notesInput;
+
+                // Make fields editable
+                passwordDetail.querySelector('#username').readOnly = true;
+                passwordDetail.querySelector('#password').readOnly = true;
+                passwordDetail.querySelector('#notesTextarea').readOnly = true;
+            })
+        })
+
+        const deleteBtn = document.querySelectorAll("#deleteBtn");
+        deleteBtn.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const account_id = e.target.getAttribute('data-account-id');
+                const modalAccountIdInput = document.getElementById('modal-account-id');
+                modalAccountIdInput.value = account_id;
+            })
+        })
+    </script>
+
+<?php require './includes/footer.php'; ?>

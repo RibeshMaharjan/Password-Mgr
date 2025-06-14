@@ -1,4 +1,0 @@
-# Redirect root to home.php
-RewriteEngine On
-RewriteBase /
-RewriteRule ^$ home.php [L]

@@ -15,7 +15,10 @@ if (isset($_POST["add_site"])) {
         exit();
     }
 
-    if(!filter_var($site_url, FILTER_VALIDATE_URL)) {
+    if (
+        !filter_var($site_url, FILTER_VALIDATE_URL) ||
+        strpos(parse_url($site_url, PHP_URL_HOST), 'www.') !== 0
+    ) {
         $_SESSION['error'] = 'Site URL is invalid. Please try again.';
         header("location: ../dashboard.php");
         exit();
@@ -56,7 +59,10 @@ if (isset($_POST["update_site"])) {
         exit();
     }
 
-    if(!filter_var($site_url, FILTER_VALIDATE_URL)) {
+    if (
+        !filter_var($site_url, FILTER_VALIDATE_URL) ||
+        strpos(parse_url($site_url, PHP_URL_HOST), 'www.') !== 0
+    ) {
         $_SESSION['error'] = 'Site URL is invalid. Please try again.';
         header("location: ../dashboard.php");
         exit();

@@ -1,8 +1,0 @@
-just read this page , and do and it will work
-
-
-
-files changed
-- D:\xampp\apache\conf\extra\httpd-vhosts.conf
-- C:\Windows\System32\drivers\etc\hosts
-

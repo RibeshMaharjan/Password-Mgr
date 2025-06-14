@@ -3,53 +3,32 @@
 if(!isset($_SESSION['auth']))
 {
    header('Location: ./login.php');
+   exit();
 }
 
 if(!checkVerification()) {
     header('Location: ./emailVerification.php');
+    exit();
 }
 
 ?>
-<header class="primary-header">
-                <div>
-                    <img src="./assets/images/logo/logo2preview.png" alt="" class="logo">
-                </div>
+<body class="min-h-screen bg-gray-50">
+<!-- Header -->
+<header class="h-16 border-b bg-white shadow-sm">
+    <div class="h-full container mx-auto px-4">
+        <div class="h-full flex justify-between items-center">
+            <h1 class="text-2xl font-bold">KeyNest</h1>
 
-                <button class="mobile-nav-toggle" aria-expanded="false">
-                </button>
+            <nav class="flex items-center space-x-10">
+                <a href="dashboard.php" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Dashboard</a>
+                <a href="password-generator.php" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Password Generator</a>
+                <a href="profile.php" class="nav-link text-sm font-medium transition-all duration-200 relative px-4 py-2 rounded-md">Profile</a>
+            </nav>
 
-                <nav>
-                    <ul id="primary-navigation" class="primary-navigation" data-visible="false">
-                        <li class="active">
-                            <a href="index.php">
-                                Dashboard
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./passwordgenerator.php">
-                                Password Generator
-                            </a>
-                        </li>
-                        <li>
-                            <a href="./userprofile.php">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                        <form action="logout.php" method="POST" id="logout-form">
-                            <input type="hidden" name="logout">
-                            <a href="" onclick="submitLogoutForm(event)">
-                                Logout
-                            </a>
-                        </form>
-                        </li>
-                        <script>
-                            function submitLogoutForm(event) {
-                                event.preventDefault();
-                                document.getElementById("logout-form").submit();
-                            }
-                        </script>
-                    </ul>
-                </nav>
-            </header>
-            <div class="content">
+<!--            <button id="logoutBtn" class="px-4 py-2 border rounded-md hover:bg-gray-100">Logout</button>-->
+           <form action="logout.php" method="post" id="logout-form">
+               <button id="logoutBtn" type="submit" name="logout" class="px-4 py-2 border rounded-md hover:bg-gray-100">Logout</button>
+           </form>
+        </div>
+    </div>
+</header>
